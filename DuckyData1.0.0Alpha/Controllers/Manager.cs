@@ -15,7 +15,8 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public IEnumerable<ApplicationUser> AllUsers()
         {
-            return db.Users.OrderBy(x => x.UserName);
+            var fetchedObject = db.Users.OrderBy(x => x.UserName);
+            return (fetchedObject == null) ? null :  fetchedObject;
         }
 
         /*

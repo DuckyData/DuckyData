@@ -82,7 +82,6 @@ C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Micr
 C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache
 C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.dll
 C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.pdb
 C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache
@@ -172,3 +171,4 @@ C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.O
 C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache

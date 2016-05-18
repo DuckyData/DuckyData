@@ -14,8 +14,7 @@ namespace DuckyData1._0._0Alpha.Models
         public DataContext() : base("name=DataContext")
         {
         }
-        //public DbSet<RegisteredUser> RegisteredUsers { get; set; }
-
+        
         public DbSet<Suggestion> Suggestions { get; set; }
         public DbSet<FollowUp> FollowUps { get; set; }
         public DbSet<BugReport> Reports { get; set; }
@@ -29,10 +28,10 @@ namespace DuckyData1._0._0Alpha.Models
     //public class StoreInitializer : DropCreateDatabaseIfModelChanges<DataContext>
     {
         //private Manager m = new Manager();
-        //private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
         protected override void Seed(DataContext context)
         {
-            /*var passwordHash = new PasswordHasher();
+            var passwordHash = new PasswordHasher();
             string password = passwordHash.HashPassword("P@ssw0rd");
 
             var user = new ApplicationUser
@@ -49,20 +48,20 @@ namespace DuckyData1._0._0Alpha.Models
                 flagged = "No",
                 gagged = "No",
             };
-            */
+            
             var msg = new Message
             {
                 date = DateTime.Now,
                 sendTo = "TestRecipient",
                 Subject = "Test Subject",
-               // user = user,
+                user = user,
                 body = "<strong>Testing</strong>"
             };
-           // msg.user = user;
+           msg.user = user;
             context.Messages.Add(msg);
-            //db.Users.Add(user);
+            db.Users.Add(user);
             context.SaveChanges();
-            //db.SaveChanges();
+            db.SaveChanges();
         }
 
     }
