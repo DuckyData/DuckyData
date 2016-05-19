@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.Factory.Account;
+using System.Net.Mail;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -160,7 +161,9 @@ namespace DuckyData1._0._0Alpha.Controllers
                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     var rse = accountFactory.getActivateCodeByAccount(model);
-
+                    MailMessage mail = new MailMessage("duckydata@gmail.com",rse.User_Account, "test email", "some dummay message");
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Send(mail);
                 }
                // AddErrors(result);
             }
