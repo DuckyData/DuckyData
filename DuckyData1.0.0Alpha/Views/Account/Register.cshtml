@@ -10,17 +10,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary("", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.fname, new { @class = "form-control", placeholder = "First Name" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.TextBoxFor(m => m.lname, new { @class = "form-control", placeholder = "Last Name" })
-            </div>
-        </div>
+      
 
         <div class="form-group">
             <div class="col-md-12">
