@@ -14,16 +14,17 @@ namespace DuckyData1._0._0Alpha.Models
         public DataContext() : base("name=DataContext")
         {
         }
-        
+        public DbSet<User_Activation_Code> User_Activation_Codes { get; set; }
+        /*
         public DbSet<Suggestion> Suggestions { get; set; }
         public DbSet<FollowUp> FollowUps { get; set; }
         public DbSet<BugReport> Reports { get; set; }
         public DbSet<History> History { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Audio> Audio { get; set; }
-        public DbSet<Video> Video { get; set; }
+        public DbSet<Video> Video { get; set; } */
     }
-
+    /*
     public class StoreInitializer : DropCreateDatabaseAlways<DataContext>
     //public class StoreInitializer : DropCreateDatabaseIfModelChanges<DataContext>
     {
@@ -64,7 +65,7 @@ namespace DuckyData1._0._0Alpha.Models
             db.SaveChanges();
         }
 
-    }
+    } */
 
     
 }

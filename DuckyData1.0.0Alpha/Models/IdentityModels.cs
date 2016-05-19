@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DuckyData1._0._0Alpha.Models
 {
@@ -82,5 +83,15 @@ namespace DuckyData1._0._0Alpha.Models
         }
 
     }
-    
+
+
+    // code for activate a user
+
+    public class User_Activation_Code{
+
+        [Key]
+        public int id { get; set; }
+        public string User_Account { get; set; }
+        public string Activation_Code { get; set; }
+    }
 }
