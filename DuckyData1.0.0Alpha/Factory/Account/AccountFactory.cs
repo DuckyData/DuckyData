@@ -2,6 +2,7 @@
 using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.ViewModels.Account;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -52,18 +53,16 @@ namespace DuckyData1._0._0Alpha.Factory.Account
 
         public bool updateUserInfo(userAdd userUpdate) {
             ApplicationUser user = userDB.Users.SingleOrDefault(u => u.Id == userUpdate.Id);
-            if (user != null)
-            {
-                ApplicationUser newInfo;
-                newInfo = new ApplicationUser();
-                newInfo = Mapper.Map<ApplicationUser>(userUpdate);
-                userDB.Entry(user).CurrentValues.SetValues(newInfo);
-                userDB.SaveChanges();
+            //if (user != null)
+            //{
+            //   user = Mapper.Map<ApplicationUser>(userUpdate);
+            user.firstName = "zhaohu";
+            user.lastName = "zhu";
+            user.UserName = "zhuzhaohu.daniewl@gmail.com";
+            userDB.SaveChanges();
                 return true;
-            }
-            else {
-                return false;
-            }
+            //}
+           
         }
 
         public ApplicationUser getUserById(string id) {

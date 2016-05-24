@@ -17,7 +17,7 @@ namespace DuckyData1._0._0Alpha.Models
         [Key]
         public override string Id { get; set; }
         public string firstName { get; set; }
-        public string lastname { get; set; }
+        public string lastName { get; set; }
         public string flagged { get; set; }
         public string gagged { get; set; }
         public string banned { get; set; }
