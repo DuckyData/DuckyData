@@ -82,7 +82,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -158,8 +158,8 @@ namespace DuckyData1._0._0Alpha.Controllers
                 User_Activation_Code userInfo = accountFactory.getRegiseInfoByCode(activation_code);
                 if (userInfo != null)
                 {
-                    string userId = accountFactory.createNewUser(userInfo);
-                    Response.Redirect("CompleteRegister?id="+userId);
+                    ApplicationUser user = accountFactory.findUserByEmail(userInfo.User_Account);
+                    Response.Redirect("CompleteRegister?id="+user.Id);
                 }
             }
            return View();
@@ -183,7 +183,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult CompleteRegister(userAdd userInfo)
         {
             accountFactory.updateUserInfo(userInfo);
-            return RedirectToAction("Home");
+            return RedirectToAction("Index","Home");
         }
 
         //
@@ -195,11 +195,11 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                //var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (true)
                 {
-                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false
+                    await SignInManager.SignInAsync(user,isPersistent: false,rememberBrowser: false);
                     string code = RandomString();
                     MailMessage mail = new MailMessage("duckydata@gmail.com", model.Email, "test email", "<table border=0 cellspacing=0 cellpadding=0 style=max-width:600px>"+
 "<tbody><tr><td><table bgcolor=#26c6da width=100% border=0 cellspacing=0 cellpadding=0 style=min-width:332px;max-width:600px;border:1px solid #e0e0e0;border-bottom:0;border-top-left-radius:3px;border-top-right-radius:3px>"+
@@ -216,7 +216,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                     smtp.Send(mail);
                     accountFactory.createRegiseInfo(model, code);
                 }
-               // AddErrors(result);
+                AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
             return View(model);

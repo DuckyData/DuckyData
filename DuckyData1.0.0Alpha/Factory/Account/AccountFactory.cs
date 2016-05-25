@@ -51,18 +51,26 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             return userToAdd.Id;
         }
 
+        public ApplicationUser findUserByEmail(string email) {
+            ApplicationUser user = userDB.Users.First(u => u.Email == email);
+
+            if(user != null)
+            {
+                return user;
+            }
+            else {
+                return null;
+            }
+        }
+
         public bool updateUserInfo(userAdd userUpdate) {
             ApplicationUser user = userDB.Users.SingleOrDefault(u => u.Id == userUpdate.Id);
-            //if (user != null)
-            //{
-            //   user = Mapper.Map<ApplicationUser>(userUpdate);
-            user.firstName = "zhaohu";
-            user.lastName = "zhu";
-            user.UserName = "zhuzhaohu.daniewl@gmail.com";
+            
+            user.firstName = userUpdate.FirstName;
+            user.lastName = userUpdate.LastName;
+            user.UserName = userUpdate.Email;
             userDB.SaveChanges();
-                return true;
-            //}
-           
+            return true;
         }
 
         public ApplicationUser getUserById(string id) {
