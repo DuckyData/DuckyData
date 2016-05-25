@@ -197,7 +197,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                if (true)
+                if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user,isPersistent: false,rememberBrowser: false);
                     string code = RandomString();
