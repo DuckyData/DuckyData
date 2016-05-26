@@ -1,1 +1,0 @@
-define({numchunks:1,prefix:'Glossary_Chunk',terms:[{t:'Child Key',c:0},{t:'Editable GDO',c:0},{t:'Full GDO',c:0},{t:'GDO',c:0},{t:'Parcel',c:0},{t:'Partial GDO',c:0},{t:'Value Key',c:0}]});
