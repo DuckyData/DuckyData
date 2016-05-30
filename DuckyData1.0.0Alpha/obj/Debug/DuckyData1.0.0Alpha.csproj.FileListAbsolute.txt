@@ -342,6 +342,5 @@ C:\Users\Toshiba\Desktop\PRJ666\repo\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Secu
 C:\Users\Toshiba\Desktop\PRJ666\repo\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Toshiba\Desktop\PRJ666\repo\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Toshiba\Desktop\PRJ666\repo\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Toshiba\Desktop\PRJ666\repo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache
 C:\Users\Toshiba\Desktop\PRJ666\repo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.dll
 C:\Users\Toshiba\Desktop\PRJ666\repo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.pdb
