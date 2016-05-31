@@ -41,6 +41,8 @@ namespace DuckyData1._0._0Alpha.Models
         [Key]
         public int Id { get; set; }
 
+        public int QueryCount { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -75,8 +77,7 @@ namespace DuckyData1._0._0Alpha.Models
         [Required]
         [StringLength(2000)]
         public string Body { get; set; }
-
-        [Required]
+        
         public ApplicationUser User { get; set; }
 
         //attachment attributes
