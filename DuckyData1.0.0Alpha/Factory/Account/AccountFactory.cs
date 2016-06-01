@@ -2,7 +2,7 @@
 using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.ViewModels.Account;
 using System;
-using System.Data.Entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -24,6 +24,20 @@ namespace DuckyData1._0._0Alpha.Factory.Account
                this.database = conn.getConnection();
            }
        }
+
+        public IEnumerable<userAdd> getUserList(string searchString) {
+            
+            var userList = from u in userDB.Users select u;
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                 userList = userList.Where(s => s.lastName.Contains(searchString)
+                                       || s.firstName.Contains(searchString));
+            }
+            userList = userList.OrderBy(us=>us.firstName);
+            getDatabase();
+             
+            return Mapper.Map<IEnumerable<userAdd>>(userList);
+        }
 
        public User_Activation_Code getRegiseInfoByCode(string activationCode) {
            getDatabase();
@@ -61,6 +75,20 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             else {
                 return null;
             }
+        }
+
+        public ApplicationUser findUserById(string id) {
+            ApplicationUser user = userDB.Users.First(u => u.Id == id);
+
+            if(user != null)
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public bool updateUserInfo(userAdd userUpdate) {

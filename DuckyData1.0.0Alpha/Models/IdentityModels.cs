@@ -56,5 +56,9 @@ namespace DuckyData1._0._0Alpha.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.Account.userAdd> userAdds { get; set; }
+
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.Account.adminEditUser> adminEditUsers { get; set; }
     } 
 }

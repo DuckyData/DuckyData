@@ -23,5 +23,13 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         public string Id { set; get; }
     }
 
+    public class adminEditUser :userBase
+    {
+        [Key]
+        public string Id { set; get; }
+        public string flagged { get; set; }
+        public string gagged { get; set; }
+        public string banned { get; set; }
+    }
 
 }

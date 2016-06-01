@@ -27,6 +27,7 @@ namespace DuckyData1._0._0Alpha
             Mapper.CreateMap<userAdd, ApplicationUser>();
             Mapper.CreateMap<ApplicationUser, userBase>();
             Mapper.CreateMap<userAdd,ApplicationUser>();
+            Mapper.CreateMap<ApplicationUser, adminEditUser>();
         }
     }
 }

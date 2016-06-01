@@ -259,3 +259,7 @@ C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.Owin
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.pdb
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.xml
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.xml

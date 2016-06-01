@@ -14,6 +14,9 @@ using System.Text;
 using DuckyData1._0._0Alpha.Factory.Account;
 using DuckyData1._0._0Alpha.ViewModels.Account;
 using AutoMapper;
+using System.Collections;
+using System.Collections.Generic;
+using PagedList;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -139,6 +142,25 @@ namespace DuckyData1._0._0Alpha.Controllers
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
+        }
+
+        // GET; /Account/Edit/bkajdbfkjhsdfkhsdhfks
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            ApplicationUser user = accountFactory.findUserById(id);
+            return View(Mapper.Map<adminEditUser>(user));
+        }
+
+        // GET: /Account/ListUsers
+        [AllowAnonymous]
+        public ActionResult ListUsers(string searchString, int? page)
+        {
+            IEnumerable<userAdd> userList = accountFactory.getUserList(searchString);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(userList.ToPagedList(pageNumber,pageSize));
         }
 
         //
