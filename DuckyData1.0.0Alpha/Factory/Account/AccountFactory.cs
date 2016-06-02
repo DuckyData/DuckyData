@@ -13,7 +13,7 @@ namespace DuckyData1._0._0Alpha.Factory.Account
    {
        private DatabaseConnection conn = new DatabaseConnection();
        private DataContext database;
-        private ApplicationDbContext userDB = new ApplicationDbContext();
+       private ApplicationDbContext userDB = new ApplicationDbContext();
 
        public AccountFactory() {
            this.database = conn.getConnection();

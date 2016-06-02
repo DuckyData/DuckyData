@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DuckyData1._0._0Alpha.Models;
+using DuckyData1._0._0Alpha.ViewModels;
 using DuckyData1._0._0Alpha.ViewModels.Account;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace DuckyData1._0._0Alpha
             Mapper.CreateMap<ApplicationUser, userBase>();
             Mapper.CreateMap<userAdd,ApplicationUser>();
             Mapper.CreateMap<ApplicationUser, adminEditUser>();
+            Mapper.CreateMap<BugReportBase,BugReport>();
         }
     }
 }

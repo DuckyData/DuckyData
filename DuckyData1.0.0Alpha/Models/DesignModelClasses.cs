@@ -94,7 +94,6 @@ public class BugReport
     }
 
     public int Id { get; set; }
-    public int repId { get; set; }
     public DateTime date { get; set; }
     [Required]
     [StringLength(100)]
@@ -108,8 +107,6 @@ public class BugReport
     public ApplicationUser regUser { get; set; }
     public ApplicationUser supportRep { get; set; }
     public ICollection<FollowUp> FollowUps { get; set; }
-    //attachment attributes
-    public byte[] Attachment { get; set; }
     public string ContentType { get; set; }
     public string ContentName { get; set; }
 
@@ -124,11 +121,8 @@ public class FollowUp
     public string Title { get; set; }
     [Required]
     public string Description { get; set; }
-    //attachment attributes
-    public byte[] Attachment { get; set; }
     public string ContentType { get; set; }
     public string ContentName { get; set; }
-
     public BugReport report { get; set; }
 }
 

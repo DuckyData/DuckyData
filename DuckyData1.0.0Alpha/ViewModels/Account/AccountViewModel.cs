@@ -27,7 +27,8 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
     {
         [Key]
         public string Id { set; get; }
-        [Phone]
+        [Display(Name = "Phone Number")]
+        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$",ErrorMessage = "Please enter valid phone number.")]
         public string PhoneNumber { set; get; }
     }
 
