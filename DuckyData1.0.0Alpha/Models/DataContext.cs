@@ -19,7 +19,7 @@ namespace DuckyData1._0._0Alpha.Models
         public DbSet<User_Activation_Code> User_Activation_Codes { get; set; }
         public DbSet<userAdd> userAddCollection { get; set; }
 
-
+        /*
         public DbSet<Message> Messages { get; set; }
         public DbSet<Suggestion> Suggestions { get; set; }
         public DbSet<FollowUp> FollowUps { get; set; }
@@ -27,7 +27,7 @@ namespace DuckyData1._0._0Alpha.Models
         public DbSet<History> History { get; set; }
         public DbSet<Audio> Audio { get; set; }
         public DbSet<Video> Video { get; set; }
-        
+        */
         
     }
 
@@ -37,8 +37,6 @@ namespace DuckyData1._0._0Alpha.Models
         protected override void Seed(DataContext context)
         {
             /*
-            var passwordHash = new PasswordHasher();
-            string password = passwordHash.HashPassword("P@ssw0rd");
 
             var user = new ApplicationUser
             {
@@ -54,7 +52,7 @@ namespace DuckyData1._0._0Alpha.Models
                 flagged = "No",
                 gagged = "No",
             };
-            */
+            
             var msg = new Message
             {
                 SentDate = DateTime.Now,
@@ -67,7 +65,9 @@ namespace DuckyData1._0._0Alpha.Models
             context.Messages.Add(msg);
             //db.Users.Add(user);
             context.SaveChanges();
+        */
         }
+        
 
     }
 

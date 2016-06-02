@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DuckyData1._0._0Alpha.Models;
+using DuckyData1._0._0Alpha.ViewModels;
 using DuckyData1._0._0Alpha.ViewModels.Account;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,9 @@ namespace DuckyData1._0._0Alpha
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //localdb
-            System.Data.Entity.Database.SetInitializer(new Models.StoreInitializer());
+            //System.Data.Entity.Database.SetInitializer(new Models.StoreInitializer());
 
+            ConfigureMaps.ForMessage();
             Mapper.CreateMap<ApplicationUser, userAdd>();
             Mapper.CreateMap<userAdd, ApplicationUser>();
             Mapper.CreateMap<ApplicationUser, userBase>();
