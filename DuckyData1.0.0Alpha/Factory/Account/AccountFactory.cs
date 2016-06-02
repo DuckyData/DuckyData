@@ -101,6 +101,12 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             return true;
         }
 
+        public void adminUpdateUserInfo(ApplicationUser dest, adminEditUser src) {
+
+            dest.PhoneNumber = src.PhoneNumber;
+            userDB.SaveChanges();
+        }
+
         public ApplicationUser getUserById(string id) {
             ApplicationUser user = userDB.Users.First(u => u.Id == id);
             return user;

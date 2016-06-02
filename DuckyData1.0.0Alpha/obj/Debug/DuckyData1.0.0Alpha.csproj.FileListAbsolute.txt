@@ -222,6 +222,8 @@ C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.Owin
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Newtonsoft.Json.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Owin.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\ParkSquare.Gracenote.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Helpers.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Mvc.dll
@@ -235,6 +237,8 @@ C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Antlr3.Runtime
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\AutoMapper.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Newtonsoft.Json.xml
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.xml
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Helpers.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Mvc.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Optimization.xml
@@ -259,7 +263,3 @@ C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.Owin
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.pdb
-C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.dll
-C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.dll
-C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.xml
-C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.xml
