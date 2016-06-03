@@ -7,8 +7,11 @@ using System.Web;
 
 namespace DuckyData1._0._0Alpha.Models
 {
-    public class Video : MediaFile
+    public class Video
     {
+        [Key]
+        public int Id { get; set; }
+
         public DateTime ReleaseDate { get; set; }
 
         public string Director { get; set; }
@@ -20,11 +23,16 @@ namespace DuckyData1._0._0Alpha.Models
         public byte[] Poster { get; set; }
     }
 
-    public class Audio : MediaFile
+    public class Audio
     {
+        [Key]
+        public int Id { get; set; }
+
         public DateTime ReleaseDate { get; set; }
 
         public string Artist { get; set; }
+
+        public List<string> ContributingArtists { get; set; }
 
         public string Album { get; set; }
 
@@ -54,11 +62,16 @@ namespace DuckyData1._0._0Alpha.Models
 
         public Video Video { get; set; }
 
+        public string ImageName { get; set; }
+
+        public string ImageType { get; set; }
+
         public byte[] File { get; set; }
 
         public string FileType { get; set; }
     }
 
+    
     public class Message
     {
         [Key]
@@ -76,10 +89,12 @@ namespace DuckyData1._0._0Alpha.Models
         public string Subject { get; set; }
 
         [Required]
-        [StringLength(2000)]
         public string Body { get; set; }
-        
-        public ApplicationUser User { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+
+        public bool viewed { get; set; }
 
         //attachment attributes
         public byte[] Attachment { get; set; }
@@ -95,9 +110,8 @@ namespace DuckyData1._0._0Alpha.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public MediaFile MediaFile { get; set; }
-
+        public MediaFile file { get; set; }
+               
         [Required]
         public ApplicationUser User { get; set; }
     }
@@ -118,7 +132,6 @@ namespace DuckyData1._0._0Alpha.Models
         public string Subject { get; set; }
 
         [Required]
-        [StringLength(2000)]
         public string Body { get; set; }
 
         [Required]
@@ -166,7 +179,6 @@ namespace DuckyData1._0._0Alpha.Models
         public string Subject { get; set; }
 
         [Required]
-        [StringLength(2000)]
         public string Body { get; set; }
 
         [Required]
@@ -193,15 +205,8 @@ namespace DuckyData1._0._0Alpha.Models
         public string Title { get; set; }
 
         [Required]
-        public string Description { get; set; }
-
-        //attachment attributes
-        public byte[] Attachment { get; set; }
-
-        public string ContentType { get; set; }
-
-        public string ContentName { get; set; }
-
+        public string Body { get; set; }
+        
         public BugReport Report { get; set; }
     }
 
