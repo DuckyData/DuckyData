@@ -1,98 +1,71 @@
 ﻿@model DuckyData1._0._0Alpha.Models.BugReport
 
-@{
-    Layout = null;
-}
+<div>
+    <h4>BugReport</h4>
+    <hr />
+    <dl class="dl-horizontal">
 
-<!DOCTYPE html>
+        <dt>
+            @Html.DisplayNameFor(model => model.subject)
+        </dt>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>BugReport</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.repId)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.repId)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.date)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.date)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.subject)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.subject)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.body)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.body)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.category)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.category)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.submittedBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.submittedBy)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Attachment)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Attachment)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ContentType)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ContentType)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ContentName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ContentName)
-            </dd>
-    
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+        <dd>
+            @Html.DisplayFor(model => model.subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.body)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.body)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.submittedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.submittedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.assignTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.assignTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

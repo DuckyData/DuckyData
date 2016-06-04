@@ -9,28 +9,36 @@ using System.Web.Mvc;
 using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.Factory.BugReports;
 using DuckyData1._0._0Alpha.ViewModels;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
+using System.Web.Routing;
+using PagedList;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
-    public class BugReportsController : Controller
+    public class BugReportsController :Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private BugRereportFactory bugRereportFactory = new BugRereportFactory();
         // GET: BugReports
-        public ActionResult Index()
+        public ActionResult Index(string query)
         {
-            return View(db.BugReports.ToList());
+
+            IEnumerable<BugReportList> bugList = bugRereportFactory.getBugReports(query);
+            int pageSize = 3;
+            int pageNumber = 1;
+            return View(bugList.ToPagedList(pageNumber,pageSize));
         }
 
         // GET: BugReports/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BugReport bugReport = db.BugReports.Find(id);
-            if (bugReport == null)
+            var bugReport = bugRereportFactory.findBugReprtById(id);
+            if(bugReport == null)
             {
                 return HttpNotFound();
             }
@@ -50,27 +58,26 @@ namespace DuckyData1._0._0Alpha.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(BugReportBase bugReport)
         {
-           // if (ModelState.IsValid)
-        //    {
-
-                bugRereportFactory.createBugReport(bugReport);
-                //db.BugReports.Add(bugReport);
-                //db.SaveChanges();
+            if(ModelState.IsValid)
+            {
+                string userId = User.Identity.GetUserId();
+                bugRereportFactory.createBugReport(bugReport,userId);
                 return RedirectToAction("Index");
-          //  }
+            }
 
-         //   return View(bugReport);
+            return View(bugReport);
         }
 
         // GET: BugReports/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BugReport bugReport = db.BugReports.Find(id);
-            if (bugReport == null)
+            var bugReport = bugRereportFactory.findBugReprtForEdit(id);
+
+            if(bugReport == null)
             {
                 return HttpNotFound();
             }
@@ -82,26 +89,34 @@ namespace DuckyData1._0._0Alpha.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,repId,date,subject,body,category,submittedBy,Attachment,ContentType,ContentName")] BugReport bugReport)
+        public ActionResult Edit(BugReport bugReport, string command)
         {
-            if (ModelState.IsValid)
+            if(command == "Save the Change")
             {
-                db.Entry(bugReport).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(ModelState.IsValid)
+                {
+                    db.Entry(bugReport).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            return View(bugReport);
+            else {
+                bugRereportFactory.closeTheBugReport(bugReport.Id);
+            }
+
+
+            return RedirectToAction("Details","BugReports",new { id = bugReport.Id });
         }
 
         // GET: BugReports/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             BugReport bugReport = db.BugReports.Find(id);
-            if (bugReport == null)
+            if(bugReport == null)
             {
                 return HttpNotFound();
             }
@@ -121,7 +136,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
                 db.Dispose();
             }

@@ -12,39 +12,85 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
     {
         private DatabaseConnection conn = new DatabaseConnection();
         private DataContext database;
-        private ApplicationDbContext userDB = new ApplicationDbContext();
+        private ApplicationDbContext appDB;
 
         public BugRereportFactory()
         {
-            this.database = conn.getConnection();
+            getDatabase();
         }
 
         public void getDatabase()
         {
-            if(this.database == null)
+            if(this.appDB == null)
             {
-                this.database = conn.getConnection();
+                appDB = new ApplicationDbContext();
             }
         }
 
-        // public IEnumerable<> getBugReportList() {
+        // function to get bugreport list with filters
+        public IEnumerable<BugReportList> getBugReports(string query) {
+            getDatabase();
+            var bugList = from b in appDB.BugReports select b;
+            if(!String.IsNullOrEmpty(query))
+            {
+                bugList = bugList.Where(b => b.subject.Contains(query)
+                                      || b.submittedBy.Contains(query)
+                                      || b.body.Contains(query));
+            }
+            bugList = bugList.OrderBy(b => b.date);
+            return Mapper.Map<IEnumerable<BugReportList>>(bugList);
+        }
 
+        public BugReport findBugReprtById(int? id) {
 
+            BugReport bug = appDB.BugReports.SingleOrDefault(b => b.Id == id);
 
-        //} 
+            if(bug != null)
+            {
+                return bug;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-        public void createBugReport(BugReportBase report) {
+        public BugReport findBugReprtForEdit(int? id) {
+            BugReport bug = appDB.BugReports.Include("supportRep").SingleOrDefault(b => b.Id == id);
+
+            if(bug != null)
+            {
+                return bug;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        // function to create bug report
+        public void createBugReport(BugReportBase report, string userId) {
             getDatabase();
             BugReport bug = new BugReport();
             bug = Mapper.Map<BugReport>(report);
             bug.date = DateTime.Now;
-            ApplicationUser user = userDB.Users.First(u => u.Email == "zhuzhaohu.daniel@gmail.com");
-            bug.submittedBy = "daniel";
+            ApplicationUser user = appDB.Users.First(u => u.Id == userId);
+            bug.submittedBy = user.firstName +" "+user.lastName;
             bug.regUser = user;
-            bug.supportRep = user;
-            //bug.regUser = HttpContext.Current.User.Identity.
-            userDB.BugReports.Add(bug);
-            userDB.SaveChanges();
+            appDB.BugReports.Add(bug);
+            appDB.SaveChanges();
         }
+
+        public bool closeTheBugReport(int id) {
+            var bug = appDB.BugReports.SingleOrDefault(b => b.Id == id);
+            if(bug == null) {
+                return false;
+            }
+
+            bug.status = "Close";
+            appDB.SaveChanges();
+            return true;
+        }
+
     }
 }
