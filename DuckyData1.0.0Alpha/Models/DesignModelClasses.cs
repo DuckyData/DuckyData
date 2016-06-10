@@ -55,9 +55,6 @@ namespace DuckyData1._0._0Alpha.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Type { get; set; }
-
         public Audio Audio { get; set; }
 
         public Video Video { get; set; }
@@ -93,6 +90,9 @@ namespace DuckyData1._0._0Alpha.Models
 
         [Required]
         public string UserId { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
 
         public bool viewed { get; set; }
 
@@ -172,6 +172,9 @@ namespace DuckyData1._0._0Alpha.Models
         public string SubmittedBy { get; set; }
 
         [Required]
+        public string SubmittedName { get; set; }
+
+        [Required]
         public DateTime SubmittedDate { get; set; }
 
         [Required]
@@ -200,6 +203,8 @@ namespace DuckyData1._0._0Alpha.Models
 
         public DateTime Date { get; set; }
 
+        public string CreatedBy { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
@@ -207,6 +212,7 @@ namespace DuckyData1._0._0Alpha.Models
         [Required]
         public string Body { get; set; }
         
+        [Required]
         public BugReport Report { get; set; }
     }
 

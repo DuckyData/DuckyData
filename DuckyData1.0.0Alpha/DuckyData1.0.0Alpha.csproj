@@ -48,13 +48,9 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="gnsdk_csharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\gnsdk\wrappers\gnsdk_csharp\lib\gnsdk_csharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -183,6 +179,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Manager.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -222,6 +219,44 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="img\favicon.ico" />
+    <Content Include="img\icons\png\Book.png" />
+    <Content Include="img\icons\png\Calendar.png" />
+    <Content Include="img\icons\png\Chat.png" />
+    <Content Include="img\icons\png\Clipboard.png" />
+    <Content Include="img\icons\png\Compas.png" />
+    <Content Include="img\icons\png\delete.png" />
+    <Content Include="img\icons\png\Gift-Box.png" />
+    <Content Include="img\icons\png\Infinity-Loop.png" />
+    <Content Include="img\icons\png\Mail.png" />
+    <Content Include="img\icons\png\Map.png" />
+    <Content Include="img\icons\png\Pensils.png" />
+    <Content Include="img\icons\png\Pocket.png" />
+    <Content Include="img\icons\png\read.png" />
+    <Content Include="img\icons\png\Retina-Ready.png" />
+    <Content Include="img\icons\png\Toilet-Paper.png" />
+    <Content Include="img\icons\png\unread.png" />
+    <Content Include="img\icons\png\Watches.png" />
+    <Content Include="img\icons\svg\book.svg" />
+    <Content Include="img\icons\svg\calendar.svg" />
+    <Content Include="img\icons\svg\chat.svg" />
+    <Content Include="img\icons\svg\clipboard.svg" />
+    <Content Include="img\icons\svg\clocks.svg" />
+    <Content Include="img\icons\svg\compas.svg" />
+    <Content Include="img\icons\svg\gift-box.svg" />
+    <Content Include="img\icons\svg\loop.svg" />
+    <Content Include="img\icons\svg\mail.svg" />
+    <Content Include="img\icons\svg\map.svg" />
+    <Content Include="img\icons\svg\paper-bag.svg" />
+    <Content Include="img\icons\svg\pencils.svg" />
+    <Content Include="img\icons\svg\retina.svg" />
+    <Content Include="img\icons\svg\ribbon.svg" />
+    <Content Include="img\icons\svg\toilet-paper.svg" />
+    <Content Include="img\login\icon.png" />
+    <Content Include="img\login\imac-2x.png" />
+    <Content Include="img\login\imac.png" />
+    <Content Include="img\tile\ribbon-2x.png" />
+    <Content Include="img\tile\ribbon.png" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
     <Content Include="Scripts\ckeditor\ckeditor.asp" />
@@ -420,6 +455,8 @@
     <Content Include="Scripts\ckeditor\package.json" />
     <Content Include="Scripts\ckeditor\LICENSE.md" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
+    <Content Include="Scripts\.jscs.json" />
+    <Content Include="Scripts\.jshintrc" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -770,6 +807,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\radiocheck.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -816,9 +854,17 @@
     <Content Include="Views\ApplicationUsers\Index.cshtml" />
     <Content Include="Views\Account\CompleteRegister.cshtml" />
     <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\Message\Inbox.cshtml" />
+    <Content Include="Views\Message\Sent.cshtml" />
+    <Content Include="Views\Message\Details.cshtml" />
+    <Content Include="Views\Message\Edit.cshtml" />
+    <Content Include="Views\Message\Delete.cshtml" />
+    <Content Include="Views\Message\_Inbox.cshtml" />
+    <Content Include="Views\Message\Reply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
