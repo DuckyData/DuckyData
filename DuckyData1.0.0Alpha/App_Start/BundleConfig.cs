@@ -21,10 +21,12 @@ namespace DuckyData1._0._0Alpha
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/flat-ui.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/FlatUI/flat-ui.css",
                       "~/Content/site.css"));
         }
     }
