@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -86,13 +87,14 @@ namespace DuckyData1._0._0Alpha.Models
         public ApplicationUser regUser { get; set; }
     }
 
+    [Table("BugReports")]
     public class BugReport
     {
         public BugReport()
         {
             this.FollowUps = new List<FollowUp>();
         }
-
+        [Key]
         public int Id { get; set; }
         public DateTime date { get; set; }
         [Required]
@@ -114,22 +116,23 @@ namespace DuckyData1._0._0Alpha.Models
         [Display(Name = "Status")]
         public string status { get; set; }
         public ApplicationUser supportRep { get; set; }
-        public ICollection<FollowUp> FollowUps { get; set; }
+        public virtual ICollection<FollowUp> FollowUps { get; set; }
 
     }
-
+    [Table("FollowUps")]
     public class FollowUp
     {
+        [Key]
         public int Id { get; set; }
+        [DisplayFormat(DataFormatString = "{0:f}")]
         public DateTime TimeStamp { get; set; }
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
-        public string ContentType { get; set; }
-        public string ContentName { get; set; }
-        public BugReport report { get; set; }
+        public virtual BugReport report { get; set; }
+        public string CreatedBy { get; set; }
     }
 
 }

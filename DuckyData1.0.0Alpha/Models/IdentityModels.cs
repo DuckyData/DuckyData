@@ -62,9 +62,18 @@ namespace DuckyData1._0._0Alpha.Models
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.Account.adminEditUser> adminEditUsers { get; set; }
 
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.BugReport> BugReports { get; set; }
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.FollowUp> FollowUps { get; set; }
 
-        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.BugReportList> BugReportLists { get; set; }
+        /**
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FollowUp>().HasRequired<BugReport>(f => f.report).WithMany(b=>b.FollowUps);
+            modelBuilder.Entity<BugReport>().HasMany(b => b.FollowUps).WithOptional().WillCascadeOnDelete(false);
 
-        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.BugReportDetails> BugReportDetails { get; set; }
+            modelBuilder.Entity<BugReport>().HasRequired(b => b.regUser).WithOptional().WillCascadeOnDelete(false);
+            modelBuilder.Entity<BugReport>().HasRequired(b => b.supportRep).WithOptional().WillCascadeOnDelete(false);
+           
+
+        } */
     } 
 }

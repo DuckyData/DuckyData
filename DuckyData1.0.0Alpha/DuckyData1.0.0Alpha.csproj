@@ -191,12 +191,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\BugReportsController.cs" />
+    <Compile Include="Controllers\FollowUpsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Manager.cs" />
     <Compile Include="Factory\Account\AccountFactory.cs" />
     <Compile Include="Factory\BugReports\BugRereportFactory.cs" />
     <Compile Include="Factory\DatabaseConnection.cs" />
+    <Compile Include="Factory\FollowUps\FollowUpsFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,6 +213,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BugReports\BugReportViewModel.cs" />
+    <Compile Include="ViewModels\FollowUps\FollowUpViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Account\CompleteRegiester.css" />
@@ -251,7 +254,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -299,6 +304,12 @@
     <Content Include="Views\BugReports\Index.cshtml" />
     <Content Include="Views\BugReports\Edit.cshtml" />
     <Content Include="Views\BugReports\Details.cshtml" />
+    <Content Include="Views\FollowUps\Delete.cshtml" />
+    <Content Include="Views\FollowUps\Details.cshtml" />
+    <Content Include="Views\FollowUps\Edit.cshtml" />
+    <Content Include="Views\FollowUps\Index.cshtml" />
+    <Content Include="Views\FollowUps\Create.cshtml" />
+    <Content Include="Views\BugReports\FollowUps.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

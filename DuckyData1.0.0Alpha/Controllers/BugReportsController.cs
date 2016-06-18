@@ -13,6 +13,8 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using System.Web.Routing;
 using PagedList;
+using DuckyData1._0._0Alpha.Factory.FollowUps;
+using DuckyData1._0._0Alpha.ViewModels.FollowUps;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -20,6 +22,7 @@ namespace DuckyData1._0._0Alpha.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private BugRereportFactory bugRereportFactory = new BugRereportFactory();
+        private FollowUpsFactory followUpsFactory = new FollowUpsFactory();
         // GET: BugReports
         public ActionResult Index(string query)
         {
@@ -31,6 +34,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: BugReports/Details/5
+        // view buy report and followup associaed
         public ActionResult Details(int? id)
         {
             if(id == null)
@@ -42,6 +46,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 return HttpNotFound();
             }
+            
             return View(bugReport);
         }
 
@@ -103,8 +108,6 @@ namespace DuckyData1._0._0Alpha.Controllers
             else {
                 bugRereportFactory.closeTheBugReport(bugReport.Id);
             }
-
-
             return RedirectToAction("Details","BugReports",new { id = bugReport.Id });
         }
 
@@ -132,6 +135,25 @@ namespace DuckyData1._0._0Alpha.Controllers
             db.BugReports.Remove(bugReport);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        // GET: BugReports/FollowUps/5
+        public ActionResult FollowUps(int? id) {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BugReport bugReport = bugRereportFactory.findBugReprtOnlyById(id);
+
+            FollowUpAddForm newFollowUp = new FollowUpAddForm();
+            newFollowUp.report = bugReport;
+            if(bugReport == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(newFollowUp);
         }
 
         protected override void Dispose(bool disposing)

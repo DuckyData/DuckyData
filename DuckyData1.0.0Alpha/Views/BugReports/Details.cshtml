@@ -62,10 +62,33 @@
         <dd>
             @Html.DisplayFor(model => model.status)
         </dd>
-
     </dl>
+    <div class="row" id="followUpsRepeatBox">
+        @foreach(var i in Model.FollowUps)
+            {
+            <div class="followUpWarpper">
+                <div class="col-lg-12 bg-primary followUpHeader">
+                    <div class="col-md-7 followUpTitle">
+                        <label>Title:</label>
+                        @Html.DisplayFor(modelitem => i.Title)
+                    </div>
+                    <div class="col-md-2 followUpCreatedBy">
+                        <label>Created By:</label>
+                        @Html.DisplayFor(modelitem => i.CreatedBy)
+                    </div>
+                    <div class="col-md-3 followUpTimeStamp">
+                        @Html.DisplayFor(modelitem => i.TimeStamp)
+                    </div>
+                </div>
+                <div class="col-lg-12 followUpDesc">
+                    @Html.DisplayFor(modelitem => i.Description)
+                </div>
+            </div>
+        }
+    </div>
+
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Create FollowUps","FollowUps", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

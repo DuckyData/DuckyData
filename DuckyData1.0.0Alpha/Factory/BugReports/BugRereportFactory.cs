@@ -4,6 +4,7 @@ using DuckyData1._0._0Alpha.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 
 namespace DuckyData1._0._0Alpha.Factory.BugReports
@@ -43,7 +44,20 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
 
         public BugReport findBugReprtById(int? id) {
 
-            BugReport bug = appDB.BugReports.SingleOrDefault(b => b.Id == id);
+            BugReport bug = appDB.BugReports.Include("FollowUps").FirstOrDefault(b => b.Id == id);
+   
+            if(bug != null)
+            {
+                return bug; 
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public BugReport findBugReprtOnlyById(int? id) {
+            BugReport bug = appDB.BugReports.FirstOrDefault(b => b.Id == id);
 
             if(bug != null)
             {
@@ -56,7 +70,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public BugReport findBugReprtForEdit(int? id) {
-            BugReport bug = appDB.BugReports.Include("supportRep").SingleOrDefault(b => b.Id == id);
+            BugReport bug = appDB.BugReports.Include("supportRep").FirstOrDefault(b => b.Id == id);
 
             if(bug != null)
             {
@@ -77,12 +91,15 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
             ApplicationUser user = appDB.Users.First(u => u.Id == userId);
             bug.submittedBy = user.firstName +" "+user.lastName;
             bug.regUser = user;
+
+            
+
             appDB.BugReports.Add(bug);
             appDB.SaveChanges();
         }
 
         public bool closeTheBugReport(int id) {
-            var bug = appDB.BugReports.SingleOrDefault(b => b.Id == id);
+            var bug = appDB.BugReports.FirstOrDefault(b => b.Id == id);
             if(bug == null) {
                 return false;
             }

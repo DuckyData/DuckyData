@@ -18,5 +18,6 @@ namespace DuckyData1._0._0Alpha.Models
         public DbSet<User_Activation_Code> User_Activation_Codes { get; set; }
         public DbSet<userAdd> userAddCollection { get; set; }
         public DbSet<BugReport> BugReports{ get; set; }
+        public DbSet<FollowUp> FollowUps { get; set; }
     }
 }

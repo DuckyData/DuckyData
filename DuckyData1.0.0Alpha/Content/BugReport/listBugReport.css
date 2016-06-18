@@ -47,3 +47,32 @@
 #list-bug #list-bug-footer div.pagination-container ul{
     margin: 4px 0;
 }
+
+#followUpsRepeatBox{
+    border-radius: 5px;
+}
+#followUpsRepeatBox div.followUpWarpper{
+    background: #F7F7F9;
+    margin-bottom: 20px;
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+}
+
+#followUpsRepeatBox .followUpHeader{
+    height: 35px;
+    line-height: 35px;
+}
+
+#followUpsRepeatBox div.followUpDesc{
+    padding: 10px;
+    min-height: 50px;
+    border-radius: 5px;
+}
+#followUpsRepeatBox .followUpTitle{
+    padding-left: 0px;
+}
+#followUpsRepeatBox .followUpTimeStamp{
+    text-align: right !important;
+    padding-right: 0;
+}
