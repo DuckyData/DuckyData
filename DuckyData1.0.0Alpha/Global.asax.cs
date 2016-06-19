@@ -2,6 +2,7 @@
 using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.ViewModels;
 using DuckyData1._0._0Alpha.ViewModels.Account;
+using DuckyData1._0._0Alpha.ViewModels.FollowUps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace DuckyData1._0._0Alpha
             Mapper.CreateMap<ApplicationUser, adminEditUser>();
             Mapper.CreateMap<BugReportBase,BugReport>();
             Mapper.CreateMap<BugReport,BugReportList>();
+            Mapper.CreateMap<FollowUpAddForm,FollowUp>();
         }
     }
 }

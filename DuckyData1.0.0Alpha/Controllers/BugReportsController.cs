@@ -156,6 +156,30 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(newFollowUp);
         }
 
+        [HttpPost]
+        // POST: BugReports/FollowUps/5
+        public ActionResult FollowUps(FollowUpAddForm newFollowUp)
+        {
+            if(ModelState.IsValid)
+            {
+                string userId = User.Identity.GetUserId();
+                bool saved = false;
+                saved = followUpsFactory.createNewFollowUp(newFollowUp,userId);
+                if(saved == false)
+                {
+                    return View(newFollowUp);
+                }
+                else
+                {
+                    return RedirectToAction("Details",new { id = newFollowUp.report.Id });
+                }
+            }
+            else
+            {
+                return View(newFollowUp);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if(disposing)
