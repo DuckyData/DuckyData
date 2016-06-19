@@ -27,3 +27,45 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.confirm-modal .modal-dialog{
+    width: 350px;
+    margin-top: calc(10%);
+}
+.confirm-modal .modal-header,.confirm-modal .modal-footer{
+    height: 40px;
+    line-height: 40px !important;
+    padding: 0 10px !important;
+}
+
+.confirm-modal .modal-footer button.btn{
+    margin-top: 5px !important;
+}
+
+
+.confirm-modal .modal-footer form{
+    margin-top: 5px !important;
+}
+
+.confirm-modal .modal-header h4{
+    height: 40px !important;
+    line-height: 40px !important;
+    padding: 0 !important;
+}
+
+.confirm-modal .modal-header button{
+    margin-top: 9px;
+}
+
+.confirm-modal .modal-header button:focus{
+    border: none;
+    outline: none;
+}
+
+.confirm-modal .modal-body{
+    padding: 10px;
+    height: auto;
+    overflow: hidden;
+    min-height: 100px;
+
+}
