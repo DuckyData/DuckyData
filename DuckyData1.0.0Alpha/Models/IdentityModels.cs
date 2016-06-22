@@ -64,6 +64,8 @@ namespace DuckyData1._0._0Alpha.Models
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.BugReport> BugReports { get; set; }
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.FollowUp> FollowUps { get; set; }
 
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.MediaFile> MediaFiles { get; set; }
+
         /**
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

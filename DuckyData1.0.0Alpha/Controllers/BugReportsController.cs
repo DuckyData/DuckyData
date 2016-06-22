@@ -15,6 +15,7 @@ using System.Web.Routing;
 using PagedList;
 using DuckyData1._0._0Alpha.Factory.FollowUps;
 using DuckyData1._0._0Alpha.ViewModels.FollowUps;
+using DuckyData1._0._0Alpha.Factory.WebAPI.Gracenote;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -26,6 +27,9 @@ namespace DuckyData1._0._0Alpha.Controllers
         // GET: BugReports
         public ActionResult Index(string query)
         {
+
+            GNQueryBuilder qbuilder = new GNQueryBuilder();
+            qbuilder.ALBUM_SEARCH("flying lotus","until the quiet comes","all in");
 
             IEnumerable<BugReportList> bugList = bugRereportFactory.getBugReports(query);
             int pageSize = 3;

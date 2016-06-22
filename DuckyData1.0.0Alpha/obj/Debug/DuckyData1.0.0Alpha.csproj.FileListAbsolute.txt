@@ -172,6 +172,7 @@ C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.O
 C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Toshiba\Desktop\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Toshiba\Desktop\int422\DuckyData1.0.0Alpha\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\roslyn\csc.exe
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\roslyn\csc.exe.config
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\roslyn\csc.rsp
@@ -225,7 +226,11 @@ C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Owin.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\ParkSquare.Gracenote.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Net.Http.Formatting.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Cors.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Helpers.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Http.Cors.dll
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Http.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Mvc.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Optimization.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Razor.dll
@@ -239,6 +244,9 @@ C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.Code
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Newtonsoft.Json.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\PagedList.Mvc.xml
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Net.Http.Formatting.xml
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Http.xml
+C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Http.Cors.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Helpers.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Mvc.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\System.Web.Optimization.xml
@@ -262,4 +270,3 @@ C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.Owin
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.dll
 C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.pdb
-C:\Users\derek\Desktop\PRJ666\ProjectRepo\DuckyData1.0.0Alpha\obj\Debug\DuckyData1.0.0Alpha.csprojResolveAssemblyReference.cache

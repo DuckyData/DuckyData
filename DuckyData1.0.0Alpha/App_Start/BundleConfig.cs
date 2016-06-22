@@ -14,6 +14,14 @@ namespace DuckyData1._0._0Alpha
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angularJS").Include(
+                        "~/Scripts/angular.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/restAngular").Include(
+                        "~/Scripts/restangular.js"));
+            bundles.Add(new ScriptBundle("~/bundles/musicFetch").Include(
+                        "~/Scripts/musicFetch.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
