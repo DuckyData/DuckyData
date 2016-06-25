@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Select2 examples</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            <label for="id_label_single" class="control-label col-md-2">Dropdown</label>
+
+            <div class="col-md-10">
+                <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">Default <span class="caret"></span></button>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="" class="control-label col-md-2">Select</label>
+
+            <div class="col-md-10">
+                <select class="form-control select select-primary" data-toggle="select">
+                    <option value="0">Choose hero</option>
+                    <option value="1">Spider Man</option>
+                    <option value="2">Wolverine</option>
+                    <option value="3">Captain America</option>
+                    <option value="4" selected>X-Men</option>
+                    <option value="5">Crocodile</option>
+                </select>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>
+
+
+
+

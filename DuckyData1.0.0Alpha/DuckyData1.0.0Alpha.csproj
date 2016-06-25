@@ -185,6 +185,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Manager.cs" />
+    <Compile Include="Controllers\SelectExamplesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -251,6 +252,8 @@
     <Content Include="fonts\glyphicons\flat-ui-icons-regular.eot" />
     <Content Include="fonts\glyphicons\flat-ui-icons-regular.ttf" />
     <Content Include="fonts\glyphicons\flat-ui-icons-regular.woff" />
+    <Content Include="images\LogoBackground.png" />
+    <Content Include="images\LogoBackground.xcf" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="favicon.ico" />
     <Content Include="images\icons\png\Book.png" />
@@ -298,7 +301,6 @@
     <Content Include="images\ui-icons_a8a3ae_256x240.png" />
     <Content Include="images\ui-icons_ebccce_256x240.png" />
     <Content Include="images\ui-icons_ffffff_256x240.png" />
-    <Content Include="images\logo.PNG" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\flat-ui.js" />
@@ -362,6 +364,7 @@
     <Content Include="Views\ApplicationUsers\Details.cshtml" />
     <Content Include="Views\ApplicationUsers\Edit.cshtml" />
     <Content Include="Views\ApplicationUsers\Index.cshtml" />
+    <Content Include="Views\SelectExamples\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
