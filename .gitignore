@@ -8,8 +8,8 @@
 *.sln.docstates
 
 # Visual studio
-bin
-obj
+*/bin
+*/obj
 packages
 *.dll
 *.csproj*
