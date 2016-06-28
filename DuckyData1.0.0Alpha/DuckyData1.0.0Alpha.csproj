@@ -220,7 +220,6 @@
     <Compile Include="Factory\FollowUps\FollowUpsFactory.cs" />
     <Compile Include="Factory\WebAPI\Gracenote\GNAjax.cs" />
     <Compile Include="Factory\WebAPI\Gracenote\GNQueryBuilder.cs" />
-    <Compile Include="Controllers\SelectExamplesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
