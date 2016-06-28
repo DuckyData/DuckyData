@@ -45,7 +45,7 @@ duckyData.factory('musicFetchFactory', function (APISwitch, $q, grecenoteAPI) {
     return rec;
 });
 
-duckyData.controller('musicFetchCtrl', function ($scope, deezerAPI) {
+duckyData.controller('musicFetchCtrl', function ($scope, deezerAPI,$http) {
     $scope.musicFetchData = {
         name: {
                 first:'zhu'
@@ -53,9 +53,17 @@ duckyData.controller('musicFetchCtrl', function ($scope, deezerAPI) {
     }
 
     $scope.testfunction = function () {
-
-        deezerAPI.one('user').customGET('2529', {}).get().then(function (data) {
-            console.log(data);
-        });
+        $http.jsonp("https://api.deezer.com/user/2529?callback=JSON_CALLBACK",{ method: 'POST'}).
+            success(function(data) {
+        $scope.data = data;
+        console.log(data);
+   
+  }).
+  error(function (data) {
+    $scope.data = "Request failed";
+  });
+        //deezerAPI.one('user').customGET('2529', {}).get().then(function (data) {
+        //    console.log(data);
+        //});
     }
 });
