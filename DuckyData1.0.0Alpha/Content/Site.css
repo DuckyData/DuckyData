@@ -1,17 +1,13 @@
-﻿html{
-    height: 100vh;
-}
-
-body {
-    height: inherit;
+﻿body {
     padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #ffffff;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-    height: 100%;
+    /*padding-left: 15px;
+    padding-right: 15px;*/
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -28,44 +24,26 @@ textarea {
     max-width: 280px;
 }
 
-.confirm-modal .modal-dialog{
-    width: 350px;
-    margin-top: calc(10%);
-}
-.confirm-modal .modal-header,.confirm-modal .modal-footer{
-    height: 40px;
-    line-height: 40px !important;
-    padding: 0 10px !important;
+/*set width for logo*/
+.navbar-logo {
+    height: 60px;
+    margin-left: -30px;
 }
 
-.confirm-modal .modal-footer button.btn{
-    margin-top: 5px !important;
+/*Spacing between navigation and body*/
+.container.body-content {
+    position: relative;
+    top: 30px;
 }
 
-
-.confirm-modal .modal-footer form{
-    margin-top: 5px !important;
+footer {
+    background-color: #eee;
+    padding: 0;
 }
 
-.confirm-modal .modal-header h4{
-    height: 40px !important;
-    line-height: 40px !important;
-    padding: 0 !important;
-}
-
-.confirm-modal .modal-header button{
-    margin-top: 9px;
-}
-
-.confirm-modal .modal-header button:focus{
-    border: none;
-    outline: none;
-}
-
-.confirm-modal .modal-body{
-    padding: 10px;
-    height: auto;
-    overflow: hidden;
-    min-height: 100px;
-
+@media(max-width: 600px) {
+    /*center logo on small devices*/
+    .navbar-logo {
+        margin-left: 110px;
+    }
 }
