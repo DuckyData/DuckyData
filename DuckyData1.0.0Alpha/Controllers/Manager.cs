@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ACRCloud;
+using static System.Net.WebRequestMethods;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -18,7 +20,29 @@ namespace DuckyData1._0._0Alpha.Controllers
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
 
-        
+        public acr RunTest()
+        {
+            Program p = new Program();
+            acr result = new acr { result = p.go() };
+            return result;
+        }
+
+        public string Between(string strSource, string strStart, string strEnd)
+        {
+            int Start, End;
+            if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+            {
+                Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+                End = strSource.IndexOf(strEnd, Start);
+                return strSource.Substring(Start, End - Start);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+
         // MESSAGE MANAGEMENT - BEGIN
         public MessageBase SendMessage(MessageAdd newItem)
         {
@@ -34,13 +58,21 @@ namespace DuckyData1._0._0Alpha.Controllers
                 newItem.Attachments.InputStream.Read(logoBytes, 0, newItem.Attachments.ContentLength);
 
 
-                addedItem.Attachment = logoBytes;
+                //addedItem.Attachment = logoBytes;
                 addedItem.ContentType = newItem.Attachments.ContentType;
-                string[] tmps = newItem.Attachments.FileName.Split(new char[] { '\\' });
-                addedItem.ContentName = tmps[tmps.Count() - 1];
-            }
-          
+
+
+                //string[] tmps = newItem.Attachments.FileName.Split(new char[] { '\\' });
+                addedItem.ContentName = newItem.Attachments.FileName;
                 ds.SaveChanges();
+                string path = HttpContext.Current.Server.MapPath("~/img/MsgAttach/" + addedItem.Id + newItem.Attachments.FileName);
+                System.IO.File.WriteAllBytes(path, logoBytes);
+            }
+            else
+            {
+
+                ds.SaveChanges();
+            }
             
                 return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
         }
@@ -120,16 +152,19 @@ namespace DuckyData1._0._0Alpha.Controllers
         public void MarkAsUnread(int id)
         {
             var omsg = ds.Messages.SingleOrDefault(i => i.Id == id);
-            var rmsg = omsg;
-            rmsg.viewed = false;
-            ds.Entry(omsg).CurrentValues.SetValues(rmsg);
-            ds.SaveChanges();
+            if (uNm == omsg.Recipient)
+            {
+                var rmsg = omsg;
+                rmsg.viewed = false;
+                ds.Entry(omsg).CurrentValues.SetValues(rmsg);
+                ds.SaveChanges();
+            }
         }
 
         public bool DeleteMessage(int id)
         {
             var toDel = ds.Messages.SingleOrDefault(i => i.Id == id);
-            if (toDel == null)
+            if (toDel == null || uNm != toDel.Recipient)
             {
                 return false;
             }

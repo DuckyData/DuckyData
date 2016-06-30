@@ -4,4 +4,10 @@
 bin/
 obj/
 TestResults/
+<<<<<<< HEAD
 applicationhost.config
+.vs/
+packages/
+=======
+applicationhost.config
+>>>>>>> 273024b9afaf4c86df696918844a4c61d243691b

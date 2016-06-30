@@ -1,0 +1,83 @@
+﻿@model IEnumerable<DuckyData1._0._0Alpha.ViewModels.MessageBase>
+
+
+@{
+    ViewBag.Title = "Inbox";
+}
+
+
+
+<h2>Inbox</h2>
+
+<p>
+        @Html.ActionLink("New Message", "Create") | 
+        @Html.ActionLink("Sent Messages", "Sent") 
+</p>
+    <table class="table">
+    <tr>
+        <th>
+            Delete
+        </th>
+        <th>
+            Viewed
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SentDate)
+        </th>
+        <th>
+            From
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+            <tr>
+                    <td>
+                        <a href="~/Message/Delete/@item.Id">
+                            <img src='~/img/icons/png/delete.png' alt="Delete" title="Delete" style="width: 30px; height: 30px;" />
+                        </a>
+                    </td>
+                <td>
+                    @{
+                        if (item.viewed == true)
+                        {
+                            <a href="@Url.Action("MarkUnread", "Message", new { id = item.Id})">
+                                <img src='~/img/icons/png/read.png' alt='Mark As Unread' title='Mark As Unread' style='width: 30px; height: 30px;' />
+                            </a>
+                        }
+                        else
+                        {
+                            <img src='~/img/icons/png/unread.png' alt="unread" title="unread" style="width: 30px; height: 30px;" />
+                        }
+                    }
+                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+</td>
+                  
+                    
+
+                    
+
+            <td>
+                @Html.ActionLink("Read ", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Reply", "Reply", new { id = item.Id}) 
+ 
+
+            </td>
+        </tr>
+                    }
+
+</table>
+
