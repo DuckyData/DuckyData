@@ -1,11 +1,7 @@
-﻿var duckyData = angular.module('duckyData', ['ngRoute','restangular']);
+﻿var duckyData = angular.module('duckyData', ['ngRoute']);
 
-duckyData.config(function (RestangularProvider, $httpProvider) {
+duckyData.config(function ( $httpProvider) {
 
-    RestangularProvider.setDefaultHeaders({
-        withCredentials: true
-    });
-    RestangularProvider.setFullResponse(true);
 });
 
 
@@ -23,21 +19,8 @@ duckyData.service('APISwitch', function () {
 });
 
 
-
-duckyData.service('grecenoteAPI', function (Restangular, APISwitch) {
-    return Restangular.withConfig(function (RestangularConfigurer) {
-        RestangularConfigurer.setBaseUrl(APISwitch.grecenoteBase());
-    });
-});
-
-
-duckyData.service('deezerAPI', function (Restangular, APISwitch) {
-    return Restangular.withConfig(function (RestangularConfigurer) {
-        RestangularConfigurer.setBaseUrl(APISwitch.deezerBase());
-    });
-});
-
-duckyData.factory('musicFetchFactory', function (APISwitch, $q, grecenoteAPI) {
+// API factory
+duckyData.factory('musicFetchFactory', function (APISwitch, $q) {
     var self = this;
     var deferred = $q.defer();
     var rec = {
@@ -45,25 +28,84 @@ duckyData.factory('musicFetchFactory', function (APISwitch, $q, grecenoteAPI) {
     return rec;
 });
 
-duckyData.controller('musicFetchCtrl', function ($scope, deezerAPI,$http) {
+duckyData.filter('formatTimer', function () {
+    return function (input) {
+        function z(n) { return (n < 10 ? '0' : '') + n; }
+        var seconds = input % 60;
+        var minutes = Math.floor(input % 3600 / 60);
+        return (z(minutes) + ':' + z(seconds));
+    }
+});
+
+duckyData.filter("trustUrl", ['$sce', function ($sce) {
+    return function (recordingUrl) {
+        return $sce.trustAsResourceUrl(recordingUrl);
+    };
+}]);
+
+// view controller
+duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce) {
     $scope.musicFetchData = {
-        name: {
-                first:'zhu'
-            }
+        albumTrackList: null,
+        album: null,
+    }
+    $scope.musicFetchUICtrl = {
+        showPreviewWindow : false
     }
 
-    $scope.testfunction = function () {
-        $http.jsonp("https://api.deezer.com/user/2529?callback=JSON_CALLBACK",{ method: 'POST'}).
-            success(function(data) {
-        $scope.data = data;
-        console.log(data);
-   
-  }).
-  error(function (data) {
-    $scope.data = "Request failed";
-  });
-        //deezerAPI.one('user').customGET('2529', {}).get().then(function (data) {
-        //    console.log(data);
-        //});
+    $scope.musicFetchRawData = {
     }
+    var config = {
+        params: {
+            output: "jsonp",
+            callback: 'JSON_CALLBACK',
+            q: 'The Eminem Show'
+        }
+    }
+
+    $scope.albumFetch = function () {
+        $http.jsonp("https://api.deezer.com/search/album", config).success(function (data) {
+
+            if (data != null) {
+                $scope.musicFetchData.album = data.data[0];
+                $scope.getAlbumTrack($scope.musicFetchData.album.tracklist);
+
+            } else {
+                console.log('no data found');
+            }
+        }).error(function (data) {
+            console.log(data);
+            $scope.data = data;
+        });
+    }(function () { }());
+    
+    $scope.getAlbumTrack = function (url) {
+        var config = {
+            params: {
+                output: "jsonp",
+                callback: 'JSON_CALLBACK',
+            }
+        }
+        $http.jsonp(url,config).success(function (data) {
+            if (data != null) {
+                $scope.musicFetchData.albumTrackList = data.data;
+
+                angular.forEach($scope.musicFetchData.albumTrackList, function (track) {
+                    track.previewAudio = $sce.trustAsResourceUrl('http://cdn-preview-0.deezer.com/stream/01ce4a31724e1dc8cccab627e233b5b9-3.mp3')
+                });
+            } else {
+                console.log('no data found');
+            }
+        }).error(function (data) {
+            $scope.data = data;
+        });
+
+    }
+
+    $scope.playPreview= function (previewURL) {
+       
+        document.getElementById("previewAudio").load();
+        console.log($scope.audios);
+    }
+
 });

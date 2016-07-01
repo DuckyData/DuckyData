@@ -6,9 +6,13 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="../../Scripts/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/angular.js"></script>
+    <script type="text/javascript" src="../../Scripts/angular-resource.js"></script>
+    <script type="text/javascript" src="../../Scripts/angular-route.js"></script>
 
 </head>
-<body>
+<body ng-app="duckyData">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -40,7 +44,6 @@
     <div class="clearfix"></div>
     <div class="container body-content ">
         @RenderBody()
-        <hr />
     </div>
     <footer>
         <div class="row">
