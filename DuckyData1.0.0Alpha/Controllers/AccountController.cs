@@ -9,6 +9,14 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DuckyData1._0._0Alpha.Models;
+using System.Net.Mail;
+using System.Text;
+using DuckyData1._0._0Alpha.Factory.Account;
+using DuckyData1._0._0Alpha.ViewModels.Account;
+using AutoMapper;
+using System.Collections;
+using System.Collections.Generic;
+using PagedList;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -17,6 +25,8 @@ namespace DuckyData1._0._0Alpha.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private AccountFactory accountFactory = new AccountFactory();
+       // private Manager manager = new Manager();
 
         public AccountController()
         {
@@ -75,7 +85,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -134,12 +144,91 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
         }
 
+        // GET; /Account/Edit/bkajdbfkjhsdfkhsdhfks
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            ApplicationUser user = accountFactory.findUserById(id);
+            return View(Mapper.Map<adminEditUser>(user));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(adminEditUser user)
+        {
+            ApplicationUser dest = accountFactory.findUserById(user.Id);
+            if(dest != null)
+            {
+                accountFactory.adminUpdateUserInfo(dest, user);
+                return RedirectToAction("Details",new { Id = user.Id });
+            }
+            else {
+                return null;
+            }
+        }
+
+        // GET; /Account/Details/bkajdbfkjhsdfkhsdhfks
+        [HttpGet]
+        public ActionResult Details(string id)
+        {
+            ApplicationUser user = accountFactory.findUserById(id);
+            return View(Mapper.Map<adminEditUser>(user));
+        }
+
+        // GET: /Account/ListUsers
+        [AllowAnonymous]
+        public ActionResult ListUsers(string searchString, int? page)
+        {
+            IEnumerable<userAdd> userList = accountFactory.getUserList(searchString);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(userList.ToPagedList(pageNumber,pageSize));
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ActivateAccount() {
+            string activation_code = null;
+            activation_code = Request.QueryString["code"];
+            if (activation_code != null)
+            {
+                User_Activation_Code userInfo = accountFactory.getRegiseInfoByCode(activation_code);
+                if (userInfo != null)
+                {
+                    ApplicationUser user = accountFactory.findUserByEmail(userInfo.User_Account);
+                    Response.Redirect("CompleteRegister?id="+user.Id);
+                }
+            }
+           return View();
+        }
+
+        // GET: /Account/CompleteRegister
+        [AllowAnonymous]
+        public ActionResult CompleteRegister()
+        {
+            string userId = null;
+            userId = Request.QueryString["id"];
+            ApplicationUser user = accountFactory.getUserById(userId);
+            userAdd newUser = Mapper.Map<userAdd>(user);
+
+            return View(newUser);
+        }
+
+        // POST: /Account/CompleteRegister
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult CompleteRegister(userAdd userInfo)
+        {
+            accountFactory.updateUserInfo(userInfo);
+            return RedirectToAction("Index","Home");
         }
 
         //
@@ -155,22 +244,42 @@ namespace DuckyData1._0._0Alpha.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    await SignInManager.SignInAsync(user,isPersistent: false,rememberBrowser: false);
+                    string code = RandomString();
+                    MailMessage mail = new MailMessage("duckydata@gmail.com", model.Email, "test email", "<table border=0 cellspacing=0 cellpadding=0 style=max-width:600px>"+
+"<tbody><tr><td><table bgcolor=#26c6da width=100% border=0 cellspacing=0 cellpadding=0 style=min-width:332px;max-width:600px;border:1px solid #e0e0e0;border-bottom:0;border-top-left-radius:3px;border-top-right-radius:3px>"+
+"<tbody><tr><td height=22px colspan=3>&nbsp;</td></tr><tr><td width=32px></td><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:24px;color:#ffffff;padding-left:15px;line-height:1.25>DuckyDate Account Activation</td>" +
+"<td width=42px></td></tr><tr><td height=18px colspan=3></td></tr></tbody></table></td></tr><tr style=padding:15px; bgcolor=#FAFAFA ><td><table bgcolor=#FAFAFA width=100% border=0 cellspacing=0 cellpadding=0 style=min-width:332px;max-width:600px;border:1px solid #f0f0f0;border-bottom:1px solid #c0c0c0;border-top:0;border-bottom-left-radius:3px;border-bottom-right-radius:3px>" +
+"<tbody><tr height=16px style=15px;><td width=32px rowspan=3></td><td></td><td width=32px rowspan=3></td></tr><tr><td><table style=min-width:300px padding:15px; border=0 cellspacing=0 cellpadding=0><tbody><tr><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5>Hi there,</td>" +
+"</tr><tr><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5>You are receiving this email because we got a account activation request from:"+
+"<b> zhuzhaohu.daniel@gmail.com </b><br><br>To activate your account,please click the link below<br><br> This message comes from an unmonitored mailbox.Please do not reply to this message.<br><br></td></tr><tr><td>"+
+"<a href=http://localhost:8102/Account/ActivateAccount?code="+ code + " target=\"_blank\">http://localhost:8102/Account/ActivateAccount?code="+ code +"</a></td></tr>" +
+"<tr height=32px></tr><tr><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5>Cheers,<br>DuckyData Customer Support.</td>"+
+"</tr><trheight=16px></tr></tbody></table></td></tr><tr height=32px></tr></tbody></table></td></tr></tbody></table>");
+                    mail.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Send(mail);
+                    accountFactory.createRegiseInfo(model, code);
                 }
                 AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        public string RandomString()
+        {
+            Random random = new Random((int)DateTime.Now.Ticks);
+            StringBuilder builder = new StringBuilder();
+            char ch;
+            for (int i = 0; i < 10; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -347,7 +456,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
         }
 
-        //
+        /*
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
         [AllowAnonymous]
@@ -384,7 +493,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
+        */
         //
         // POST: /Account/LogOff
         [HttpPost]

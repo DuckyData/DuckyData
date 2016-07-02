@@ -1,0 +1,92 @@
+﻿@model DuckyData1._0._0Alpha.Models.BugReport
+
+<div>
+    <h4>BugReport</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.body)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.body)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.submittedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.submittedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.assignTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.assignTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+    </dl>
+    <div class="row" id="followUpsRepeatBox">
+        @foreach(var i in Model.FollowUps)
+            {
+            <div class="followUpWarpper">
+                <div class="col-lg-12 bg-primary followUpHeader">
+                    <div class="col-md-7 followUpTitle">
+                        <label>Title:</label>
+                        @Html.DisplayFor(modelitem => i.Title)
+                    </div>
+                    <div class="col-md-2 followUpCreatedBy">
+                        <label>Created By:</label>
+                        @Html.DisplayFor(modelitem => i.CreatedBy)
+                    </div>
+                    <div class="col-md-3 followUpTimeStamp">
+                        @Html.DisplayFor(modelitem => i.TimeStamp)
+                    </div>
+                </div>
+                <div class="col-lg-12 followUpDesc">
+                    @Html.DisplayFor(modelitem => i.Description)
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Create FollowUps","FollowUps", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

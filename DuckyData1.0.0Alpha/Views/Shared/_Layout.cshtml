@@ -3,12 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="../../Scripts/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/angular.js"></script>
+    <script type="text/javascript" src="../../Scripts/angular-resource.js"></script>
+    <script type="text/javascript" src="../../Scripts/angular-route.js"></script>
 
 </head>
-<body>
+<body ng-app="duckyData">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -17,28 +21,57 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <img class="navbar-logo" src="@Url.Content("~/images/logo.png")" alt="Logo" />
+                @* @Html.Label("DuckyData", new { @class = "navbar-brand" })*@
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
+
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content ">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
+    <footer>
+        <div class="width-100">
+            <div class="col-xs-4 col-xs-offset-3">
+                <h3 class="footer-title">Meet our team</h3>
+                <p>&copy; @DateTime.Now.Year - DuckyData</p>
+            </div>
+            <div class="col-xs-5">
+                <div class="footer-banner">
+                    <h3 class="footer-title"><span class="fui-mail"></span>&nbsp;Leave us a message</h3>
+                    <ul>
+                        <li>Contact us at duckydata@gmail.com</li>
+                        <li>Have a suggestion for us?</li>
+                        <li>Report a bug!</li>
+                    </ul>
+                    Go to: <a href="http://designmodo.com/flat" target="_blank">designmodo.com/flat</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>
