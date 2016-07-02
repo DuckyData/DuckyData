@@ -127,14 +127,77 @@
 }
 
 #track-preview-module.show-preview-module span.fui-arrow-left{
-    display: none !important;
-}
-#track-preview-module span.fui-arrow-left{
     display: block !important;
 }
-#track-preview-module.show-preview-module span.fui-arrow-right{
-    display: block;
+#track-preview-module span.fui-arrow-left{
+    display: none !important;
 }
-#track-preview-module span.fui-arrow-right{
+#track-preview-module.show-preview-module span.fui-arrow-right{
     display: none;
 }
+#track-preview-module span.fui-arrow-right{
+    display: block;
+}
+#possible-album-list{
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    padding: 0px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+#possible-album-list .album-repeat{
+    width: 400px;
+    height: 160px;
+    margin: 20px;
+    cursor: pointer;
+    background: #f9f9f9;
+}
+
+#possible-album-list .album-repeat:hover{
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    background: #fff;
+}
+
+#possible-album-list .album-repeat img{
+    width: 140px;
+    height: 140px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+#possible-album-list .album-repeat .ablum-title{
+    padding: 0 15px 0 0px;
+    height: 50px;
+}
+#possible-album-list .album-repeat .ablum-title label{
+    font-size: 105% !important;
+}
+
+#possible-album-list .album-repeat .ablum-track-nb{
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px 0 0px;
+}
+
+#possible-album-list .album-repeat .ablum-track-nb label{
+    margin-right: 10px;
+}
+
+#possible-album-list .album-repeat .ablum-artist{
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px 0 0px;
+}
+
+#possible-album-list .album-repeat .ablum-artist label{
+    margin-right: 10px;
+}
+
+.possible-album-info{
+    width: 240px;
+    height: 100%;
+    padding: 10px;
+}
+

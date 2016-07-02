@@ -48,9 +48,11 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce) {
     $scope.musicFetchData = {
         albumTrackList: null,
         album: null,
+        possibleAlbunList:null
     }
     $scope.musicFetchUICtrl = {
-        showPreviewWindow : false
+        showPreviewWindow: false,
+        showPossibleAlbum: false
     }
 
     $scope.musicFetchRawData = {
@@ -65,11 +67,14 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce) {
 
     $scope.albumFetch = function () {
         $http.jsonp("https://api.deezer.com/search/album", config).success(function (data) {
-
             if (data != null) {
-                $scope.musicFetchData.album = data.data[0];
-                $scope.getAlbumTrack($scope.musicFetchData.album.tracklist);
-
+                if (data.data.length == 1) {
+                    $scope.musicFetchData.album = data.data[0];
+                    $scope.getAlbumTrack($scope.musicFetchData.album.tracklist);
+                } else {
+                    $scope.musicFetchUICtrl.showPossibleAlbum = true;
+                    $scope.musicFetchData.possibleAlbunList = data.data
+                }
             } else {
                 console.log('no data found');
             }
@@ -77,9 +82,10 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce) {
             console.log(data);
             $scope.data = data;
         });
-    }(function () { }());
+    }(function(){}());
     
-    $scope.getAlbumTrack = function (url) {
+
+    $scope.getAlbumTrack = function(url) {
         var config = {
             params: {
                 output: "jsonp",
@@ -96,6 +102,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce) {
             } else {
                 console.log('no data found');
             }
+            $scope.musicFetchData.possibleAlbunList = false;
         }).error(function (data) {
             $scope.data = data;
         });

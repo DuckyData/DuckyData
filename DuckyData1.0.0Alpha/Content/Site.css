@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
     background-color: #ffffff;
 }
@@ -31,9 +30,8 @@ textarea {
 }
 
 /*Spacing between navigation and body*/
-.container.body-content {
-    position: relative;
-    top: 30px;
+body div.container.body-content {
+    margin-top: 60px;
 }
 
 footer {
@@ -46,4 +44,8 @@ footer {
     .navbar-logo {
         margin-left: 110px;
     }
+}
+
+body div.navbar-fixed-top{
+    margin-bottom: 0;
 }

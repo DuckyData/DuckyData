@@ -8,7 +8,7 @@
         <script type="text/javascript" src="../../Scripts/musicFetch.js"></script>
     </head>
     <body ng-controller="musicFetchCtrl">
-        <div id="MusicFetchIndex">
+        <div id="MusicFetchIndex" ng-hide="musicFetchData.possibleAlbunList">
             <div id="album-info">
                 <div id="album-cover" class="pull-left">
                     <img alt="cover" ng-src={{musicFetchData.album.cover}} />
@@ -41,7 +41,29 @@
                 </div>
             </div>
         </div>
-        <div id="track-preview-module" ng-class={'show-preview-module':musicFetchUICtrl.showPreviewWindow}>
+
+        <!-- list of possible album-->
+        <div id="possible-album-list" ng-show="musicFetchData.possibleAlbunList">
+            <div class="width-100" id="album-holder">
+                <div class="album-repeat pull-left" ng-repeat="album in musicFetchData.possibleAlbunList" ng-click="musicFetchData.album = album;getAlbumTrack(album.tracklist)">
+                    <div class="possible-album-cover pull-left">
+                        <img ng-src={{album.cover}}>
+                    </div>
+                    <div class="possible-album-info pull-left">
+                        <div class="width-100 ablum-title text-ellipsis">
+                            {{album.title}}
+                        </div>
+                        <div class="width-100 ablum-artist">
+                            <div class="text-ellipsis"><label>Artist: </label>{{album.artist.name}}</div>
+                        </div>
+                        <div class="width-100 ablum-track-nb">
+                            <div class="text-ellipsis"><label>Number of Tracks: </label>{{album.nb_tracks}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="track-preview-module" ng-class={'show-preview-module':musicFetchUICtrl.showPreviewWindow} ng-hide="musicFetchData.possibleAlbunList">
             <div id="preview-album-cover" class="pull-left">
                 <img alt="cover" ng-src={{musicFetchData.album.cover}} />
             </div>
@@ -57,5 +79,5 @@
                 <span class="fui-arrow-left"></span>
             </div>
         </div>
-    </body>
+</body>
 </html>
