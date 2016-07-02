@@ -16,7 +16,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         // GET: ApplicationUsers
         public ActionResult Index()
         {
-            return View(m.AllUsers());
+            return View();
         }
 
         // GET: ApplicationUsers/Details/5
