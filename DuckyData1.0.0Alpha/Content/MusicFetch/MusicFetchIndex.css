@@ -24,7 +24,16 @@
 #MusicFetchIndex #album-detail-info{
     padding-left: 10px;
     height: 120px;
-    width:calc(100% - 125px);
+    width:calc(100% - 155px);
+}
+
+#MusicFetchIndex #back-to-possible-album-list {
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+    cursor: pointer;
+    background: #EEEEEE;
+    width:30px;
 }
 #album-detail-info .artist-label{
     width: 70px;
@@ -50,7 +59,7 @@
     width: calc(100% - 255px);
 }
 
-#music-data-info #track-preview{
+#music-data-info #track-pause{
     width: 50px;
     text-align: center;
 }
@@ -67,16 +76,24 @@
 }
 #music-data-info .track-repeat:hover{
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-    cursor: pointer;
 }
 
 #music-data-info .track-repeat a.fui-link,
-#music-data-info .track-repeat a.fui-play {
+#music-data-info .track-repeat a.fui-play,
+#music-data-info .track-repeat a.fui-pause
+ {
     visibility: hidden;   
 }
 
 #music-data-info .track-repeat:hover a.fui-link,
-#music-data-info .track-repeat:hover a.fui-play {
+#music-data-info .track-repeat:hover a.fui-play,
+#music-data-info .track-repeat:hover a.fui-pause {
+    visibility: visible;
+}
+
+#music-data-info .track-repeat.visible a.fui-link,
+#music-data-info .track-repeat.visible a.fui-play,
+#music-data-info .track-repeat.visible a.fui-pause{
     visibility: visible;
 }
 
