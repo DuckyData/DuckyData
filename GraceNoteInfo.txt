@@ -1,0 +1,13 @@
+
+App Details
+App Name:
+DuckyData
+Client ID for Web API, Rhythm API and eyeQ
+303281583-A9ECDA10CE786BFDE9028F7AFD0E160F
+License information for GNSDK and Entourage
+Client ID: 303281583
+Client Tag: A9ECDA10CE786BFDE9028F7AFD0E160F
+License String:
+
+-- BEGIN LICENSE v1.0 F8A0427A --\r\nname: \r\nnotes: Gracenote Open Developer Program\r\nstart_date: 0000-00-00\r\nclient_id: 303281583\r\nmusicid_file: enabled\r\nmusicid_text: enabled\r\nmusicid_stream: enabled\r\nmusicid_cd: enabled\r\nplaylist: enabled\r\nvideoid: enabled\r\nvideo_explore: enabled\r\nlocal_images: enabled\r\nlocal_mood: enabled\r\nvideoid_explore: enabled\r\nacr: enabled\r\nepg: enabled\r\n-- SIGNATURE F8A0427A --\r\nlAADAgAeSWFQ5cJeM7DPKcbMgsOhU1Dh5WkuN1Btlmxlhf8LAB4Pg/sgR0nRW2jGoCNVQDAY3OQFi3J7HzHa8O3IOz8=\r\n-- END LICENSE F8A0427A --\r\n
+

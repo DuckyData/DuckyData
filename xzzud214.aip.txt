@@ -1,0 +1,32 @@
+﻿first stable progress
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch Mike
+# Your branch is up-to-date with 'origin/Mike'.
+#
+# Changes to be committed:
+#	modified:   DuckyData1.0.0Alpha/Controllers/Manager.cs
+#	modified:   DuckyData1.0.0Alpha/DuckyData1.0.0Alpha.csproj
+#	modified:   DuckyData1.0.0Alpha/Models/DataContext.cs
+#	modified:   DuckyData1.0.0Alpha/Models/DesignModelClasses.cs
+#	modified:   DuckyData1.0.0Alpha/Models/IdentityModels.cs
+#	modified:   DuckyData1.0.0Alpha/Scripts/_references.js
+#	modified:   DuckyData1.0.0Alpha/Views/Shared/_Layout.cshtml
+#	modified:   DuckyData1.0.0Alpha/Web.config
+#	modified:   DuckyData1.0.0Alpha/bin/DuckyData1.0.0Alpha.dll
+#	modified:   DuckyData1.0.0Alpha/bin/DuckyData1.0.0Alpha.dll.config
+#	modified:   DuckyData1.0.0Alpha/bin/DuckyData1.0.0Alpha.pdb
+#	modified:   DuckyData1.0.0Alpha/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+#	modified:   DuckyData1.0.0Alpha/obj/Debug/DuckyData1.0.0Alpha.dll
+#	modified:   DuckyData1.0.0Alpha/obj/Debug/DuckyData1.0.0Alpha.pdb
+#	modified:   DuckyData1.0.0Alpha/packages.config
+#
+# Untracked files:
+#	DuckyData1.0.0Alpha/App_Data/
+#	DuckyData1.0.0Alpha/Controllers/MessageController.cs
+#	DuckyData1.0.0Alpha/Models/DesignModelClasses.cs.BAK
+#	DuckyData1.0.0Alpha/Scripts/ckeditor/
+#	DuckyData1.0.0Alpha/ViewModels/Messages_VM.cs
+#	DuckyData1.0.0Alpha/Views/Message/
+#
+

@@ -15,7 +15,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "DuckyData Address.";
+            ViewBag.Message = "Your application description page.";
 
             return View();
         }

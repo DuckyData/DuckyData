@@ -2,7 +2,7 @@
 using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.ViewModels.Account;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,7 +13,7 @@ namespace DuckyData1._0._0Alpha.Factory.Account
    {
        private DatabaseConnection conn = new DatabaseConnection();
        private DataContext database;
-       private ApplicationDbContext userDB = new ApplicationDbContext();
+        private ApplicationDbContext userDB = new ApplicationDbContext();
 
        public AccountFactory() {
            this.database = conn.getConnection();
@@ -24,20 +24,6 @@ namespace DuckyData1._0._0Alpha.Factory.Account
                this.database = conn.getConnection();
            }
        }
-
-        public IEnumerable<userAdd> getUserList(string searchString) {
-            
-            var userList = from u in userDB.Users select u;
-            if(!String.IsNullOrEmpty(searchString))
-            {
-                 userList = userList.Where(s => s.lastName.Contains(searchString)
-                                       || s.firstName.Contains(searchString));
-            }
-            userList = userList.OrderBy(us=>us.firstName);
-            getDatabase();
-             
-            return Mapper.Map<IEnumerable<userAdd>>(userList);
-        }
 
        public User_Activation_Code getRegiseInfoByCode(string activationCode) {
            getDatabase();
@@ -77,20 +63,6 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             }
         }
 
-        public ApplicationUser findUserById(string id) {
-            ApplicationUser user = userDB.Users.First(u => u.Id == id);
-
-            if(user != null)
-            {
-                return user;
-            }
-            else
-            {
-                return null;
-            }
-
-        }
-
         public bool updateUserInfo(userAdd userUpdate) {
             ApplicationUser user = userDB.Users.SingleOrDefault(u => u.Id == userUpdate.Id);
             
@@ -99,12 +71,6 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             user.UserName = userUpdate.Email;
             userDB.SaveChanges();
             return true;
-        }
-
-        public void adminUpdateUserInfo(ApplicationUser dest, adminEditUser src) {
-
-            dest.PhoneNumber = src.PhoneNumber;
-            userDB.SaveChanges();
         }
 
         public ApplicationUser getUserById(string id) {

@@ -23,13 +23,5 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         public string Id { set; get; }
     }
 
-    public class adminEditUser :userBase
-    {
-        [Key]
-        public string Id { set; get; }
-        [Display(Name = "Phone Number")]
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$",ErrorMessage = "Please enter valid phone number.")]
-        public string PhoneNumber { set; get; }
-    }
 
 }

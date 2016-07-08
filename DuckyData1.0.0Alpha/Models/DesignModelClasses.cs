@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,132 +7,213 @@ using System.Web;
 
 namespace DuckyData1._0._0Alpha.Models
 {
-    //
-    public class Video : MediaFile
+    public class Video
     {
-        public DateTime releaseDate { get; set; }
-        public string director { get; set; }
-        public string producer { get; set; }
-        public string cast { get; set; }
-        public byte[] poster { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        public DateTime ReleaseDate { get; set; }
+
+        public string Director { get; set; }
+
+        public string Producer { get; set; }
+
+        public List<string> Cast { get; set; }
+
+        public byte[] Poster { get; set; }
     }
 
-    public class Audio : MediaFile
+    public class Audio
     {
-        public DateTime releaseDate { get; set; }
-        public string artist { get; set; }
-        public string album { get; set; }
-        public string genre { get; set; }
-        public int trackNumber { get; set; }
-        public string producer { get; set; }
-        public byte[] albumArt { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        public DateTime ReleaseDate { get; set; }
+
+        public string Artist { get; set; }
+
+        public List<string> ContributingArtists { get; set; }
+
+        public string Album { get; set; }
+
+        public string Genre { get; set; }
+
+        public int TrackNumber { get; set; }
+
+        public string Producer { get; set; }
+
+        public byte[] AlbumArt { get; set; }
     }
 
     public class MediaFile
     {
+        [Key]
         public int Id { get; set; }
-        //[Required]
-        //public ApplicationUser user { get; set; }
+
+        public int QueryCount { get; set; }
+
         [Required]
-        public string fileName { get; set; }
-        [Required]
-        public string mediaType { get; set; }
-        public Audio audio { get; set; }
-        public Video video { get; set; }
-        public byte[] fileData { get; set; }
+        public string Name { get; set; }
+
+        public Audio Audio { get; set; }
+
+        public Video Video { get; set; }
+
+        public string ImageName { get; set; }
+
+        public string ImageType { get; set; }
+
+        public byte[] File { get; set; }
+
+        public string FileType { get; set; }
     }
 
+    
     public class Message
     {
+        [Key]
         public int Id { get; set; }
-        public DateTime date { get; set; }
+
         [Required]
-        [StringLength(100)]
-        public string sendTo { get; set; }
+        public DateTime SentDate { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string Recipient { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Subject { get; set; }
+
         [Required]
-        public string body { get; set; }
-        public ApplicationUser user { get; set; }
+        public string Body { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
+
+        public bool viewed { get; set; }
+
         //attachment attributes
         public byte[] Attachment { get; set; }
+
         public string ContentType { get; set; }
+
         public string ContentName { get; set; }
 
     }
 
     public class History
     {
+        [Key]
         public int Id { get; set; }
-        [Required]
+
         public MediaFile file { get; set; }
+               
         [Required]
-        public ApplicationUser user { get; set; }
+        public ApplicationUser User { get; set; }
     }
 
     public class Suggestion
     {
+        [Key]
         public int Id { get; set; }
-        public DateTime date { get; set; }
+
+        [Required]
+        public DateTime SentDate { get; set; }
+
+        [Required]
+        public string Sender { get; set; }
+
         [Required]
         [StringLength(100)]
-        public string subject { get; set; }
-        [Required]
-        public string body { get; set; }
-        [Required]
-        public string category { get; set; }
-        public string notes { get; set; }
+        public string Subject { get; set; }
 
-        public ApplicationUser regUser { get; set; }
+        [Required]
+        public string Body { get; set; }
+
+        [Required]
+        public Category Category { get; set; }
+
+        public string Notes { get; set; }
     }
 
-    [Table("BugReports")]
+    public class Category
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string Description { get; set; }
+    }
+
     public class BugReport
     {
         public BugReport()
         {
             this.FollowUps = new List<FollowUp>();
         }
+
         [Key]
         public int Id { get; set; }
-        public DateTime date { get; set; }
+
+        [Required]
+        public ApplicationUser RegisteredUser { get; set; }
+
+        public ApplicationUser TechSupport { get; set; }
+
+        [Required]
+        public string SubmittedBy { get; set; }
+
+        [Required]
+        public string SubmittedName { get; set; }
+
+        [Required]
+        public DateTime SubmittedDate { get; set; }
+
         [Required]
         [StringLength(100)]
-        [Display(Name = "Subject")]
-        public string subject { get; set; }
-        [Required]
-        [Display(Name = "Description")]
-        public string body { get; set; }
-        [Required]
-        [Display(Name = "category")]
-        public string category { get; set; }
-        [Required]
-        [Display(Name ="Submitted By")]
-        public string submittedBy { get; set; }
-        public ApplicationUser regUser { get; set; }
-        [Display(Name ="Assign To")]
-        public string assignTo { get; set; }
-        [Display(Name = "Status")]
-        public string status { get; set; }
-        public ApplicationUser supportRep { get; set; }
-        public virtual ICollection<FollowUp> FollowUps { get; set; }
+        public string Subject { get; set; }
 
+        [Required]
+        public string Body { get; set; }
+
+        [Required]
+        public Category Category { get; set; }
+
+        public ICollection<FollowUp> FollowUps { get; set; }
+
+        // Attachment Attributes
+        public byte[] Attachment { get; set; }
+
+        public string ContentType { get; set; }
+
+        public string ContentName { get; set; }
     }
-    [Table("FollowUps")]
+
     public class FollowUp
     {
-        [Key]
         public int Id { get; set; }
-        [DisplayFormat(DataFormatString = "{0:f}")]
-        public DateTime TimeStamp { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public string CreatedBy { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
+
         [Required]
-        public string Description { get; set; }
-        public virtual BugReport report { get; set; }
-        public string CreatedBy { get; set; }
+        public string Body { get; set; }
+        
+        [Required]
+        public BugReport Report { get; set; }
     }
 
 }
