@@ -424,6 +424,7 @@
     <Content Include="Scripts\video-js.swf" />
     <Content Include="Scripts\video.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Shared\pagination.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
