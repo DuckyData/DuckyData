@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/MusicFetch/MusicFetchIndex.css")
+    @Styles.Render("~/Content/helper.css")
+    <link rel="stylesheet" type="text/css" href="~/Content/MusicFetch/audioUploader.css">
+    <script type="text/javascript" src="../../Scripts/musicFetchCreate.js"></script>
+</head>
+<body ng-controller="musicFetchCreateCtrl">
+    <div class="width-100" id="audio-uploader" nv-file-drop uploader="audioFileUploader">
+        <div id="audio-drop-box" >
+            drop file here
+        </div>
+        <div id="audio-drop-display">
+            <div class="audio-upload-repeat" ng-repeat="audio in audioFileUploader.queue">{{audio.file.name}}</div>
+        </div>
+        <div id="audio-uploader-footer">
+            <button class="btn btn-danger pull-right btn-sm">Upload All</button>
+        </div>
+    </div>
+</body>
+</html>

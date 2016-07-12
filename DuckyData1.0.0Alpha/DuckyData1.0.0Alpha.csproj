@@ -255,6 +255,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\BugReport\listBugReport.css" />
     <Content Include="Content\helper.css" />
+    <Content Include="Content\MusicFetch\audioUploader.css" />
     <Content Include="Content\MusicFetch\MusicFetchIndex.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
@@ -291,6 +292,7 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-file-uploader.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-message-format.js" />
@@ -309,6 +311,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\duckyDataApp.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -415,6 +418,7 @@
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\musicFetch.js" />
+    <Content Include="Scripts\musicFetchCreate.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -488,6 +492,8 @@
     <Content Include="Views\MusicFetch\Edit.cshtml" />
     <Content Include="Views\MusicFetch\Index.cshtml" />
     <Content Include="Views\SelectExamples\Index.cshtml" />
+    <Content Include="Views\MusicFetch\Upload.cshtml" />
+    <Content Include="Views\MusicFetch\CallBack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
