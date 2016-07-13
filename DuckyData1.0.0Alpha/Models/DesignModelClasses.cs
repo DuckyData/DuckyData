@@ -7,6 +7,24 @@ using System.Web;
 
 namespace DuckyData1._0._0Alpha.Models
 {
+    public class fileInput
+    {
+        public HttpPostedFileBase input { get; set; }
+        public byte[] bytes { get; set; }
+    }
+
+    public class acr
+    {
+        public string result { get; set; }
+        public string album { get; set; }
+        public string artist { get; set; }
+        public string song { get; set; }
+        public string duration { get; set; }
+        public string genre { get; set; }
+
+
+    }
+
     //
     public class Video : MediaFile
     {
@@ -44,20 +62,36 @@ namespace DuckyData1._0._0Alpha.Models
 
     public class Message
     {
+        [Key]
         public int Id { get; set; }
-        public DateTime date { get; set; }
+
         [Required]
-        [StringLength(100)]
-        public string sendTo { get; set; }
+        public DateTime SentDate { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string Recipient { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Subject { get; set; }
+
         [Required]
-        public string body { get; set; }
-        public ApplicationUser user { get; set; }
+        public string Body { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
+
+        public bool viewed { get; set; }
+
         //attachment attributes
         public byte[] Attachment { get; set; }
+
         public string ContentType { get; set; }
+
         public string ContentName { get; set; }
 
     }

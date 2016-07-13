@@ -32,4 +32,13 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         public string PhoneNumber { set; get; }
     }
 
+    public class Flags
+    {
+        [Key]
+        public string Id { set; get; }
+        public string flagged { get; set; }
+        public string gagged { get; set; }
+        public string banned { get; set; }
+    }
+
 }
