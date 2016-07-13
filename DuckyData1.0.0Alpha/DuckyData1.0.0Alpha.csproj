@@ -238,6 +238,7 @@
     <Compile Include="recognizer.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Service\EmailService\AppEmailService.cs" />
     <Compile Include="ViewModels\Account\AccountViewModel.cs" />
     <Compile Include="ViewModels\Account\User_Activation_Code.cs" />
     <Compile Include="Models\DataContext.cs" />

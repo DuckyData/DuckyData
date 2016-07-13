@@ -53,8 +53,8 @@ namespace DuckyData1._0._0Alpha.Factory.Account
        public void createRegiseInfo(RegisterViewModel newUser, string code)
        {
             User_Activation_Code newRegistInfo = new User_Activation_Code(newUser.Email, newUser.Password, code);
-           database.User_Activation_Codes.Add(newRegistInfo);
-           database.SaveChanges();
+            userDB.User_Activation_Codes.Add(newRegistInfo);
+            userDB.SaveChanges();
        }
 
         public string createNewUser(User_Activation_Code newUser) {
@@ -103,6 +103,8 @@ namespace DuckyData1._0._0Alpha.Factory.Account
 
         public void adminUpdateUserInfo(ApplicationUser dest, adminEditUser src) {
 
+            dest.firstName = src.FirstName;
+            dest.lastName = src.LastName;
             dest.PhoneNumber = src.PhoneNumber;
             userDB.SaveChanges();
         }
@@ -123,6 +125,34 @@ namespace DuckyData1._0._0Alpha.Factory.Account
                 hashValue.Append(b.ToString("x2"));
             }
             return hashValue.ToString();
+        }
+
+        public bool resetCode(string email, string code) {
+            getDatabase();
+            User_Activation_Code userCode = userDB.User_Activation_Codes.FirstOrDefault(u => u.User_Account == email);
+            if(userCode != null)
+            {
+                userCode.Activation_Code = code;
+                userDB.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public User_Activation_Code findUserCodeByCode(string code) {
+            getDatabase();
+            User_Activation_Code userCode = userDB.User_Activation_Codes.FirstOrDefault(u => u.Activation_Code == code);
+
+            if(userCode != null)
+            {
+                return userCode;
+            }
+            else {
+                return null;
+            }
         }
 
     }
