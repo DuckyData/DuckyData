@@ -10,22 +10,25 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="email-sign-in-form-group">
+            <div class="form-group">
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control",placeholder = "Email" })
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
-            <div class="password-sign-in-form-group">
+            <div class="form-group">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder="Password"})
                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                <div class="col-md-12 sign-in-input">
+                <div class="col-md-10 no-padding">
                     <input type="submit" value="SIGN IN" class="btn col-md-12 btn-primary" />
                 </div>
             </div>
+            <p>
+                @Html.ActionLink("Forgot your password?","ForgotPassword")
+            </p>
             <div class="form-group">
-                <div class="col-md-12 new-account-btn">
-                    <button class="btn col-md-12 btn-info">@Html.ActionLink("CREATE AN ACCOUNT","Register","Account")</button>
+                <div class="col-md-offset-2 col-md-10">
+                    <a class="btn col-md-12 btn-info" href="Account/Register">Register</a>
                 </div>
             </div>
         }
