@@ -39,6 +39,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         // GET: BugReports/Details/5
         // view buy report and followup associaed
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if(id == null)
@@ -55,6 +56,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: BugReports/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -64,6 +66,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BugReportBase bugReport)
         {
@@ -78,6 +81,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: BugReports/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if(id == null)
@@ -97,6 +101,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BugReport bugReport, string command)
         {
@@ -116,6 +121,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: BugReports/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if(id == null)
@@ -131,6 +137,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // POST: BugReports/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -141,6 +148,8 @@ namespace DuckyData1._0._0Alpha.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "TechSupport")]
         [HttpGet]
         // GET: BugReports/FollowUps/5
         public ActionResult FollowUps(int? id) {
@@ -160,6 +169,8 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(newFollowUp);
         }
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "TechSupport")]
         [HttpPost]
         // POST: BugReports/FollowUps/5
         public ActionResult FollowUps(FollowUpAddForm newFollowUp)

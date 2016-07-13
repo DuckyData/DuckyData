@@ -7,13 +7,17 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/helper.css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/ckeditor/ckeditor_basic.js")
+
+
     <script type="text/javascript" src="../../Scripts/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="../../Scripts/angular.js"></script>
     <script type="text/javascript" src="../../Scripts/angular-resource.js"></script>
     <script type="text/javascript" src="../../Scripts/angular-route.js"></script>
-
+    <script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
 </head>
-<body ng-app="duckyData">
+<body ng-app="duckyData" id="body">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -29,11 +33,27 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+							<li>@Html.ActionLink("About", "About", "Home")</li>
+							<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+							<li>@Html.ActionLink("Messages", "Inbox", "Message")</li>
+							<li>@Html.ActionLink("Bug Reports", "Index", "BugReports")</li>
+							<li>@Html.ActionLink("Follow Ups", "Index", "FollowUps")</li>
+							<li>@Html.ActionLink("Music Fetch", "Index", "MusicFetch")</li>
+							<li>@Html.ActionLink("ACRtest", "ACRQuery", "MusicFetch")</li>
+                            <li>@Html.ActionLink("Input", "Input", "MusicFetch")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Roles", "RoleIndex", "Account")</li>
+                            <li>@Html.ActionLink("Create Role", "RoleCreate", "Account")</li>
+                            <li>@Html.ActionLink("Apply Role to User", "RoleAddToUser", "Account")</li>
+                            <li>@Html.ActionLink("Users", "ListUsers", "Account")</li>
+                            <li>@Html.ActionLink("Messages", "Index", "Message")</li>
                         </ul>
                     </li>
                 </ul>
@@ -45,7 +65,7 @@
     <div class="container body-content ">
         @RenderBody()
     </div>
-    <footer>
+    <!--<footer>
         <div class="width-100">
             <div class="col-xs-4 col-xs-offset-3">
                 <h3 class="footer-title">Meet our team</h3>
@@ -63,7 +83,7 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer>-->
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -75,4 +95,5 @@
     $(document).ready(function () {
         $('.dropdown-toggle').dropdown();
     });
+
 </script>

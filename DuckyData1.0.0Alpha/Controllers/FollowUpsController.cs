@@ -15,6 +15,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: FollowUps/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -30,6 +31,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: FollowUps/Create
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "TechSupport")]
         public ActionResult Create()
         {
             return View();
@@ -38,6 +41,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         // POST: FollowUps/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "TechSupport")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create( FollowUp followUp)

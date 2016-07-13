@@ -24,7 +24,7 @@ namespace DuckyData1._0._0Alpha
 
             //localdb
             // System.Data.Entity.Database.SetInitializer(new Models.StoreInitializer());
-
+            ConfigureMaps.ForMessage();
             Mapper.CreateMap<ApplicationUser,userAdd>();
             Mapper.CreateMap<userAdd,ApplicationUser>();
             Mapper.CreateMap<ApplicationUser,userBase>();
