@@ -17,6 +17,8 @@ using AutoMapper;
 using System.Collections;
 using System.Collections.Generic;
 using PagedList;
+using Microsoft.AspNet.Identity.EntityFramework;
+using DuckyData1._0._0Alpha.Service.EmailService;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -26,7 +28,9 @@ namespace DuckyData1._0._0Alpha.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private AccountFactory accountFactory = new AccountFactory();
-       // private Manager manager = new Manager();
+        private AppEmailService appEmailService = new AppEmailService();
+        // private Manager manager = new Manager();
+
 
         public AccountController()
         {
@@ -176,7 +180,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: /Account/ListUsers
-        [AllowAnonymous]
+        [Authorize(Roles ="Admin")]
         public ActionResult ListUsers(string searchString, int? page)
         {
             IEnumerable<userAdd> userList = accountFactory.getUserList(searchString);
@@ -245,20 +249,12 @@ namespace DuckyData1._0._0Alpha.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user,isPersistent: false,rememberBrowser: false);
-                    string code = RandomString();
-                    MailMessage mail = new MailMessage("duckydata@gmail.com", model.Email, "test email", "<table border=0 cellspacing=0 cellpadding=0 style=max-width:600px>"+
-"<tbody><tr><td><table bgcolor=#26c6da width=100% border=0 cellspacing=0 cellpadding=0 style=min-width:332px;max-width:600px;border:1px solid #e0e0e0;border-bottom:0;border-top-left-radius:3px;border-top-right-radius:3px>"+
-"<tbody><tr><td height=22px colspan=3>&nbsp;</td></tr><tr><td width=32px></td><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:24px;color:#ffffff;padding-left:15px;line-height:1.25>DuckyDate Account Activation</td>" +
-"<td width=42px></td></tr><tr><td height=18px colspan=3></td></tr></tbody></table></td></tr><tr style=padding:15px; bgcolor=#FAFAFA ><td><table bgcolor=#FAFAFA width=100% border=0 cellspacing=0 cellpadding=0 style=min-width:332px;max-width:600px;border:1px solid #f0f0f0;border-bottom:1px solid #c0c0c0;border-top:0;border-bottom-left-radius:3px;border-bottom-right-radius:3px>" +
-"<tbody><tr height=16px style=15px;><td width=32px rowspan=3></td><td></td><td width=32px rowspan=3></td></tr><tr><td><table style=min-width:300px padding:15px; border=0 cellspacing=0 cellpadding=0><tbody><tr><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5>Hi there,</td>" +
-"</tr><tr><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5>You are receiving this email because we got a account activation request from:"+
-"<b> zhuzhaohu.daniel@gmail.com </b><br><br>To activate your account,please click the link below<br><br> This message comes from an unmonitored mailbox.Please do not reply to this message.<br><br></td></tr><tr><td>"+
-"<a href=http://localhost:8102/Account/ActivateAccount?code="+ code + " target=\"_blank\">http://localhost:8102/Account/ActivateAccount?code="+ code +"</a></td></tr>" +
-"<tr height=32px></tr><tr><td style=font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5>Cheers,<br>DuckyData Customer Support.</td>"+
-"</tr><trheight=16px></tr></tbody></table></td></tr><tr height=32px></tr></tbody></table></td></tr></tbody></table>");
-                    mail.IsBodyHtml = true;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Send(mail);
+                   // string code = RandomString();
+                    //var callbackUrl = Url.Action("ActivateAccount","Account",new { userId = user.Id,code = code },protocol: Request.Url.Scheme);
+                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                    await appEmailService.SendActivationAsync(model.Email,callbackUrl);
                     accountFactory.createRegiseInfo(model, code);
                 }
                 AddErrors(result);
@@ -290,6 +286,8 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 return View("Error");
             }
+
+            code = code.Replace("%2","+");
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -312,7 +310,8 @@ namespace DuckyData1._0._0Alpha.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+               // var user = accountFactory.findUserByEmail(model.Email);
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -320,10 +319,14 @@ namespace DuckyData1._0._0Alpha.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword","Account",new { userId = user.Id,code = code },protocol: Request.Url.Scheme);
+                if(accountFactory.resetCode(user.Email,code))
+                {
+                    await appEmailService.SendResetPasswordAsync(user.Email,callbackUrl);
+                }
+                
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -343,7 +346,27 @@ namespace DuckyData1._0._0Alpha.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+
+            if(code == null)
+            {
+                return View("Error");
+            }
+            else {
+                code = code.Replace(" ","+");
+                User_Activation_Code userCode = accountFactory.findUserCodeByCode(code);
+                if(userCode == null)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    ResetPasswordViewModel model = new ResetPasswordViewModel();
+                    model.Email = userCode.User_Account;
+                    model.Code = code;
+                    return View(model);
+                }
+            }
+           
         }
 
         //
@@ -363,7 +386,8 @@ namespace DuckyData1._0._0Alpha.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var resetPasswordToken = model.Code.Replace(" ","+");
+            var result = await UserManager.ResetPasswordAsync(user.Id,resetPasswordToken, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -590,5 +614,256 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
         }
         #endregion
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Flags(string id)
+        {
+            ApplicationUser user = accountFactory.findUserById(id);    
+
+            if (user == null) { return HttpNotFound(); }
+            Flags flags = new Flags() {
+                Id = user.Id,
+                flagged = user.flagged,
+                gagged = user.gagged,
+                banned = user.banned
+            };
+
+            return View(flags);
+
+}
+
+// POST: Message/Edit/5
+[Authorize(Roles = "Admin")]
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult Flags(int id, ApplicationUser newItem)
+        {
+            if (ModelState.IsValid & id.ToString() == newItem.Id)
+            {
+                 
+            }
+            return View(newItem);
+        }
+
+
+
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RoleCreate()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RoleCreate(string roleName)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roleManager.Create(new IdentityRole(roleName));
+                context.SaveChanges();
+            }
+
+            ViewBag.ResultMessage = "Role created successfully !";
+            return RedirectToAction("RoleIndex", "Account");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RoleIndex()
+        {
+            List<string> roles;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+            }
+
+            return View(roles.ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RoleDelete(string roleName)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+                var role = roleManager.FindByName(roleName);
+
+                roleManager.Delete(role);
+                context.SaveChanges();
+            }
+
+            ViewBag.ResultMessage = "Role deleted succesfully !";
+            return RedirectToAction("RoleIndex", "Account");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RoleAddToUser()
+        {
+            List<string> roles;
+            List<string> users;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                users = (from u in userManager.Users select u.UserName).ToList();
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+            }
+
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.Users = new SelectList(users);
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RoleAddToUser(string roleName, string userName)
+        {
+            List<string> roles;
+            List<string> users;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                users = (from u in userManager.Users select u.UserName).ToList();
+
+                var user = userManager.FindByName(userName);
+                if (user == null)
+                    throw new Exception("User not found!");
+
+                var role = roleManager.FindByName(roleName);
+                if (role == null)
+                    throw new Exception("Role not found!");
+
+                if (userManager.IsInRole(user.Id, role.Name))
+                {
+                    ViewBag.ResultMessage = "This user already has the role specified !";
+                }
+                else
+                {
+                    userManager.AddToRole(user.Id, role.Name);
+                    context.SaveChanges();
+
+                    ViewBag.ResultMessage = "Username added to the role succesfully !";
+                }
+
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+            }
+
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.Users = new SelectList(users);
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetRoles(string userName)
+        {
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                List<string> userRoles;
+                List<string> roles;
+                List<string> users;
+                using (var context = new ApplicationDbContext())
+                {
+                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    roles = (from r in roleManager.Roles select r.Name).ToList();
+
+                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+
+                    users = (from u in userManager.Users select u.UserName).ToList();
+
+                    var user = userManager.FindByName(userName);
+                    if (user == null)
+                        throw new Exception("User not found!");
+
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+                }
+
+                ViewBag.Roles = new SelectList(roles);
+                ViewBag.Users = new SelectList(users);
+                ViewBag.RolesForThisUser = userRoles;
+            }
+
+            return View("RoleAddToUser");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteRoleForUser(string userName, string roleName)
+        {
+            List<string> userRoles;
+            List<string> roles;
+            List<string> users;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                users = (from u in userManager.Users select u.UserName).ToList();
+
+                var user = userManager.FindByName(userName);
+                if (user == null)
+                    throw new Exception("User not found!");
+
+                if (userManager.IsInRole(user.Id, roleName))
+                {
+                    userManager.RemoveFromRole(user.Id, roleName);
+                    context.SaveChanges();
+
+                    ViewBag.ResultMessage = "Role removed from this user successfully !";
+                }
+                else
+                {
+                    ViewBag.ResultMessage = "This user doesn't belong to selected role.";
+                }
+
+                var userRoleIds = (from r in user.Roles select r.RoleId);
+                userRoles = (from id in userRoleIds
+                             let r = roleManager.FindById(id)
+                             select r.Name).ToList();
+            }
+
+            ViewBag.RolesForThisUser = userRoles;
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.Users = new SelectList(users);
+            return View("RoleAddToUser");
+        }
+
+
+
+
+
     }
 }

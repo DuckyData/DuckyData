@@ -13,12 +13,100 @@ namespace DuckyData1._0._0Alpha.Controllers
     public class MusicFetchController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private Manager m = new Manager();
         
         public ActionResult Index()
         {
             return View();
         }
 
+		
+		
+		
+
+        public ActionResult Input()
+        {
+            var addForm = new fileInput();
+            return View(addForm);
+        }
+        
+        [HttpPost]
+        public ActionResult Input(fileInput newItem)
+        {
+            if (ModelState.IsValid)
+            {
+
+                newItem.bytes = new byte[newItem.input.ContentLength];
+                newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
+                //return RedirectToAction("ACRQuery", "MusicFetch", newItem);
+                var result = m.RunQuery(newItem);
+                var album = result.album;
+                album = album.Substring(1, album.Length - 1);
+                album = album.Replace("  ", " ");
+                string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
+                if (tmp.Contains("acrid"))
+                {
+                    int indexOf = tmp.IndexOf(" acrid");
+                    if (indexOf >= 0)
+                    {
+                        tmp = tmp.Remove(indexOf);
+                    }
+                }
+                return Redirect(tmp);
+            }
+            return View();
+        }
+
+
+        public ActionResult _MediaInput()
+        {
+            var addForm = new fileInput();
+            return PartialView(addForm);
+        }
+
+        [HttpPost]
+        public ActionResult _MediaInput(fileInput newItem)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                newItem.bytes = new byte[newItem.input.ContentLength];
+                newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
+                //return RedirectToAction("ACRQuery", "MusicFetch", newItem);
+                var result = m.RunQuery(newItem);
+                var album = result.album;
+                album = album.Substring(1, album.Length - 1);
+                album = album.Replace("  ", " ");
+                string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
+                if (tmp.Contains("acrid"))
+                {
+                    int indexOf = tmp.IndexOf(" acrid");
+                    if (indexOf >= 0)
+                    {
+                        tmp = tmp.Remove(indexOf);
+                    }
+                }
+                return Redirect(tmp);
+            }
+            return View();
+
+        }
+
+        [Authorize]
+        public ActionResult ACRQuery(fileInput input)
+        {
+            
+            var result = m.RunQuery(input);
+            //return RedirectToAction("Index", "MusicFetch", new { id = "?album=" + result.album });
+            
+            string url = string.Format("~/MusicFetch/Index?album={0}", result.album);
+            return Redirect(url);
+        }
+
+
+		
+		
         // GET: MusicFetch/Details/5
         public ActionResult Details(int? id)
         {

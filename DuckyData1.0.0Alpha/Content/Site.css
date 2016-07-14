@@ -1,4 +1,14 @@
-﻿body {
+﻿accordion .panel-heading a { cursor: pointer; }
+.cursor-move { cursor: move; }
+.modal
+{
+    overflow: hidden;
+}
+.modal-dialog{
+    margin-right: 0;
+    margin-left: 0;
+}
+body {
     padding-bottom: 20px;
     background-color: #ffffff;
 }
