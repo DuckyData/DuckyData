@@ -37,10 +37,8 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
     uploader.filters.push({
         name: 'audioFilter',
         fn: function (item, options) {
-            console.log(item);
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-            console.log(type);
-            if ('|mp3|'.indexOf(type) !== -1) {
+            if ('|mp3|wav|x-wav|x-pn-wav|ogg|aiff|x-aiff|mpeg|x-mpeg|flac|x-aac|x-ms-wma|'.indexOf(type) !== -1) {
                 return true;
             } else {
                 toastr.error('We only support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC, AMR and WMA','Unrecongnize File Type');
@@ -49,8 +47,6 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
             
         }
     });
-
-
 
     return {
         uploader: uploader
@@ -86,6 +82,20 @@ duckyData.filter('formatTimer', function () {
         var minutes = Math.floor(input % 3600 / 60);
         return (z(minutes) + ':' + z(seconds));
     }
+});
+
+duckyData.filter("percentage", function () {
+    return function (value) {
+        if (value == null || value == 0 || value == undefined) {
+            return 'Waiting';
+        } else if (value == 100) {
+            return 'Done';
+        } else if (isNaN(value)) {
+            return 'Waiting';
+        } else {
+            return value + '%';
+        }
+    };
 });
 
 duckyData.filter("trustUrl", ['$sce', function ($sce) {

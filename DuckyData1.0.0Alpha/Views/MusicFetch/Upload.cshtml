@@ -15,14 +15,20 @@
         </div>
         <input type="file" id="audio-file-select-tag" nv-file-select uploader="audioFileUploader" multiple class="invisible">
         <div id="audio-drop-display">
-            <div class="audio-upload-repeat" ng-repeat="audio in audioFileUploader.queue">
-                <div class="pull-left audio-file-name">{{audio.file.name}}  {{audio.pct || 0}}</div>
+            <div class="width-100 audio-upload-title">
+                <div class="pull-left audio-file-status">Status</div>
+                <div class="pull-left audio-file-name">Name</div>
+                <div class="pull-left audio-file-size">Size</div>
+            </div>
+            <div class="audio-upload-repeat width-100" ng-repeat="audio in audioFileUploader.queue">
+                <div class="pull-left audio-file-status">{{audio.pct | percentage}}</div>
+                <div class="pull-left audio-file-name text-ellipsis">{{audio.file.name}}</div>
                 <div class="pull-left audio-file-remove"><span class="fui-trash" ng-click="audioFileUploader.queue.splice($index,1)"></span></div>
                 <div class="pull-left audio-file-size">{{audio.file.size/1024/1024 | number:2}} MB</div>
             </div>
         </div>
         <div id="audio-uploader-footer">
-            <button class="btn btn-danger pull-right btn-sm" ng-disabled="musicUploaderUICtrl.disableUploadAll" ng-click="musicUploaderUICtrl.disableUploadAll=true;uploadAllAudio()">Upload All ({{audioFileUploader.queue.length}})</button>
+            <button class="btn btn-danger pull-right btn-sm" ng-disabled="musicUploaderUICtrl.disableUploadAll" ng-click="uploadAllAudio()">Upload All ({{audioFileUploader.queue.length}})</button>
         </div>
     </div>
 </body>

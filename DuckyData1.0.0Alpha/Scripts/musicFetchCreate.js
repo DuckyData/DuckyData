@@ -1,9 +1,12 @@
-﻿duckyData.controller('musicFetchCreateCtrl', function ($scope, $interval, $timeout, $q, $interval, toastr, duckyDataFileUploader) {
+﻿duckyData.controller('musicFetchCreateCtrl', function ($scope, $interval, $timeout, $location, $q, $interval, toastr, duckyDataFileUploader) {
     $scope.musicFetchCreateData = {
         file: null,
         buttonLogo: 'GO',
-        currentUploadudio: null
+        currentUploadudio: null,
+        uploadingLastOne: false,
+        failedQueue : []
     }
+
     $scope.musicUploaderUICtrl = {
         showUploader: false,
         disableUploadAll: false
@@ -13,18 +16,11 @@
 
     SC.initialize({
         client_id: 'd468660bb9056f5d8e48361dd5327c80',
-        redirect_uri: 'http://localhost:8102/MusicFetch/CallBack'
+        redirect_uri: $location.protocol() + "://" + $location.host() + ":" + $location.port() + '/MusicFetch/CallBack'
     });
-
-    $scope.connectFunction = function () {
-        SC.connect();
-    }
-
     $scope.inputTagClick = function(){
         $("#audio-file-select-tag").click();
     }
-    
-
 
     function soundCloudConnectionCheck() {
         var deferred = $q.defer();
@@ -34,56 +30,82 @@
             SC.connect().then(function () {
                 deferred.resolve({ status: 'connected', code: 200 });
             }).catch(function (error) {
-                deferred.resolve({ status: 'unconnected', code: 401});
+                deferred.resolve({ status: 'unconnected', code: 401 });
             });
         }
         return deferred.promise;
     }
 
     $scope.uploadAllAudio = function () {
+        // clear failed queue 
+        $scope.musicFetchCreateData.failedQueue = [];
         soundCloudConnectionCheck().then(function (connectionResult) {
-            console.log(connectionResult);
             if (connectionResult.code == 200) {
-
-                console.log($scope.audioFileUploader.queue[0]);
-                syncAudioUpload($scope.audioFileUploader.queue[0],0);
+                if ($scope.audioFileUploader.queue.length) {
+                    syncAudioUpload($scope.audioFileUploader.queue[0], 0);
+                }
             } else {
                 toastr.error('have problem connect to Sound Cloud, please check yuu sound cloud crendatial or try again later','Opps');
             }
         })
     }
 
-    function syncAudioUpload(audio,index) {
+    function syncAudioUpload(audio, index) {
+        
         // if audio is not the last in file in list
-        console.log();
         if ($scope.audioFileUploader.queue.length >= index + 1 || index == 0) {
+            if (index + 1 == $scope.audioFileUploader.queue.length) {
+                $scope.musicFetchCreateData.uploadingLastOne = true;
+            } else {
+                $scope.musicFetchCreateData.uploadingLastOne = false;
+            }
             $scope.musicFetchCreateData.currentUploadudio = audio;
+            if ($scope.audioFileUploader.queue.length > 0) {
+                $scope.musicUploaderUICtrl.disableUploadAll = true;
+            }
+            
             SC.upload({
                 file: audio._file,
                 title: audio._file.name,
                 progress: progressCallBack
             }).then(function (track) {
-                console.log('upload next');
                 // call upload for next audio
                 syncAudioUpload($scope.audioFileUploader.queue[index + 1], index + 1);
+                
             }).catch(function () {
-                if ($scope.audioFileUploader.queue.lenght == 1) {
-                    toastr.error('Failed to upload audio [' + audio.name + ']')
-                } else {
-                    toastr.error('Failed to upload audio [' + audio.name + '], will start next')
+                audio.pct = 0;
+                $scope.musicFetchCreateData.failedQueue.push(audio)
+                toastr.error('Failed to upload audio [' + audio._file.name + '], please try again latter')
+                syncAudioUpload($scope.audioFileUploader.queue[index + 1], index + 1);
+                if ($scope.musicFetchCreateData.uploadingLastOne) {
+                    $scope.audioFileUploader.queue = [];
+                    $scope.musicUploaderUICtrl.disableUploadAll = false;
+                    checkForFailedUpload();
                 }
-
             });
-        }
+        } 
     }
 
     function progressCallBack(p) {
         var pct = Math.round((p.loaded / p.total) * 100);
         $scope.musicFetchCreateData.currentUploadudio.pct = pct;
         $scope.$apply($scope.musicFetchCreateData.currentUploadudio.pct);
+        if ($scope.musicFetchCreateData.uploadingLastOne) {
+            if (pct == 100) {
+                if ($scope.audioFileUploader.queue.length > 0) {
+                    $scope.audioFileUploader.queue = [];
+                    $scope.musicUploaderUICtrl.disableUploadAll = false;
+                    checkForFailedUpload();
+                }
+            }
+        }
     }
-    $timeout(function () {
-        $scope.musicUploaderUICtrl.showUploader = true;
-    }, 500);
-    
+
+    function checkForFailedUpload() {
+        if ($scope.musicFetchCreateData.failedQueue.length > 0) {
+            angular.forEach($scope.musicFetchCreateData.failedQueue, function (failed) {
+                $scope.audioFileUploader.queue.push(failed);
+            })
+        }
+    }
 });

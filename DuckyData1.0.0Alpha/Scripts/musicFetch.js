@@ -39,7 +39,6 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
         if ($scope.albumFilter.params.q) {
             $http.jsonp("https://api.deezer.com/search/album", $scope.albumFilter).success(function (data) {
                 if (data != null) {
-                    console.log(data);
                     if (data.total == 1) {
                         $scope.musicFetchData.album = data.data[0];
                         $scope.musicFetchUICtrl.showTrackList = true;
@@ -84,7 +83,6 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
                 $scope.musicFetchUICtrl.showPossibleAlbum= false;
                 $scope.musicFetchUICtrl.showTrackList = true;
             } else {
-                console.log('no data found');
             }
         }).error(function (data) {
             $scope.data = data;
