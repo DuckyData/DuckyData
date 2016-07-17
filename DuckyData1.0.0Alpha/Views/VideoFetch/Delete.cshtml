@@ -1,0 +1,96 @@
+﻿@model DuckyData1._0._0Alpha.Models.Video
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Video</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.fileName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fileName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.mediaType)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.mediaType)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fileData)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fileData)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.releaseDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.releaseDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.director)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.director)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.producer)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.producer)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cast)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cast)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.poster)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.poster)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

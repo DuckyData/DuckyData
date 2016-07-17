@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/VideoFetch/VideoFetchIndex.css")
+    @Styles.Render("~/Content/helper.css")
+    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../../Scripts/videoFetch.js"></script>
+</head>
+<body ng-controller="videoFetchCtrl">
+    <div>i am index</div>
+    <button class="btn btn-primary" ng-click="googleApiClientReady()">click me</button>
+    <div id="search-container">
+    </div>
+</body>
+</html>

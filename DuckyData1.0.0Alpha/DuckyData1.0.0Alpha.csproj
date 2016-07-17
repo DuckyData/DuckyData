@@ -225,6 +225,7 @@
     <Compile Include="Controllers\Manager.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\MusicFetchController.cs" />
+    <Compile Include="Controllers\VideoFetchController.cs" />
     <Compile Include="Factory\Account\AccountFactory.cs" />
     <Compile Include="Factory\BugReports\BugRereportFactory.cs" />
     <Compile Include="Factory\DatabaseConnection.cs" />
@@ -266,6 +267,7 @@
     <Content Include="Content\MusicFetch\audioUploader.css" />
     <Content Include="Content\MusicFetch\MusicFetchIndex.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\VideoFetch\VideoFetchIndex.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\jquery\jquery-ui.css" />
     <Content Include="Content\jquery\jquery-ui.min.css" />
@@ -790,6 +792,7 @@
     <Content Include="Scripts\restangular.min.js" />
     <Content Include="Scripts\video-js.swf" />
     <Content Include="Scripts\video.js" />
+    <Content Include="Scripts\videoFetch.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\pagination.html" />
     <Content Include="Web.config">
@@ -875,6 +878,12 @@
     <Content Include="Views\Account\RoleCreate.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Account\Flags.cshtml" />
+    <Content Include="Views\VideoFetch\Create.cshtml" />
+    <Content Include="Views\VideoFetch\Delete.cshtml" />
+    <Content Include="Views\VideoFetch\Details.cshtml" />
+    <Content Include="Views\VideoFetch\Edit.cshtml" />
+    <Content Include="Views\VideoFetch\Index.cshtml" />
+    <Content Include="Views\VideoFetch\oauth2callback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

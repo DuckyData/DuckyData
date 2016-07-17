@@ -184,7 +184,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult ListUsers(string searchString, int? page)
         {
             IEnumerable<userAdd> userList = accountFactory.getUserList(searchString);
-            int pageSize = 3;
+            int pageSize = 20;
             int pageNumber = (page ?? 1);
 
             return View(userList.ToPagedList(pageNumber,pageSize));
