@@ -22,8 +22,11 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
 
 
     $scope.playVideo = function () {
-        $scope.videoFetchData.player = null;
-        onYouTubeIframeAPIReady();
+        if ($scope.videoFetchData.player) {
+            $scope.videoFetchData.player.loadVideoById($scope.videoFetchData.selectedVideo.id.videoId)
+        } else {
+            onYouTubeIframeAPIReady();
+        }
     }
 
     
@@ -45,11 +48,11 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
     var done = true;
     function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
-            setTimeout(stopVideo, 6000);
+            setTimeout($scope.stopVideo, 6000);
             done = true;
         }
     }
-    function stopVideo() {
+    $scope.stopVideo = function() {
         $scope.videoFetchData.player.stopVideo();
     }
 });

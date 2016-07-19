@@ -34,6 +34,11 @@
     transition: transform .8s ease-in-out;
 }
 
+#videoPlayer .modal-content > button.close:focus,
+#videoPlayer .modal-content > button.close:active{
+    outline: none;
+}
+
 #videoPlayer .modal-content:hover button.close{
     visibility:visible;
 }
