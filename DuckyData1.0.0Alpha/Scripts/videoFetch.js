@@ -1,48 +1,55 @@
 ﻿// view controller
-duckyData.controller('videoFetchCtrl', function ($scope) {
+duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GAPIFactory) {
     var OAUTH2_CLIENT_ID = '254706105392-sac4crqcmko7lagnmkng0krfsdg1ongg';
-    var OAUTH2_SCOPES = [
-      'https://www.googleapis.com/auth/youtube'
-    ];
+    var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
 
-    $scope.googleApiClientReady = function() {
-        gapi.auth.init(function () {
-            window.setTimeout(checkAuth, 1);
+    $scope.videoFetchData = {
+        videoList: [],
+        selectedVideo: null,
+        player:null
+    }
+
+    $scope.videoFetchDataPageInfo = {
+        nextPageToken : null
+    }
+
+    $timeout(function () {
+        GAPIFactory.searchVideo($location.search().video).then(function (searchResult) {
+            console.log(searchResult);
+            $scope.videoFetchData.videoList = searchResult.data.videoList;
+        });
+    }, 2000)
+
+
+    $scope.playVideo = function () {
+        $scope.videoFetchData.player = null;
+        onYouTubeIframeAPIReady();
+    }
+
+    
+    function onYouTubeIframeAPIReady() {
+        //document.getElementById("player").remove();
+        $scope.videoFetchData.player = new YT.Player('player', {
+            height: '390',
+            width: '640',
+            videoId: $scope.videoFetchData.selectedVideo.id.videoId,
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
         });
     }
 
-    function checkAuth() {
-        gapi.auth.authorize({
-            client_id: OAUTH2_CLIENT_ID,
-            scope: OAUTH2_SCOPES,
-            immediate: false
-        }, handleAuthResult);
+    function onPlayerReady(event) {
+        event.target.playVideo();
     }
-
-    function handleAuthResult(authResult) {
-        if (authResult && !authResult.error) {
-            gapi.client.load('youtube', 'v3', function () {
-                search();
-            });
-      } 
+    var done = true;
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 6000);
+            done = true;
+        }
     }
-
-
-    function search(){
-        var q = 'cat';
-
-        console.log(gapi);
-        var request = gapi.client.youtube.search.list({
-            q: q,
-            maxResults: 30,
-            nextPageToken: 'CB4QAA',
-            part: 'snippet'
-        });
-
-        request.execute(function (response) {
-            var str = JSON.stringify(response.result);
-            console.log(response);
-            $('#search-container').html('<pre>' + str + '</pre>');
-        });
+    function stopVideo() {
+        $scope.videoFetchData.player.stopVideo();
     }
 });

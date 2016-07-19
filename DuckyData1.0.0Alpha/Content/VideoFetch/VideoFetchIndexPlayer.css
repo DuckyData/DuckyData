@@ -2,12 +2,7 @@
     text-align: left !important;
 }
 
-.modal-dialog{
-
-    border-bottom-right-radius: none !important;
-}
-
-#videoPlayer .modal-dialog .modal-content{
+#videoPlayer .modal-content{
     width: 670px;
     position: absolute;
     top: 40px;
@@ -20,8 +15,12 @@
     padding: 0 15px;
 }
 
-#videoPlayer .modal-content .modal-header > button.close{
+#videoPlayer .modal-content > button.close{
     margin-top: 5px;
+    visibility: hidden;
+    position: absolute;
+    top: -19px;
+    right: -13px;
     background: #E74C3C;
     text-shadow: none !important;
     opacity: 1;
@@ -35,12 +34,15 @@
     transition: transform .8s ease-in-out;
 }
 
-#videoPlayer .modal-content .modal-header > button.close:hover{
+#videoPlayer .modal-content:hover button.close{
+    visibility:visible;
+}
+
+#videoPlayer .modal-content > button.close:hover{
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
 }
 
 #videoPlayer .modal-content .modal-footer{
     text-align: left !important;
-    border-radius: none !important;
 }
