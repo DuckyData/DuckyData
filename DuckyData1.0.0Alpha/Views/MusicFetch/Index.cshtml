@@ -22,7 +22,7 @@
                         <div class="width-80 pull-left">{{musicFetchData.album.artist.name}}</div>
                     </div>
                 </div>
-                <div id="back-to-possible-album-list" class="pull-left" ng-click="musicFetchUICtrl.showTrackList = false;musicFetchUICtrl.showPossibleAlbum=true;musicFetchUICtrl.showPreviewWindow=false">
+                <div id="back-to-possible-album-list" class="pull-left" ng-click="musicFetchUICtrl.showTrackList = false;musicFetchUICtrl.showPossibleAlbum=true;musicFetchUICtrl.showPreviewWindow=false;playPausePreview('reset')">
                     <span class="fui-arrow-left"></span>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div id="music-data-info">
                 <div class="width-100 track-repeat" ng-repeat="track in musicFetchData.albumTrackList" ng-class="{'visible':track.id==musicFetchData.currentPreview.id}">
                     <div id="track-index" class="pull-left">{{$index + 1}}</div>
-                    <div id="track-title" class="pull-left">{{track.title_short}}</div>
+                    <div id="track-title" class="pull-left text-ellipsis">{{track.title_short}}</div>
                     <div id="track-playing" title="preview" class="pull-left">
                         <a class="fui-play" ng-click="musicFetchData.currentPreview = track;playPausePreview('play')"></a>
                     </div>
@@ -47,7 +47,7 @@
 
         <!-- list of possible album-->
         <div id="possible-album-list" ng-show="musicFetchUICtrl.showPossibleAlbum">
-            <div class="width-100" id="album-holder">
+            <div id="possible-album-holder">
                 <div class="album-repeat pull-left" ng-repeat="album in musicFetchData.possibleAlbunList" ng-click="musicFetchData.album = album;getAlbumTrack(album.tracklist)">
                     <div class="possible-album-cover pull-left">
                         <img ng-src={{album.cover}}>
@@ -65,9 +65,31 @@
                     </div>
                 </div>
             </div>
+            <div id="possible-album-footer">
+                <ul class="pagination">
+                    <li ng-click="jumpPage(albumPagination.current-1)">
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li  ng-repeat="page in albumPagination.pageList | limitTo: 5 : albumPagination.begin" ng-class="{'active':page == albumPagination.current}" ng-click="jumpPage(page)"><a href="#"><span>{{page||0}}</span></a></li>
+                    <li ng-click="jumpPage(albumPagination.current+1)">
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="loading-logo" ng-if="audioPreviewCtrl.loadAnotherOfAlbumBusy">
+                <div class="width-100">
+                    <span class="loading-circle">&nbsp;</span>
+                    <span class="loading-text">Loading...</span>
+                </div>
+            </div>
         </div>
         <!-- preview music module -->
-        <div id="track-preview-module" ng-class={'show-preview-module':musicFetchUICtrl.showPreviewWindow} ng-show="musicFetchUICtrl.showPreviewWindow">
+        <div id="track-preview-module" ng-class={'show-preview-module':musicFetchUICtrl.openPreviewWindow,'invisible':!musicFetchUICtrl.showPreviewWindow}>
             <div id="preview-album-cover" class="pull-left">
                 <img alt="cover" ng-src={{musicFetchData.album.cover}} />
             </div>
@@ -76,12 +98,13 @@
                     <div class="width-100 title">{{musicFetchData.currentPreview.title_short}}</div>
                     <div class="width-100 duration">Time:  30s</div>
                 </div>
-                <audio controls id="previewAudio" autoplay ng-src="{{musicFetchData.currentPreview.preview | trustUrl}}"></audio>
+                <audio controls id="previewAudio" ng-src="{{musicFetchData.currentPreview.preview | trustUrl}}"></audio>
             </div>
-            <div id="perview-module-status" class="pull-left" ng-click="musicFetchUICtrl.showPreviewWindow=!musicFetchUICtrl.showPreviewWindow">
+            <div id="perview-module-status" class="pull-left" ng-click="musicFetchUICtrl.openPreviewWindow=!musicFetchUICtrl.openPreviewWindow">
                 <span class="fui-arrow-right"></span>
                 <span class="fui-arrow-left"></span>
             </div>
         </div>
+        <app-Pagination></app-Pagination>
 </body>
 </html>

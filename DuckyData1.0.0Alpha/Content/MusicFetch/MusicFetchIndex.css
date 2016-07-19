@@ -83,6 +83,7 @@
 #music-data-info .track-repeat a.fui-pause
  {
     visibility: hidden;   
+    cursor: pointer;
 }
 
 #music-data-info .track-repeat:hover a.fui-link,
@@ -159,19 +160,58 @@
     height: auto;
     overflow: hidden;
     width: 100%;
-    padding: 0px;
+    padding: 0 !important;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 
+#possible-album-list #possible-album-holder{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background: #eee;
+    min-height: calc(100vh - 166px);
+}
+
+#possible-album-list #possible-album-footer{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+#possible-album-list #possible-album-footer >ul{
+    margin:5px 0 0 0 !important;
+}
 
 #possible-album-list .album-repeat{
-    width: 400px;
+
     height: 160px;
     margin: 20px;
+    width: calc((100% - 80px)/2);
     cursor: pointer;
     background: #f9f9f9;
 }
+
+@media (max-width: 1200px) {
+    #possible-album-list .album-repeat{
+        width: calc((100% - 80px)/2);
+    }
+}
+
+@media (max-width: 992px) {
+    #possible-album-list .album-repeat{
+        width: calc(100% - 80px);
+         margin: 20px 40px;
+    }
+}
+
+@media (max-width: 550px) {
+    #possible-album-list .album-repeat{
+        width: calc(100% - 0px);
+         margin: 20px 0px;
+    }
+}
+
 
 #possible-album-list .album-repeat:hover{
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
@@ -213,8 +253,31 @@
 }
 
 .possible-album-info{
-    width: 240px;
+    width: calc(100% - 160px);
     height: 100%;
     padding: 10px;
 }
 
+@media (max-width: 570px) {
+
+    #track-preview-module #preview-album-cover, #track-preview-module #preview-album-cover img{
+        width: 100px;
+        height: 100px;
+        margin-top: 5px;
+    }
+    #track-preview-module{
+        width: 360px;
+    }
+    
+    #track-preview-module  #preview-album-console audio{
+        bottom:10px;
+        margin-left: 0px;
+        width: 230px;
+    }
+
+    #track-preview-module #preview-album-console{
+        width: calc(100% - 120px);
+        padding: 10px 5px;
+        height: 120px;
+    }
+}
