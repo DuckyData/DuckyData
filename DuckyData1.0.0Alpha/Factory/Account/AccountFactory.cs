@@ -9,55 +9,63 @@ using System.Text;
 
 namespace DuckyData1._0._0Alpha.Factory.Account
 {
-   public class AccountFactory
-   {
-       private DatabaseConnection conn = new DatabaseConnection();
-       private DataContext database;
-       private ApplicationDbContext userDB = new ApplicationDbContext();
+    public class AccountFactory
+    {
+        private DatabaseConnection conn = new DatabaseConnection();
+        private DataContext database;
+        private ApplicationDbContext userDB = new ApplicationDbContext();
 
-       public AccountFactory() {
-           this.database = conn.getConnection();
-       }
+        public AccountFactory()
+        {
+            this.database = conn.getConnection();
+        }
 
-       public void getDatabase() {
-           if (this.database == null) {
-               this.database = conn.getConnection();
-           }
-       }
-
-        public IEnumerable<userAdd> getUserList(string searchString) {
-            
-            var userList = from u in userDB.Users select u;
-            if(!String.IsNullOrEmpty(searchString))
+        public void getDatabase()
+        {
+            if (this.database == null)
             {
-                 userList = userList.Where(s => s.lastName.Contains(searchString)
-                                       || s.firstName.Contains(searchString));
+                this.database = conn.getConnection();
             }
-            userList = userList.OrderBy(us=>us.firstName);
+        }
+
+        public IEnumerable<userAdd> getUserList(string searchString)
+        {
+
+            var userList = from u in userDB.Users select u;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                userList = userList.Where(s => s.lastName.Contains(searchString)
+                                      || s.firstName.Contains(searchString));
+            }
+            userList = userList.OrderBy(us => us.firstName);
             getDatabase();
-             
+
             return Mapper.Map<IEnumerable<userAdd>>(userList);
         }
 
-       public User_Activation_Code getRegiseInfoByCode(string activationCode) {
-           getDatabase();
-           User_Activation_Code userCode = database.User_Activation_Codes.First(u => u.Activation_Code == activationCode);
-           if (userCode != null)
-           {
-               return userCode;
-           }else{
-               return null;
-           }
-       }
+        public User_Activation_Code getRegiseInfoByCode(string activationCode)
+        {
+            getDatabase();
+            User_Activation_Code userCode = database.User_Activation_Codes.First(u => u.Activation_Code == activationCode);
+            if (userCode != null)
+            {
+                return userCode;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-       public void createRegiseInfo(RegisterViewModel newUser, string code)
-       {
+        public void createRegiseInfo(RegisterViewModel newUser, string code)
+        {
             User_Activation_Code newRegistInfo = new User_Activation_Code(newUser.Email, newUser.Password, code);
             userDB.User_Activation_Codes.Add(newRegistInfo);
             userDB.SaveChanges();
-       }
+        }
 
-        public string createNewUser(User_Activation_Code newUser) {
+        public string createNewUser(User_Activation_Code newUser)
+        {
             ApplicationUser userToAdd = new ApplicationUser(newUser.User_Account, newUser.Password);
             userToAdd.Id = hashEmail(newUser.User_Account);
             userDB.Users.Add(userToAdd);
@@ -65,22 +73,25 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             return userToAdd.Id;
         }
 
-        public ApplicationUser findUserByEmail(string email) {
+        public ApplicationUser findUserByEmail(string email)
+        {
             ApplicationUser user = userDB.Users.First(u => u.Email == email);
 
-            if(user != null)
+            if (user != null)
             {
                 return user;
             }
-            else {
+            else
+            {
                 return null;
             }
         }
 
-        public ApplicationUser findUserById(string id) {
+        public ApplicationUser findUserById(string id)
+        {
             ApplicationUser user = userDB.Users.First(u => u.Id == id);
 
-            if(user != null)
+            if (user != null)
             {
                 return user;
             }
@@ -91,9 +102,10 @@ namespace DuckyData1._0._0Alpha.Factory.Account
 
         }
 
-        public bool updateUserInfo(userAdd userUpdate) {
+        public bool updateUserInfo(userAdd userUpdate)
+        {
             ApplicationUser user = userDB.Users.SingleOrDefault(u => u.Id == userUpdate.Id);
-            
+
             user.firstName = userUpdate.FirstName;
             user.lastName = userUpdate.LastName;
             user.UserName = userUpdate.Email;
@@ -101,7 +113,8 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             return true;
         }
 
-        public void adminUpdateUserInfo(ApplicationUser dest, adminEditUser src) {
+        public void adminUpdateUserInfo(ApplicationUser dest, adminEditUser src)
+        {
 
             dest.firstName = src.FirstName;
             dest.lastName = src.LastName;
@@ -109,7 +122,8 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             userDB.SaveChanges();
         }
 
-        public ApplicationUser getUserById(string id) {
+        public ApplicationUser getUserById(string id)
+        {
             ApplicationUser user = userDB.Users.First(u => u.Id == id);
             return user;
         }
@@ -127,10 +141,11 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             return hashValue.ToString();
         }
 
-        public bool resetCode(string email, string code) {
+        public bool resetCode(string email, string code)
+        {
             getDatabase();
             User_Activation_Code userCode = userDB.User_Activation_Codes.FirstOrDefault(u => u.User_Account == email);
-            if(userCode != null)
+            if (userCode != null)
             {
                 userCode.Activation_Code = code;
                 userDB.SaveChanges();
@@ -142,18 +157,20 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             }
         }
 
-        public User_Activation_Code findUserCodeByCode(string code) {
+        public User_Activation_Code findUserCodeByCode(string code)
+        {
             getDatabase();
             User_Activation_Code userCode = userDB.User_Activation_Codes.FirstOrDefault(u => u.Activation_Code == code);
 
-            if(userCode != null)
+            if (userCode != null)
             {
                 return userCode;
             }
-            else {
+            else
+            {
                 return null;
             }
         }
 
     }
-} 
+}
