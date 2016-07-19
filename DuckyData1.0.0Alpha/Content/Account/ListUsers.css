@@ -1,0 +1,47 @@
+﻿#list-user {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 0px;
+    background: #f1f1f1;
+    position: relative;
+}
+
+.list-user-header{
+    padding: 6px 10px;
+    margin: 0;
+    height: 40px;
+    background: #e3e3e3;
+}
+
+
+.list-user-header h3{
+    width: 100px;
+    overflow-y: hidden;
+    display: inline;
+    margin: 0;
+}
+
+.list-user-header form > div{
+    width: 340px;
+}
+.list-user-footer{
+    width: 100%;
+    margin: 0;
+    background: #e3e3e3;
+    height: 40px;
+    padding: 0 10px;
+    position: absolute;
+    bottom: 0;
+}
+.list-user-footer div.pagination-container{
+    height: 40px;
+}
+.list-user-footer div.pagination-container ul{
+    margin: 4px 0;
+}
+.list-user-body{
+    margin: 0;
+    overflow-y: auto;
+    height: calc(100% - 80px);    
+}

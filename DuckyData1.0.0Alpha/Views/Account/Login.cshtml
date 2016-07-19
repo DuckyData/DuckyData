@@ -1,0 +1,39 @@
+﻿@using DuckyData1._0._0Alpha.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "SIGN IN";
+}
+
+<div id="sign-in">
+    <h2>@ViewBag.Title</h2>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="email-sign-in-form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control",placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="password-sign-in-form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder="Password"})
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 sign-in-input">
+                    <input type="submit" value="SIGN IN" class="btn col-md-12 btn-primary" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 new-account-btn">
+                    <button class="btn col-md-12 btn-info">@Html.ActionLink("CREATE AN ACCOUNT","Register","Account")</button>
+                </div>
+            </div>
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>
+        }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
