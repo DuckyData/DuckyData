@@ -885,6 +885,7 @@
     <Content Include="Views\VideoFetch\Details.cshtml" />
     <Content Include="Views\VideoFetch\Edit.cshtml" />
     <Content Include="Views\VideoFetch\Index.cshtml" />
+    <Content Include="Views\VideoFetch\oauth2callback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
