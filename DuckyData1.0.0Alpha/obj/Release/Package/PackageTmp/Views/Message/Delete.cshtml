@@ -1,0 +1,126 @@
+﻿@model DuckyData1._0._0Alpha.ViewModels.MessageBase
+
+@{
+    ViewBag.Title = "Message";
+}
+
+<h2>Message</h2>
+
+
+<div>
+    <h4>Message</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Recipient)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Recipient)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.Body)
+        </dd>
+
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AttachUrl)
+        </dt>
+
+
+
+
+
+        @{
+            if (Model.ContentType != null)
+            {
+                if (Model.ContentType.Contains("audio"))
+                {
+                    <dd>
+                        <audio controls>
+                            <source src="@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
+                            Audio playback not supported.
+                        </audio> <br />
+                        <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download audio</a>
+                    </dd>
+                }
+                else if (Model.ContentType.Contains("video"))
+                {
+                    <dd>
+                        <video width="300" height="280" controls>
+                            <source src="@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
+                            Video playback not supported.
+                        </video> <br />
+                        <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download video</a>
+                    </dd>
+                }
+                else if (Model.ContentType.Contains("image"))
+                {
+                    <dd>
+                        <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>
+                            <img src='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' alt="@Model.ContentName" title="@Model.ContentType" style="width: 400px; height:400px;" />
+                        </a>
+                    </dd>
+                }
+                else
+                {
+                    <dd>
+                        <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>File - @Model.ContentType</a>
+                    </dd>
+                }
+            }
+            else
+            {
+                <dd>No Attachment.</dd>
+            }
+        }
+
+
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> <br />
+            @Html.ActionLink("Inbox", "Inbox") |
+            @Html.ActionLink("Sent", "Sent") 
+        </div>
+    }
+</div>
+
+</body>
+</html>

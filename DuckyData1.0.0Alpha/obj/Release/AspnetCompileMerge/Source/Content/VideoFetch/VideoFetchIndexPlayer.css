@@ -1,0 +1,53 @@
+﻿#videoPlayer{
+    text-align: left !important;
+}
+
+#videoPlayer .modal-content{
+    width: 670px;
+    position: absolute;
+    top: 40px;
+    left: calc(50vw - 340px);
+}
+
+#videoPlayer .modal-content .modal-header{
+    height: 40px;
+    line-height: 30px;
+    padding: 0 15px;
+}
+
+#videoPlayer .modal-content > button.close{
+    margin-top: 5px;
+    visibility: hidden;
+    position: absolute;
+    top: -19px;
+    right: -13px;
+    background: #E74C3C;
+    text-shadow: none !important;
+    opacity: 1;
+    color: #fff;
+    width: 25px;
+    border-radius: 50px;
+    border: 1px solid red;
+    height: 25px;
+    font-size: 95%;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
+}
+
+#videoPlayer .modal-content > button.close:focus,
+#videoPlayer .modal-content > button.close:active{
+    outline: none;
+}
+
+#videoPlayer .modal-content:hover button.close{
+    visibility:visible;
+}
+
+#videoPlayer .modal-content > button.close:hover{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+#videoPlayer .modal-content .modal-footer{
+    text-align: left !important;
+}

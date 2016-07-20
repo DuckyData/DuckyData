@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/MusicFetch/MusicFetchIndex.css")
+    @Styles.Render("~/Content/helper.css")
+    <script type="text/javascript" src="../../Scripts/musicFetchCreate.js"></script>
+</head>
+<body ng-controller="musicFetchCreateCtrl">
+    <div class="width-100">
+        <form>
+            <label>Title: <input name="title"  /></label><br>
+            <p>
+        Hello There, <span id="name"></span>
+    </p>
+            <label>File: <input name="file" type="file" accept="audio/*" ng-model="musicFetchCreateData.file" /></label><br>
+            <button type="submit" ng-click="textFunction()">Submit</button>
+            <button class="btn btn-primary" ng-click="connectFunction()">Connect</button>
+        </form>
+    </div>
+</body>
+</html>

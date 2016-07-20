@@ -1,0 +1,96 @@
+﻿@model DuckyData1._0._0Alpha.Models.BugReport
+
+
+@using(Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>BugReport</h4>
+        <hr />
+        @Html.ValidationSummary(true,"",new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.subject)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.subject)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.category)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.category)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.body)
+            </label>
+            <div class="col-md-10">
+                @Html.Raw(Model.body)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.submittedBy)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.submittedBy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.status)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.status)
+            </div>
+        </div>
+      
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="command" value="Save the Change" class="btn col-md-10 btn-primary" />
+            </div>
+        </div>
+        <div  class="@(Model.status == "Close"?"hide form-group":"form-group")">
+            <div class="col-md-offset-2 col-md-10">
+               <input readonly value="Close the Bug Report" class="btn col-md-10 btn-danger" data-toggle="modal" data-target="#closeTheReport" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index") | 
+    @Html.ActionLink("Create Follow Ups","Create","FollowUps")
+</div>
+
+<div class="modal fade confirm-modal" id="closeTheReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to close this bug report, this will automaticly send message to user with the update.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm pull-left" data-dismiss="modal">Cancel</button>
+        @using(Html.BeginForm())
+        {@Html.AntiForgeryToken()
+            <input type="submit" name="command" value="Finalize" class="btn btn-danger btn-sm pull-right" />
+        }
+      </div>
+    </div>
+  </div>
+</div>
