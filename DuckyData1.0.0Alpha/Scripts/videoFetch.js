@@ -21,9 +21,9 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
     $timeout(function () {
         GAPIFactory.searchVideo($location.search().video,{nextPageToken: null, prevPageToken: null}).then(function (searchResult) {
             console.log(searchResult);
-            $scope.videoFetchDataPageInfo.nextPageToken = searchResult.data.nextPageToken;
-            $scope.videoFetchDataPageInfo.prevPageToken = searchResult.data.prevPageToken;
-            $scope.videoFetchData.videoList = searchResult.data.videoList;
+            $scope.videoFetchDataPageInfo.nextPageToken = searchResult.nextPageToken;
+            $scope.videoFetchDataPageInfo.prevPageToken = searchResult.prevPageToken;
+            $scope.videoFetchData.videoList = searchResult.videoList;
         });
     }, 2000)
 
@@ -66,39 +66,39 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
             // go next
             GAPIFactory.searchVideo($location.search().video, { nextPageToken: $scope.videoFetchDataPageInfo.nextPageToken, prevPageToken:null }).then(function (searchResult) {
                 console.log(searchResult);
-                $scope.videoFetchDataPageInfo.nextPageToken = searchResult.data.nextPageToken;
-                $scope.videoFetchDataPageInfo.prevPageToken = searchResult.data.prevPageToken;
-                if (searchResult.data.nextPageToken) {
+                $scope.videoFetchDataPageInfo.nextPageToken = searchResult.nextPageToken;
+                $scope.videoFetchDataPageInfo.prevPageToken = searchResult.prevPageToken;
+                if (searchResult.nextPageToken) {
                     $scope.videoFetchDataUICtrl.disableNext = false;
                 } else {
                     $scope.videoFetchDataUICtrl.disableNext = true;
                 }
 
-                if (searchResult.data.prevPageToken) {
+                if (searchResult.prevPageToken) {
                     $scope.videoFetchDataUICtrl.disablePrev = false;
                 } else {
                     $scope.videoFetchDataUICtrl.disablePrev = true;
                 }
-                $scope.videoFetchData.videoList = searchResult.data.videoList;
+                $scope.videoFetchData.videoList = searchResult.videoList;
             })
         } else {
             // go prev
             GAPIFactory.searchVideo($location.search().video, { nextPageToken: null, prevPageToken: $scope.videoFetchDataPageInfo.prevPageToken }).then(function (searchResult) {
                 console.log(searchResult);
-                $scope.videoFetchDataPageInfo.nextPageToken = searchResult.data.nextPageToken;
-                $scope.videoFetchDataPageInfo.prevPageToken = searchResult.data.prevPageToken;
-                if (searchResult.data.nextPageToken) {
+                $scope.videoFetchDataPageInfo.nextPageToken = searchResult.nextPageToken;
+                $scope.videoFetchDataPageInfo.prevPageToken = searchResult.prevPageToken;
+                if (searchResult.nextPageToken) {
                     $scope.videoFetchDataUICtrl.disableNext = false;
                 } else {
                     $scope.videoFetchDataUICtrl.disableNext = true;
                 }
 
-                if (searchResult.data.prevPageToken) {
+                if (searchResult.prevPageToken) {
                     $scope.videoFetchDataUICtrl.disablePrev = false;
                 } else {
                     $scope.videoFetchDataUICtrl.disablePrev = true;
                 }
-                $scope.videoFetchData.videoList = searchResult.data.videoList;
+                $scope.videoFetchData.videoList = searchResult.videoList;
             })
         }
     }

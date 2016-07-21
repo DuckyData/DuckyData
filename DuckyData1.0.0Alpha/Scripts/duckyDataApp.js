@@ -17,7 +17,6 @@ duckyData.config(function ($httpProvider, $locationProvider, toastrConfig) {
     });
 });
 
-
 duckyData.service('APISwitch', function () {
     var API_ENV = {
         gracenote: 'https://c415878569.web.cddbp.net/webapi/json/1.0/',
@@ -34,70 +33,27 @@ duckyData.service('APISwitch', function () {
 duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
     var OAUTH2_CLIENT_ID = '254706105392-sac4crqcmko7lagnmkng0krfsdg1ongg';
     var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
-
+    // get session, set token
     function getConnection() {
-        console.log('get connection');
         var deferred = $q.defer();
-        gapi.auth.init(function () {
-            console.log('done init');
-            gapi.auth.authorize({
-                client_id: OAUTH2_CLIENT_ID,
-                response_type:'token',
-                scope: OAUTH2_SCOPES,
-                immediate: false
-            }).then(function (signInResult) {
-                console.log(signInResult);
-                if (signInResult && !signInResult.error) {
-                    // connected
-                    $cookies.put('gapiToken', signInResult.access_token);
-                    deferred.resolve({ status: 200 });
-                } else {
-                    deferred.resolve({ status: 400 });
-                }
-            });
+        gapi.auth.authorize({
+            client_id: OAUTH2_CLIENT_ID,
+            response_type: 'token',
+            scope: OAUTH2_SCOPES,
+            immediate: false
+        }).then(function (signInResult) {
+            console.log(gapi.auth.getToken());
+            if (signInResult && !signInResult.error) {
+                $cookies.put('gapiToken', signInResult.access_token);
+                deferred.resolve({ status: 200 });
+            } else {
+                deferred.resolve({ status: 400 });
+            }
         });
         return deferred.promise;
     }
 
-    function checkConnection() {
-        var deferred = $q.defer();
-        var token =  $cookies.get('gapiToken');
-        if (!token) {
-            getConnection().then(function (result) {
-                if (result.status == 200) {
-                    deferred.resolve({ status: 200 });
-                } else {
-                    deferred.resolve({ status: 400 });
-                }
-            })
-        } else {
-            console.log(gapi.auth.getToken());
-            deferred.resolve({ status: 200 });
-            console.log('connected in check');
-        }
-        return deferred.promise;
-    }
-
     function searchVideo(param, pageInfo) {
-        var deferred = $q.defer();
-        checkConnection().then(function (connection) {
-            if (connection.status == 200) {
-                searchFunction(param, pageInfo).then(function (result) {
-                    deferred.resolve({ status: 200, data: result });
-                });
-            } else {
-                getConnection(param, pageInfo).then(function () {
-                    searchFunction().then(function (result) {
-                        deferred.resolve({ status: 200, data: result });
-                    });
-                })
-            }
-        })
-
-        return deferred.promise;
-    }
-
-    function searchFunction(param, pageInfo) {
         var deferred = $q.defer();
         var page = pageInfo.nextPageToken ? pageInfo.nextPageToken : pageInfo.prevPageToken;
         gapi.client.load('youtube', 'v3', function () {
@@ -110,8 +66,17 @@ duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
                 part: 'snippet'
             });
             request.execute(function (response) {
-                console.log(gapi);
-                deferred.resolve({ videoList: response.result.items, pageInfo: response.pageInfo, nextPageToken: response.nextPageToken, prevPageToken: response.prevPageToken });
+                if (response.error && (response.code == 401 || response.code == 403)) {
+                    // token expired, reconnect
+                    getConnection().then(function () {
+                        searchVideo(param, pageInfo).then(function (response) {
+                            console.log(response);
+                            deferred.resolve(response);
+                        })
+                    })
+                } else {
+                    deferred.resolve({ videoList: response.result.items, pageInfo: response.pageInfo, nextPageToken: response.nextPageToken, prevPageToken: response.prevPageToken });
+                }
             });
         });
         return deferred.promise;
