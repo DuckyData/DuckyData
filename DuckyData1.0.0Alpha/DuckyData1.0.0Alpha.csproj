@@ -269,6 +269,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\VideoFetch\VideoFetchIndex.css" />
     <Content Include="Content\VideoFetch\VideoFetchIndexPlayer.css" />
+    <Content Include="Content\VideoFetch\VideoFetchUpload.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\jquery\jquery-ui.css" />
     <Content Include="Content\jquery\jquery-ui.min.css" />
@@ -325,7 +326,10 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\autosize.js" />
     <Content Include="Scripts\client.js" />
+    <Content Include="Scripts\client_plusone.js" />
+    <Content Include="Scripts\cors_upload.js" />
     <Content Include="Scripts\duckyDataApp.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
@@ -795,6 +799,7 @@
     <Content Include="Scripts\video-js.swf" />
     <Content Include="Scripts\video.js" />
     <Content Include="Scripts\videoFetch.js" />
+    <Content Include="Scripts\VideoUpload.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\pagination.html" />
     <Content Include="Web.config">
@@ -886,6 +891,7 @@
     <Content Include="Views\VideoFetch\Edit.cshtml" />
     <Content Include="Views\VideoFetch\Index.cshtml" />
     <Content Include="Views\VideoFetch\oauth2callback.cshtml" />
+    <Content Include="Views\VideoFetch\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

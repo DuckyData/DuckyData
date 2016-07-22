@@ -1,0 +1,136 @@
+﻿duckyData.controller('videoUploadCtrl', function ($scope, $location, $timeout, $window, $cookies, $q, GAPIFactory, duckyDataFileUploader, toastr) {
+    $scope.videoFileUploader = duckyDataFileUploader.uploaderVideo;
+
+    $scope.videoFileUploader.onAfterAddingFile = function (fileItem) {
+        $timeout(function () {
+            autosize(document.querySelectorAll('textarea'));
+        }, 200)
+        console.log('resize');
+        fileItem.metadataTitle = fileItem._file.name
+    };
+    $scope.videoUploadData = {
+        user: {
+            imgURL: $cookies.get('userYoutubeImage'),
+            channel: $cookies.get('userYoutubeChannel'),
+        },
+        currentUploadingVideo:null
+    }
+
+    $scope.videoUploadUICtrl = {
+        showUserLogo: $scope.videoUploadData.user.imgURL ? true: false
+    }
+
+    $scope.videoInputTagClick = function () {
+        $("#video-file-select-tag").click();
+    }
+    $scope.goToMyChannel = function () {
+        var url = 'https://www.youtube.com/channel/' + $cookies.get('userYoutubeChannel');
+        $window.open(url, '_blank');
+    }
+
+    var uploadVideo;
+    var UploadVideo = function () {
+        this.tags = ['youtube-cors-upload'];
+        this.categoryId = 22;
+        this.videoId = '';
+        this.uploadStartTime = 0;
+    };
+
+    UploadVideo.prototype.ready = function (accessToken) {
+        var deferred = $q.defer();
+        this.accessToken = accessToken;
+        this.gapi = gapi;
+        this.authenticated = true;
+        this.gapi.client.request({
+            path: '/youtube/v3/channels',
+            params: {
+                part: 'snippet',
+                mine: true
+            },
+            callback: function (response) {
+                if (response.error) {
+                    console.log(response.error.message);
+                    deferred.resolve({status:403});
+                } else {
+                    $cookies.put('userYoutubeChannel', response.items[0].id);
+                    $cookies.put('userYoutubeImage', response.items[0].snippet.thumbnails.default.url);
+                    console.log(response)
+                    $scope.videoUploadUICtrl.showUserLogo = true;
+                    deferred.resolve({ status: 200 });
+                }
+            }.bind(this)
+        });
+        return deferred.promise;
+    };
+
+    $scope.uploadAllVideos = function() {
+        // get connestion
+        if (uploadVideo == null) {
+            uploadVideo = new UploadVideo();
+            GAPIFactory.signIn().then(function (result) {
+                if (result.status == 200) {
+                    uploadVideo.ready(result.token).then(function () {
+                        UploadVideo.prototype.uploadFile(0)
+                    });
+                }
+            })
+        }
+    }
+
+    UploadVideo.prototype.uploadFile = function (index) {
+        $scope.videoUploadData.currentUploadingVideo = file;
+        var deferred = $q.defer();
+        if (index+1 <= $scope.videoFileUploader.queue.length) {
+            var file = $scope.videoFileUploader.queue[index];
+            var metadata = {
+                snippet: {
+                    title: file.metadataTitle?file.metadataTitle:'test',
+                    description: file.metadataDesc?file.metadataDesc:'test',
+                    tags: this.tags,
+                    categoryId: this.categoryId
+                },
+                status: {
+                    privacyStatus: file.privacyStatus ? file.privacyStatus : 'public'
+                }
+            };
+            var uploader = new MediaUploader({
+                baseUrl: 'https://www.googleapis.com/upload/youtube/v3/videos',
+                file: file._file,
+                token: $cookies.get('gapiToken'),
+                metadata: metadata,
+                params: {
+                    part: Object.keys(metadata).join(',')
+                },
+                onError: function (data) {
+                    var message = data;
+                    try {
+                        var errorResponse = JSON.parse(data);
+                        message = errorResponse.error.message;
+                        toastr.error(message);
+                    } finally {
+                        toastr.error(message);
+                        alert(message);
+                    }
+                    UploadVideo.prototype.uploadFile(index + 1);
+                }.bind(this),
+                onProgress: function (data) {
+                    console.log('uploading');
+                    var currentTime = Date.now();
+                    var bytesUploaded = data.loaded;
+                    var totalBytes = data.total;
+                    file.pct = Math.round((data.loaded / data.total)*100);
+                    $scope.$apply(file.pct);
+                }.bind(this),
+                onComplete: function (data) {
+                    UploadVideo.prototype.uploadFile(index + 1);
+                }.bind(this)
+            });
+
+            this.uploadStartTime = Date.now();
+            uploader.upload();
+        }
+        // This won't correspond to the *exact* start of the upload, but it should be close enough.
+        
+    };
+
+});

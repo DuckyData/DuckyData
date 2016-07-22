@@ -1,0 +1,124 @@
+﻿#video-uploader{
+    background: #f9f9f9;
+    width: 100%;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+#video-uploader form{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#video-uploader #video-drop-box{
+    width: calc(100% - 60px);
+    background: #fff;
+    margin: 10px 30px;
+    height: 200px;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+#video-uploader #video-drop-display{
+    height: calc(100% - 295px);
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 30px 30px 10px 30px;
+}
+
+#video-uploader #video-uploader-footer{
+    background: #48C9B0;
+    height: 45px;
+    padding: 0 30px;
+}
+#video-uploader #video-uploader-footer button{
+    margin-top: 4px;
+}
+#video-uploader .video-file-name{
+    width: calc(100% - 200px);
+}
+
+#video-uploader .video-file-remove{
+    width: 40px;
+    cursor: pointer;
+}
+
+#video-uploader .video-file-remove span{
+    visibility:hidden;
+}
+
+#video-uploader .video-upload-repeat:hover .video-file-remove span{
+    visibility:visible;
+    color: #E74C3C;
+}
+#video-uploader .video-file-size{
+    width: 90px;
+}
+
+#video-uploader .video-upload-title{
+    font-weight: 600;
+}
+
+#video-uploader .video-file-status{
+    width: 70px;
+}
+#video-uploader .video-upload-title  .video-file-name {
+    width: calc(100% - 160px);
+}
+
+#video-uploader #youtube-user-icon{
+    position: absolute;
+    top:278px;
+    left: calc(50% - 32px);
+    width: 64px;
+    height: 64px;
+    border-radius: 300px;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    cursor:pointer; 
+}
+
+.video-upload-repeat{
+    padding-left: 5px;
+    margin-top: 30px;
+}
+
+.video-upload-repeat input{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius:0;
+    border-bottom: #48C9B0 1px solid;
+    height: 30px;
+    width: calc(100% - 20px)!important;
+    display: block !important;
+    background: transparent;
+    margin-right: 0;
+    max-width: none;
+}
+
+.video-upload-repeat input:hover,
+.video-upload-repeat:hover{
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);  
+}
+
+.video-upload-repeat textarea{
+    margin-left: 70px;
+    margin-top: 10px;
+    width: calc(100% - 220px);
+    max-width: none;
+    font-size: 90%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: #48C9B0 1px solid;
+    background: transparent;
+     resize: none;
+}
+
+.video-upload-repeat textarea:focus,
+.video-upload-repeat textarea:active{
+    outline: none;
+}

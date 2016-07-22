@@ -128,5 +128,11 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult oauth2callback() {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Upload()
+        {
+            return View();
+        }
     }
 }

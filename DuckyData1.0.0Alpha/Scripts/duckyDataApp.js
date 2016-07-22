@@ -32,7 +32,7 @@ duckyData.service('APISwitch', function () {
 
 duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
     var OAUTH2_CLIENT_ID = '254706105392-sac4crqcmko7lagnmkng0krfsdg1ongg';
-    var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
+    var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube','https://www.googleapis.com/auth/youtube.upload'];
     // get session, set token
     function getConnection() {
         var deferred = $q.defer();
@@ -45,7 +45,7 @@ duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
             console.log(gapi.auth.getToken());
             if (signInResult && !signInResult.error) {
                 $cookies.put('gapiToken', signInResult.access_token);
-                deferred.resolve({ status: 200 });
+                deferred.resolve({ status: 200, token: $cookies.get('gapiToken') });
             } else {
                 deferred.resolve({ status: 400 });
             }
@@ -83,13 +83,15 @@ duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
     }
 
     return {
-        searchVideo: searchVideo
+        searchVideo: searchVideo,
+        signIn: getConnection
     }
 });
 
 duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
-    var uploader = new FileUploader();
-    uploader.filters.push({
+    var uploaderAudio = new FileUploader();
+    var uploaderVideo = new FileUploader();
+    uploaderAudio.filters.push({
         name: 'audioFilter',
         fn: function (item, options) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
@@ -99,12 +101,12 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
                 toastr.error('We only support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC, AMR and WMA','Unrecongnize File Type');
                 return false;
             }
-            
         }
     });
 
     return {
-        uploader: uploader
+        uploaderAudio: uploaderAudio,
+        uploaderVideo: uploaderVideo
     }
 });
 
