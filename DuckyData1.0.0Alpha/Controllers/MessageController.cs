@@ -1,7 +1,13 @@
 ﻿using AutoMapper;
 using DuckyData1._0._0Alpha.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
+using System.Web.Services;
+using System.Linq;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -15,6 +21,44 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult Index()
         {
             return View(m.AllMsg());
+        }
+
+        [HttpPost]
+        private string SearchRecipients(string searchTerm, int sizelimit = 10)
+        {
+            Regex regexEmail = new Regex(@"^.*[\.].*[@]?.*$");
+            Match matchEmail = regexEmail.Match(searchTerm);
+
+            List<Models.Message> results = new List<Models.Message>();
+            var query = m.GetMessages();
+
+            if (matchEmail.Success == true)
+            {
+                query = query.Where(x => x.Recipient.ToUpper().Contains(searchTerm.ToUpper()))
+                            .GroupBy(x => x.Recipient)
+                            .Select(s => s.FirstOrDefault());
+            }
+
+            results = query.ToList();
+
+            List<Dictionary<string, string>> suggestions = new List<Dictionary<string, string>>(results.Count);
+            foreach (var result in results)
+            {
+                Dictionary<string, string> record = new Dictionary<string, string>();
+                string email = result.Recipient;
+                record.Add("email", email);
+
+                suggestions.Add(record);
+            }
+
+            return (new JavaScriptSerializer()).Serialize(suggestions);
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetRecipientSuggestions(string searchTerm)
+        {
+            return SearchRecipients(searchTerm);
         }
 
         // GET: Message

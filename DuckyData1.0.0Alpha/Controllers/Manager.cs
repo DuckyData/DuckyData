@@ -87,6 +87,10 @@ namespace DuckyData1._0._0Alpha.Controllers
                 return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
         }
 
+        public IEnumerable<Message> GetMessages() {
+            return ds.Messages.AsQueryable();
+        }
+
         public IEnumerable<MessageBase> AllMsg()
         {
             var messages = ds.Messages.AsEnumerable();
