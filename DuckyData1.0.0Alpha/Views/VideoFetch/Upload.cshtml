@@ -21,7 +21,7 @@
                     <div class="pull-left video-file-name">Name</div>
                     <div class="pull-left video-file-size">Size</div>
                 </div>
-                <img ng-src={{videoUploadData.user.imgURL}} ng-show="videoUploadUICtrl.showUserLogo" ng-click="goToMyChannel()" alt="user" id="youtube-user-icon">
+                @*<img ng-src={{videoUploadData.user.imgURL}} ng-show="videoUploadUICtrl.showUserLogo" ng-click="goToMyChannel()" alt="user" id="youtube-user-icon">*@
                 <div class="video-upload-repeat width-100" ng-repeat="video in videoFileUploader.queue">
                     <div class="width-100">
                         <div class="pull-left video-file-status">{{video.pct | percentage}}</div>

@@ -1,11 +1,11 @@
 ﻿@model DuckyData1._0._0Alpha.Models.BugReport
-
+@Styles.Render("~/Content/BugReport/editBugReport.css")
 
 @using(Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="form-horizontal" id="edit-bug-report">
         <h4>BugReport</h4>
         <hr />
         @Html.ValidationSummary(true,"",new { @class = "text-danger" })
@@ -34,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.body)
             </label>
             <div class="col-md-10">
-                @Html.Raw(Model.body)
+                @Html.DisplayFor(model => model.body)
             </div>
         </div>
 
@@ -55,8 +55,17 @@
                 @Html.DisplayFor(model => model.status)
             </div>
         </div>
-      
+
         <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.assignTo)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.assignTo)
+            </div>
+        </div>
+      
+        <div class="@(Model.status == "Close"?"hide form-group":"form-group")">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" name="command" value="Save the Change" class="btn col-md-10 btn-primary" />
             </div>
