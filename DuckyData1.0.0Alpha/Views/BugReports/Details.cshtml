@@ -1,5 +1,5 @@
 ﻿@model DuckyData1._0._0Alpha.Models.BugReport
-
+@Styles.Render("~/Content/BugReport/listBugReport.css")
 <div>
     <h4>BugReport</h4>
     <hr />
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12 followUpDesc">
-                    @Html.DisplayFor(modelitem => i.Description)
+                    @Html.Raw(i.Description)
                 </div>
             </div>
         }

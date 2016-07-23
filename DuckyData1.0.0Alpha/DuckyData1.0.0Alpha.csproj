@@ -225,6 +225,7 @@
     <Compile Include="Controllers\Manager.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\MusicFetchController.cs" />
+    <Compile Include="Controllers\VideoFetchController.cs" />
     <Compile Include="Factory\Account\AccountFactory.cs" />
     <Compile Include="Factory\BugReports\BugRereportFactory.cs" />
     <Compile Include="Factory\DatabaseConnection.cs" />
@@ -261,10 +262,17 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\BugReport\createBugReport.css" />
+    <Content Include="Content\BugReport\createFollowUp.css" />
+    <Content Include="Content\BugReport\editBugReport.css" />
     <Content Include="Content\BugReport\listBugReport.css" />
     <Content Include="Content\helper.css" />
+    <Content Include="Content\MusicFetch\audioUploader.css" />
     <Content Include="Content\MusicFetch\MusicFetchIndex.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\VideoFetch\VideoFetchIndex.css" />
+    <Content Include="Content\VideoFetch\VideoFetchIndexPlayer.css" />
+    <Content Include="Content\VideoFetch\VideoFetchUpload.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\jquery\jquery-ui.css" />
     <Content Include="Content\jquery\jquery-ui.min.css" />
@@ -302,6 +310,7 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-file-uploader.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-message-format.js" />
@@ -320,6 +329,11 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\autosize.js" />
+    <Content Include="Scripts\client.js" />
+    <Content Include="Scripts\client_plusone.js" />
+    <Content Include="Scripts\cors_upload.js" />
+    <Content Include="Scripts\duckyDataApp.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
     <Content Include="Scripts\ckeditor\ckeditor.asp" />
@@ -779,6 +793,7 @@
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\musicFetch.js" />
+    <Content Include="Scripts\musicFetchCreate.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -788,7 +803,10 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\video-js.swf" />
     <Content Include="Scripts\video.js" />
+    <Content Include="Scripts\videoFetch.js" />
+    <Content Include="Scripts\VideoUpload.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Shared\pagination.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -850,6 +868,9 @@
     <Content Include="Views\MusicFetch\Details.cshtml" />
     <Content Include="Views\MusicFetch\Edit.cshtml" />
     <Content Include="Views\MusicFetch\Index.cshtml" />
+    <Content Include="Views\SelectExamples\Index.cshtml" />
+    <Content Include="Views\MusicFetch\Upload.cshtml" />
+    <Content Include="Views\MusicFetch\CallBack.cshtml" />
     <Content Include="Views\MusicFetch\Input.cshtml" />
     <Content Include="Views\MusicFetch\_MediaInput.cshtml" />
     <Content Include="Views\Message\ACRTest.cshtml" />
@@ -869,6 +890,13 @@
     <Content Include="Views\Account\RoleCreate.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Account\Flags.cshtml" />
+    <Content Include="Views\VideoFetch\Create.cshtml" />
+    <Content Include="Views\VideoFetch\Delete.cshtml" />
+    <Content Include="Views\VideoFetch\Details.cshtml" />
+    <Content Include="Views\VideoFetch\Edit.cshtml" />
+    <Content Include="Views\VideoFetch\Index.cshtml" />
+    <Content Include="Views\VideoFetch\oauth2callback.cshtml" />
+    <Content Include="Views\VideoFetch\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/VideoFetch/VideoFetchIndex.css")
+    @Styles.Render("~/Content/VideoFetch/VideoFetchIndexPlayer.css")
+    @Styles.Render("~/Content/helper.css")
+    <script type="text/javascript" src="../../Scripts/videoFetch.js"></script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body ng-controller="videoFetchCtrl">
+    <div id="video-search-result">
+        <div class="video-search-item pull-left" ng-repeat="item in videoFetchData.videoList">
+            <img alt="cover" data-toggle="modal" ng-click="videoFetchData.selectedVideo = item;playVideo();" data-target="#videoPlayer" ng-src={{item.snippet.thumbnails.high.url}} />
+            <div class="video-info pull-right">
+                <div class="width-100 title text-ellipsis">{{item.snippet.title}}</div>
+                <div class="width-100 youtube-channel-link text-ellipsis"><span class="fui-youtube"></span><a ng-href={{'https://www.youtube.com/channel/'+item.snippet.channelId}}>{{item.snippet.channelTitle}}</a></div>
+                <div class="width-100 title video-publish-date text-ellipsis">Published on {{item.snippet.publishedAt | date:'MMM dd yyyy'}}</div>
+                <div class="width-100 video-desc">{{item.snippet.description}}</div>
+            </div>
+        </div>
+    </div>
+    <div id="video-search-page">
+        <a class="fui-arrow-left pull-left" ng-click="pageNavigation(-1)" title="Previous Page" ng-disabled="videoFetchDataUICtrl.disablePrev" ng-class="{'disabled':videoFetchDataUICtrl.disablePrev}"></a>
+        <a class="fui-arrow-right pull-right" ng-click="pageNavigation(1)" title="Next Page" ng-disabled="videoFetchDataUICtrl.disableNext" ng-class="{'disabled':videoFetchDataUICtrl.disableNext}"></a>
+    </div>
+    
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="videoPlayer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="stopVideo()">&#10005</button>
+                <div class="modal-body">
+                    <div id="player"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="width-100 title text-ellipsis">{{videoFetchData.selectedVideo.snippet.title}}</div>
+                    <div class="width-100 youtube-channel-link text-ellipsis"><span class="fui-youtube"></span><a ng-href={{'https://www.youtube.com/channel/'+videoFetchData.selectedVideo.snippet.channelId}}>{{videoFetchData.selectedVideo.snippet.channelTitle}}</a></div>
+                    <div class="width-100 title video-publish-date text-ellipsis">Published on {{videoFetchData.selectedVideo.snippet.publishedAt | date:'MMM dd yyyy'}}</div>
+                    <div class="width-100 video-desc">{{videoFetchData.selectedVideo.snippet.description}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

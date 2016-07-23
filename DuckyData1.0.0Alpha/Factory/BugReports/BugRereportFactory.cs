@@ -36,7 +36,8 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
             {
                 bugList = bugList.Where(b => b.subject.Contains(query)
                                       || b.submittedBy.Contains(query)
-                                      || b.body.Contains(query));
+                                      || b.category.Equals(query)
+                                      || b.body.Contains(query)).OrderBy(g=>g.category);
             }
             bugList = bugList.OrderBy(b => b.date);
             return Mapper.Map<IEnumerable<BugReportList>>(bugList);
@@ -88,11 +89,11 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
             BugReport bug = new BugReport();
             bug = Mapper.Map<BugReport>(report);
             bug.date = DateTime.Now;
+            bug.status = "Open";
             ApplicationUser user = appDB.Users.First(u => u.Id == userId);
-            bug.submittedBy = user.firstName +" "+user.lastName;
+            string name = user.firstName + " " + user.lastName;
+            bug.submittedBy = name != null ? name : "Anonymous";
             bug.regUser = user;
-
-            
 
             appDB.BugReports.Add(bug);
             appDB.SaveChanges();

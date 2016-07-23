@@ -1,220 +1,46 @@
-﻿#MusicFetchIndex{
-    height: auto;
-    overflow: hidden;
-    margin-bottom: 40px;
+﻿#videoPlayer{
+    text-align: left !important;
 }
 
-#MusicFetchIndex #album-info{
-    background: #f9f9f9;
-    height: 130px;
-    padding-top: 5px;
-    padding-left: 5px;
-    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+.modal-dialog{
+
+    border-bottom-right-radius: none !important;
 }
 
-#MusicFetchIndex #music-data-info{
-    height: auto;
-    padding: 5px;
-}
-
-#MusicFetchIndex #album-cover{
-    width: 120px;
-    height: 120px;
-}
-#MusicFetchIndex #album-detail-info{
-    padding-left: 10px;
-    height: 120px;
-    width:calc(100% - 155px);
-}
-
-#MusicFetchIndex #back-to-possible-album-list {
-    height: 120px;
-    line-height: 120px;
-    text-align: center;
-    cursor: pointer;
-    background: #EEEEEE;
-    width:30px;
-}
-#album-detail-info .artist-label{
-    width: 70px;
-}
-#album-detail-info .album-title{
-    font-size: 115%;   
-    font-weight: 600;
-}
-#music-data-info #track-index{
-    width: 35px;
-    text-align: center;
-}
-
-#music-data-info #track-download{
-    width: 50px;
-    text-align: center;
-}
-#music-data-info #track-playing{
-    width: 50px;
-    text-align: center;
-}
-#music-data-info #track-title{
-    width: calc(100% - 255px);
-}
-
-#music-data-info #track-pause{
-    width: 50px;
-    text-align: center;
-}
-#music-data-info #track-duration{
-    width: 70px;
-}
-#music-data-info .track-repeat{
-    border-bottom: 1px solid #f1f1f1;
-    height: 50px;
-    line-height: 50px;
-   -webkit-transition: box-shadow 0.15s; /* For Safari 3.1 to 6.0 */
-    transition: box-shadow 0.15s;
-
-}
-#music-data-info .track-repeat:hover{
-    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-}
-
-#music-data-info .track-repeat a.fui-link,
-#music-data-info .track-repeat a.fui-play,
-#music-data-info .track-repeat a.fui-pause
- {
-    visibility: hidden;   
-}
-
-#music-data-info .track-repeat:hover a.fui-link,
-#music-data-info .track-repeat:hover a.fui-play,
-#music-data-info .track-repeat:hover a.fui-pause {
-    visibility: visible;
-}
-
-#music-data-info .track-repeat.visible a.fui-link,
-#music-data-info .track-repeat.visible a.fui-play,
-#music-data-info .track-repeat.visible a.fui-pause{
-    visibility: visible;
-}
-
-#track-preview-module{
-    position: fixed;
-    bottom:20px;
-    left:-530px;
-    background: #00BFA5;
-    width: 550px;
-    height: 120px;
-    z-index: 1000 !important;
-    -webkit-transition: left 0.7s; /* For Safari 3.1 to 6.0 */
-    transition: left 0.7s;
-}
-
-#track-preview-module #preview-album-cover, #track-preview-module #preview-album-cover img{
-    width: 120px;
-    height: 120px;
-}
-
-#track-preview-module #preview-album-console{
-    width: 410px;
-    padding: 10px;
-    height: 120px;
-    color: #fff;
-}
-
-#track-preview-module #preview-album-console .duration{
-    font-size: 85%;
-}
-
-#track-preview-module #preview-album-console audio{
+#videoPlayer .modal-dialog .modal-content{
+    width: 670px;
     position: absolute;
-    bottom:10px;
-    width: 390px;
+    top: 40px;
+    left: calc(50vw - 340px);
 }
-#perview-module-status{
-    height: 120px;
-    width: 20px;
-    background: #34495E;
+
+#videoPlayer .modal-content .modal-header{
+    height: 40px;
+    line-height: 30px;
+    padding: 0 15px;
+}
+
+#videoPlayer .modal-content .modal-header > button.close{
+    margin-top: 5px;
+    background: #E74C3C;
+    text-shadow: none !important;
+    opacity: 1;
     color: #fff;
-    line-height: 120px;
-    text-align:center;
-    cursor: pointer;
-}
-#track-preview-module.show-preview-module{
-    left: 5px;
-}
-
-#track-preview-module.show-preview-module span.fui-arrow-left{
-    display: block !important;
-}
-#track-preview-module span.fui-arrow-left{
-    display: none !important;
-}
-#track-preview-module.show-preview-module span.fui-arrow-right{
-    display: none;
-}
-#track-preview-module span.fui-arrow-right{
-    display: block;
-}
-#possible-album-list{
-    height: auto;
-    overflow: hidden;
-    width: 100%;
-    padding: 0px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    width: 25px;
+    border-radius: 50px;
+    border: 1px solid red;
+    height: 25px;
+    font-size: 95%;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
 }
 
-
-#possible-album-list .album-repeat{
-    width: 400px;
-    height: 160px;
-    margin: 20px;
-    cursor: pointer;
-    background: #f9f9f9;
+#videoPlayer .modal-content .modal-header > button.close:hover{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
 }
 
-#possible-album-list .album-repeat:hover{
-    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-    background: #fff;
+#videoPlayer .modal-content .modal-footer{
+    text-align: left !important;
+    border-radius: none !important;
 }
-
-#possible-album-list .album-repeat img{
-    width: 140px;
-    height: 140px;
-    margin-left: 20px;
-    margin-top: 10px;
-}
-#possible-album-list .album-repeat .ablum-title{
-    padding: 0 15px 0 0px;
-    height: 50px;
-}
-#possible-album-list .album-repeat .ablum-title label{
-    font-size: 105% !important;
-}
-
-#possible-album-list .album-repeat .ablum-track-nb{
-    height: 30px;
-    line-height: 30px;
-    padding: 0 15px 0 0px;
-}
-
-#possible-album-list .album-repeat .ablum-track-nb label{
-    margin-right: 10px;
-}
-
-#possible-album-list .album-repeat .ablum-artist{
-    height: 30px;
-    line-height: 30px;
-    padding: 0 15px 0 0px;
-}
-
-#possible-album-list .album-repeat .ablum-artist label{
-    margin-right: 10px;
-}
-
-.possible-album-info{
-    width: 240px;
-    height: 100%;
-    padding: 10px;
-}
-

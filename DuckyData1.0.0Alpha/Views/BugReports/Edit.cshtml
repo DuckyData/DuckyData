@@ -1,60 +1,76 @@
 ﻿@model DuckyData1._0._0Alpha.Models.BugReport
+@Styles.Render("~/Content/BugReport/editBugReport.css")
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")
-
-
-@using (Html.BeginForm())
+@using(Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+
+    <div class="form-horizontal" id="edit-bug-report">
         <h4>BugReport</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true,"",new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.subject)
+            </label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.subject, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.subject, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.category, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.category, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.subject)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.body,htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.category)
+            </label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.body,new { htmlAttributes = new { @class = "form-control",@readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.body,"",new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.category)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.submittedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.body)
+            </label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.submittedBy, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.submittedBy, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.body)
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.submittedBy)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.submittedBy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.status)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.status)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 title">
+                @Html.DisplayNameFor(model => model.assignTo)
+            </label>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.assignTo)
+            </div>
+        </div>
       
-        <div class="form-group">
+        <div class="@(Model.status == "Close"?"hide form-group":"form-group")">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" name="command" value="Save the Change" class="btn col-md-10 btn-primary" />
             </div>
         </div>
-        <div class="form-group">
+        <div  class="@(Model.status == "Close"?"hide form-group":"form-group")">
             <div class="col-md-offset-2 col-md-10">
                <input readonly value="Close the Bug Report" class="btn col-md-10 btn-danger" data-toggle="modal" data-target="#closeTheReport" />
             </div>

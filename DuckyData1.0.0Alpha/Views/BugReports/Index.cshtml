@@ -1,14 +1,14 @@
 ﻿@model PagedList.IPagedList< DuckyData1._0._0Alpha.ViewModels.BugReportList >
 @using PagedList.Mvc;
+@Styles.Render("~/Content/BugReport/listBugReport.css")
 <div id="list-bug">
     <div id="list-bug-header">
         @using(Html.BeginForm())
         {
-            <h3>List Bug Report</h3>
             <div class="input-group pull-right">
                 <input type="text" class="form-control input-sm col-lg-6" id="query" name="query" placeholder="Search">
                 <span class="input-group-btn pull-left">
-                    <button type="submit" class="btn btn-primary btn-sm"> Search </button>
+                    <button type="submit" class="btn btn-info btn-sm"> Search </button>
                 </span>
             </div>
         }
@@ -33,7 +33,7 @@
                         @Html.DisplayFor(modelItem => item.subject)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.body)
+                        @Html.DisplayFor(model => item.body)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.category)

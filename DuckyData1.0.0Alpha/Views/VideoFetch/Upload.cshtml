@@ -1,0 +1,43 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>YouTube API Uploads via CORS</title>
+    @Styles.Render("~/Content/VideoFetch/VideoFetchUpload.css")
+    <script type="text/javascript" src="../../Scripts/videoUpload.js"></script>
+    <script type="text/javascript" src="../../Scripts/cors_upload.js"></script>
+    <script type="text/javascript" src="../../Scripts/autosize.js"></script>
+</head>
+<body ng-controller="videoUploadCtrl">
+    <div class="width-100" id="video-uploader">
+        <form name="uploadVideo">
+            <div id="video-drop-box" nv-file-drop uploader="videoFileUploader" ng-click="videoInputTagClick()">
+                drop your files here or click here to select video files
+            </div>
+            <input type="file" id="video-file-select-tag" nv-file-select uploader="videoFileUploader" multiple class="invisible">
+            <div id="video-drop-display">
+                <div class="width-100 video-upload-title">
+                    <div class="pull-left video-file-status">Status</div>
+                    <div class="pull-left video-file-name">Name</div>
+                    <div class="pull-left video-file-size">Size</div>
+                </div>
+                @*<img ng-src={{videoUploadData.user.imgURL}} ng-show="videoUploadUICtrl.showUserLogo" ng-click="goToMyChannel()" alt="user" id="youtube-user-icon">*@
+                <div class="video-upload-repeat width-100" ng-repeat="video in videoFileUploader.queue">
+                    <div class="width-100">
+                        <div class="pull-left video-file-status">{{video.pct | percentage}}</div>
+                        <div class="pull-left video-file-name text-ellipsis"><input class="form-control" placeholder="video title" required ng-class="{'has-error':!video.metadataTitle}" ng-model="video.metadataTitle"></div>
+                        <div class="pull-left video-file-remove"><span class="fui-trash" ng-click="videoFileUploader.queue.splice($index,1)"></span></div>
+                        <div class="pull-left video-file-size">{{video.file.size/1024/1024 | number:2}} MB</div>
+                    </div>
+                    <div class="width-100">
+                        <textarea ng-model="video.metadataDesc" placeholder="video description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="video-uploader-footer">
+                <button class="btn btn-danger pull-right btn-sm" ng-disabled="uploadVideo.$invalid || !videoFileUploader.queue.length" ng-click="uploadAllVideos()">Upload All ({{videoFileUploader.queue.length}})</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

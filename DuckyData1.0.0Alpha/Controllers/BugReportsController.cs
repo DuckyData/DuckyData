@@ -25,15 +25,15 @@ namespace DuckyData1._0._0Alpha.Controllers
         private BugRereportFactory bugRereportFactory = new BugRereportFactory();
         private FollowUpsFactory followUpsFactory = new FollowUpsFactory();
         // GET: BugReports
-        public ActionResult Index(string query)
+        public ActionResult Index(string query,int? page)
         {
 
             GNQueryBuilder qbuilder = new GNQueryBuilder();
             qbuilder.ALBUM_SEARCH("flying lotus","until the quiet comes","all in");
 
             IEnumerable<BugReportList> bugList = bugRereportFactory.getBugReports(query);
-            int pageSize = 3;
-            int pageNumber = 1;
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
             return View(bugList.ToPagedList(pageNumber,pageSize));
         }
 
@@ -148,8 +148,6 @@ namespace DuckyData1._0._0Alpha.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "TechSupport")]
         [HttpGet]
         // GET: BugReports/FollowUps/5
         public ActionResult FollowUps(int? id) {
@@ -169,8 +167,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(newFollowUp);
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "TechSupport")]
+    
         [HttpPost]
         // POST: BugReports/FollowUps/5
         public ActionResult FollowUps(FollowUpAddForm newFollowUp)

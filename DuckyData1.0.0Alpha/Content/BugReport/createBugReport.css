@@ -1,0 +1,15 @@
+﻿#create-bug-report textarea{
+    width: 100%;
+    max-width: none;
+    font-size: 90%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: #48C9B0 1px solid;
+    background: transparent;
+    resize: none;
+}
+#create-bug-report  textarea:focus,
+#create-bug-report  textarea:active{
+    outline: none;
+}

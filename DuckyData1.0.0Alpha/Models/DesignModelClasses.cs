@@ -130,6 +130,7 @@ namespace DuckyData1._0._0Alpha.Models
         }
         [Key]
         public int Id { get; set; }
+        [Display(Name ="Data Submitted")]
         public DateTime date { get; set; }
         [Required]
         [StringLength(100)]

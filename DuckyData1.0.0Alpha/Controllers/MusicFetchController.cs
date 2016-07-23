@@ -202,6 +202,22 @@ namespace DuckyData1._0._0Alpha.Controllers
             return RedirectToAction("Index");
         }
 
+
+        // GET: MusicFetch/Upload
+        public ActionResult upload()
+        {
+            return View();
+        }
+
+
+        // GET: MusicFetch/Upload
+        public ActionResult CallBack()
+        {
+            return View();
+        }
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
