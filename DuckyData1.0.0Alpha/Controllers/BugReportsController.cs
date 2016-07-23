@@ -16,6 +16,7 @@ using PagedList;
 using DuckyData1._0._0Alpha.Factory.FollowUps;
 using DuckyData1._0._0Alpha.ViewModels.FollowUps;
 using DuckyData1._0._0Alpha.Factory.WebAPI.Gracenote;
+using System.Threading.Tasks;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -27,7 +28,6 @@ namespace DuckyData1._0._0Alpha.Controllers
         // GET: BugReports
         public ActionResult Index(string query,int? page)
         {
-
             GNQueryBuilder qbuilder = new GNQueryBuilder();
             qbuilder.ALBUM_SEARCH("flying lotus","until the quiet comes","all in");
 
@@ -68,12 +68,14 @@ namespace DuckyData1._0._0Alpha.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BugReportBase bugReport)
+        public async Task<ActionResult> Create(BugReportBase bugReport)
         {
             if(ModelState.IsValid)
             {
                 string userId = User.Identity.GetUserId();
                 bugRereportFactory.createBugReport(bugReport,userId);
+                Service.EmailService.AppEmailService service = new Service.EmailService.AppEmailService();
+                await service.SendBugReportCreated(User.Identity.Name);
                 return RedirectToAction("Index");
             }
 

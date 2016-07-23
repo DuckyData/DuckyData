@@ -3,6 +3,8 @@
 @Styles.Render("~/Content/BugReport/listBugReport.css")
 <div id="list-bug">
     <div id="list-bug-header">
+        <input type="button" value="Submit Report" class="btn btn-primary btn-sm col-md-2" onclick="window.location.href='@Url.Action("Create", "BugReports" )';" />
+
         @using(Html.BeginForm())
         {
             <div class="input-group pull-right">
