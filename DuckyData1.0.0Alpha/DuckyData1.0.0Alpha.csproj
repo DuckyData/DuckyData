@@ -664,6 +664,7 @@
     <Content Include="Scripts\ckeditor\skins\v2\skin.js" />
     <Content Include="Scripts\ckeditor\skins\v2\templates.css" />
     <Content Include="Scripts\ckeditor\themes\default\theme.js" />
+    <Content Include="Scripts\custom-file-input.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -784,6 +785,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\restangular.js" />
     <Content Include="Scripts\restangular.min.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Scripts\video-js.swf" />
     <Content Include="Scripts\video.js" />
     <Content Include="Scripts\_references.js" />
