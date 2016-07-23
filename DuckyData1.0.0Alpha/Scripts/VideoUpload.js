@@ -1,11 +1,10 @@
 ﻿duckyData.controller('videoUploadCtrl', function ($scope, $location, $timeout, $window, $cookies, $q, GAPIFactory, duckyDataFileUploader, toastr) {
     $scope.videoFileUploader = duckyDataFileUploader.uploaderVideo;
-
+    $scope.videoFileUploader.failedQueue = [];
     $scope.videoFileUploader.onAfterAddingFile = function (fileItem) {
         $timeout(function () {
             autosize(document.querySelectorAll('textarea'));
         }, 200)
-        console.log('resize');
         fileItem.metadataTitle = fileItem._file.name
     };
     $scope.videoUploadData = {
@@ -49,12 +48,10 @@
             },
             callback: function (response) {
                 if (response.error) {
-                    console.log(response.error.message);
                     deferred.resolve({status:403});
                 } else {
                     $cookies.put('userYoutubeChannel', response.items[0].id);
                     $cookies.put('userYoutubeImage', response.items[0].snippet.thumbnails.default.url);
-                    console.log(response)
                     $scope.videoUploadUICtrl.showUserLogo = true;
                     deferred.resolve({ status: 200 });
                 }
@@ -67,6 +64,7 @@
         // get connestion
         if (uploadVideo == null) {
             uploadVideo = new UploadVideo();
+        }
             GAPIFactory.signIn().then(function (result) {
                 if (result.status == 200) {
                     uploadVideo.ready(result.token).then(function () {
@@ -74,23 +72,22 @@
                     });
                 }
             })
-        }
+        
     }
 
     UploadVideo.prototype.uploadFile = function (index) {
         $scope.videoUploadData.currentUploadingVideo = file;
-        var deferred = $q.defer();
-        if (index+1 <= $scope.videoFileUploader.queue.length) {
+        if (index + 1 <= $scope.videoFileUploader.queue.length) {
             var file = $scope.videoFileUploader.queue[index];
             var metadata = {
                 snippet: {
-                    title: file.metadataTitle?file.metadataTitle:'test',
-                    description: file.metadataDesc?file.metadataDesc:'test',
+                    title: file.metadataTitle ? file.metadataTitle : file._file.name,
+                    description: file.metadataDesc,
                     tags: this.tags,
                     categoryId: this.categoryId
                 },
                 status: {
-                    privacyStatus: file.privacyStatus ? file.privacyStatus : 'public'
+                    privacyStatus: file.privacyStatus ? file.privacyStatus : 'unlisted'
                 }
             };
             var uploader = new MediaUploader({
@@ -106,31 +103,44 @@
                     try {
                         var errorResponse = JSON.parse(data);
                         message = errorResponse.error.message;
-                        toastr.error(message);
                     } finally {
                         toastr.error(message);
-                        alert(message);
                     }
+                    file.uploaded = false;
+                    file.pct = 0;
+                    $scope.videoFileUploader.failedQueue.push(file);
                     UploadVideo.prototype.uploadFile(index + 1);
                 }.bind(this),
                 onProgress: function (data) {
-                    console.log('uploading');
                     var currentTime = Date.now();
                     var bytesUploaded = data.loaded;
                     var totalBytes = data.total;
-                    file.pct = Math.round((data.loaded / data.total)*100);
+                    file.pct = Math.round((data.loaded / data.total) * 100);
                     $scope.$apply(file.pct);
                 }.bind(this),
                 onComplete: function (data) {
+                    file.uploaded = true;
                     UploadVideo.prototype.uploadFile(index + 1);
                 }.bind(this)
             });
 
             this.uploadStartTime = Date.now();
             uploader.upload();
+        } else {
+            //chec for failed queue
+            $scope.videoFileUploader.queue = [];
+            if ($scope.videoFileUploader.failedQueue.lenght) {
+                angular.forEach($scope.videoFileUploader.failedQueue, function (file) {
+                    $scope.videoFileUploader.queue.push(file);
+                });
+                $timeout(function () {
+                    $scope.videoFileUploader.failedQueue = [];
+                    $scope.$apply($scope.videoFileUploader);
+                }, 500);
+            } else {
+                //$scope.$apply($scope.videoFileUploader.queue);
+            }
         }
-        // This won't correspond to the *exact* start of the upload, but it should be close enough.
-        
     };
 
 });

@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div id="video-uploader-footer">
-                <button class="btn btn-danger pull-right btn-sm" ng-disabled="uploadVideo.$invalid" ng-click="uploadAllVideos()">Upload All ({{videoFileUploader.queue.length}})</button>
+                <button class="btn btn-danger pull-right btn-sm" ng-disabled="uploadVideo.$invalid || !videoFileUploader.queue.length" ng-click="uploadAllVideos()">Upload All ({{videoFileUploader.queue.length}})</button>
             </div>
         </form>
     </div>
