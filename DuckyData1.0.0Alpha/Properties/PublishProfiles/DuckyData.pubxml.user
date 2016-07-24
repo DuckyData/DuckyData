@@ -16,16 +16,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>07/21/2016 15:55:34</publishTime>
+      <publishTime>07/24/2016 14:34:54</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>07/21/2016 15:55:34</publishTime>
+      <publishTime>07/24/2016 14:34:54</publishTime>
     </File>
     <File Include="bin/AutoMapper.dll">
       <publishTime>02/24/2016 19:36:08</publishTime>
     </File>
     <File Include="bin/DuckyData1.0.0Alpha.dll">
-      <publishTime>07/21/2016 15:55:23</publishTime>
+      <publishTime>07/24/2016 14:34:37</publishTime>
     </File>
     <File Include="bin/DuckyData1.0.0Alpha.pdb">
       <publishTime>07/21/2016 11:40:48</publishTime>
@@ -258,11 +258,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/bootstrap.min.css.map">
       <publishTime>07/20/2016 14:36:02</publishTime>
     </File>
+    <File Include="Content/BugReport/createBugReport.css">
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
+    <File Include="Content/BugReport/createFollowUp.css">
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
+    <File Include="Content/BugReport/editBugReport.css">
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
     <File Include="Content/BugReport/listBugReport.css">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/24/2016 14:05:08</publishTime>
     </File>
     <File Include="Content/helper.css">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="Content/jquery/jquery-ui.css">
       <publishTime>07/20/2016 14:36:02</publishTime>
@@ -286,19 +295,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:02</publishTime>
     </File>
     <File Include="Content/MusicFetch/MusicFetchIndex.css">
-      <publishTime>07/20/2016 14:36:53</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="Content/PagedList.css">
       <publishTime>07/20/2016 14:36:02</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>07/19/2016 18:43:09</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Content/VideoFetch/VideoFetchIndex.css">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Content/VideoFetch/VideoFetchIndexPlayer.css">
       <publishTime>07/20/2016 14:36:02</publishTime>
+    </File>
+    <File Include="Content/VideoFetch/VideoFetchUpload.css">
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -514,10 +526,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:02</publishTime>
     </File>
     <File Include="images/LogoBackground.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/LogoBackground.xcf">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/tile/ribbon-2x.png">
       <publishTime>07/20/2016 14:36:02</publishTime>
@@ -526,46 +538,46 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:02</publishTime>
     </File>
     <File Include="images/ui-bg_gloss-wave_30_3d3644_500x100.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-bg_highlight-soft_100_dcd9de_1x100.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-bg_highlight-soft_100_eae6ea_1x100.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-bg_highlight-soft_25_30273a_1x100.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-bg_highlight-soft_45_5f5964_1x100.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-icons_454545_256x240.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-icons_734d99_256x240.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-icons_8d78a5_256x240.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-icons_a8a3ae_256x240.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-icons_ebccce_256x240.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="images/ui-icons_ffffff_256x240.png">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="libacrcloud_extr_tool.dll">
       <publishTime>07/20/2016 14:36:04</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>07/21/2016 12:35:31</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>07/21/2016 15:55:26</publishTime>
+      <publishTime>07/24/2016 14:34:41</publishTime>
     </File>
     <File Include="Scripts/angular-animate.js">
       <publishTime>07/20/2016 14:36:02</publishTime>
@@ -677,6 +689,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/angular.min.js.map">
       <publishTime>07/20/2016 14:36:02</publishTime>
+    </File>
+    <File Include="Scripts/autosize.js">
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>07/20/2016 14:36:02</publishTime>
@@ -1731,8 +1746,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/client.js">
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
+    <File Include="Scripts/client_plusone.js">
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
+    <File Include="Scripts/cors_upload.js">
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
     <File Include="Scripts/duckyDataApp.js">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Scripts/errors.json">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -1798,7 +1819,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Scripts/musicFetchCreate.js">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Scripts/respond.js">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -1828,10 +1849,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Scripts/videoFetch.js">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
+    <File Include="Scripts/VideoUpload.js">
+      <publishTime>07/24/2016 14:22:25</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>07/20/2016 14:36:02</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Views/Account/CompleteRegister.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -1840,10 +1864,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Views/Account/Details.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/24/2016 13:37:15</publishTime>
     </File>
     <File Include="Views/Account/Edit.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/24/2016 13:38:02</publishTime>
     </File>
     <File Include="Views/Account/ExternalLoginConfirmation.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -1858,19 +1882,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Views/Account/ForgotPasswordConfirmation.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="Views/Account/ListUsers.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>07/20/2016 14:36:53</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Views/Account/ResetPassword.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:18</publishTime>
     </File>
     <File Include="Views/Account/ResetPasswordConfirmation.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -1909,7 +1933,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/09/2016 12:42:14</publishTime>
     </File>
     <File Include="Views/BugReports/Create.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/24/2016 13:50:13</publishTime>
     </File>
     <File Include="Views/BugReports/Delete.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -1918,13 +1942,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Views/BugReports/Edit.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Views/BugReports/FollowUps.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Views/BugReports/Index.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Views/ControlPanels/Admin.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -2044,7 +2068,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2016 18:43:09</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/20/2016 14:36:53</publishTime>
+      <publishTime>07/24/2016 13:41:19</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -2062,7 +2086,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Views/VideoFetch/Index.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
+    <File Include="Views/VideoFetch/oauth2callback.cshtml">
+      <publishTime>07/23/2016 22:13:43</publishTime>
+    </File>
+    <File Include="Views/VideoFetch/Upload.cshtml">
+      <publishTime>07/23/2016 22:13:43</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>07/20/2016 14:36:03</publishTime>
@@ -2071,7 +2101,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/21/2016 15:55:24</publishTime>
+      <publishTime>07/24/2016 14:32:52</publishTime>
     </File>
   </ItemGroup>
 </Project>
