@@ -16,8 +16,14 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         public string Email { set; get; }
     }
 
+    public class userRole : userBase
+    {
+        [Key]
+        public string Id { set; get; }
+        public string Role { set; get; }
+    }
 
-    public class userAdd:userBase
+        public class userAdd:userBase
     {
         [Key]
         public string Id { set; get; }

@@ -19,9 +19,13 @@ using System.Collections.Generic;
 using PagedList;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DuckyData1._0._0Alpha.Service.EmailService;
+using System.Web.Security;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
+
+
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -867,8 +871,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             ViewBag.Users = new SelectList(users);
             return View("RoleAddToUser");
         }
-
-
+        
 
 
 

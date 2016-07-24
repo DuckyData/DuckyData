@@ -29,8 +29,6 @@ using System.Drawing;
 using DuckyData1._0._0Alpha.ViewModels;
 using DuckyData1._0._0Alpha.Models;
 using Newtonsoft.Json.Linq;
-using Softpae.Media;
-using MediaToolkit;
 
 namespace ACRCloud
 {
