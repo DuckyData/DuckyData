@@ -1,5 +1,5 @@
 ﻿// view controller
-duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GAPIFactory) {
+duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GAPIFactory, musicFetchFactory, toastr) {
     var OAUTH2_CLIENT_ID = '254706105392-sac4crqcmko7lagnmkng0krfsdg1ongg';
     var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
 
@@ -101,5 +101,16 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
                 $scope.videoFetchData.videoList = searchResult.videoList;
             })
         }
+    }
+
+    $scope.addToMyVideoFavourite = function (video) {
+        console.log(video);
+        musicFetchFactory.addToMyFavourite({ VideoId: video.id.videoId, VideoTitle: video.snippet.title, VideoImg: video.snippet.thumbnails.default.url }).then(function (data) {
+            if (data.data.Status == 200) {
+                toastr.success(data.data.message);
+            } else {
+                toastr.error(data.data.message);
+            }
+        })
     }
 });

@@ -229,6 +229,7 @@
     <Compile Include="Factory\Account\AccountFactory.cs" />
     <Compile Include="Factory\BugReports\BugRereportFactory.cs" />
     <Compile Include="Factory\DatabaseConnection.cs" />
+    <Compile Include="Factory\FavouriteFactory\FavouriteFactory.cs" />
     <Compile Include="Factory\FollowUps\FollowUpsFactory.cs" />
     <Compile Include="Factory\WebAPI\Gracenote\GNAjax.cs" />
     <Compile Include="Factory\WebAPI\Gracenote\GNQueryBuilder.cs" />
@@ -252,6 +253,8 @@
     <Compile Include="ViewModels\BugReports\BugReportViewModel.cs" />
     <Compile Include="ViewModels\FollowUps\FollowUpViewModel.cs" />
     <Compile Include="ViewModels\Messages_VM.cs" />
+    <Compile Include="ViewModels\MusicFetch\MusicVetchViewModel.cs" />
+    <Compile Include="ViewModels\VideoFetch\VideoFetchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Account\CompleteRegiester.css" />

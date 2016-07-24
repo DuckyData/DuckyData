@@ -67,7 +67,8 @@ namespace DuckyData1._0._0Alpha.Models
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.MediaFile> MediaFiles { get; set; }
 
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.Account.User_Activation_Code> User_Activation_Codes { get; set; }
-
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.MusicFavourite> MusicFavourites { get; set; }
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.VideoFavourite> VideoFavourites { get; set; }
 
         public DbSet<Message> Messages { get; set; }
         /**

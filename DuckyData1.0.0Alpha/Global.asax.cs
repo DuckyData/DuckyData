@@ -3,6 +3,8 @@ using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.ViewModels;
 using DuckyData1._0._0Alpha.ViewModels.Account;
 using DuckyData1._0._0Alpha.ViewModels.FollowUps;
+using DuckyData1._0._0Alpha.ViewModels.MusicFetch;
+using DuckyData1._0._0Alpha.ViewModels.VideoFetch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,10 @@ namespace DuckyData1._0._0Alpha
             Mapper.CreateMap<BugReportBase,BugReport>();
             Mapper.CreateMap<BugReport,BugReportList>();
             Mapper.CreateMap<FollowUpAddForm,FollowUp>();
+            Mapper.CreateMap<MusicFavourite,MusicFavouriteAdd>();
+            Mapper.CreateMap<MusicFavouriteAdd,MusicFavourite>();
+            Mapper.CreateMap<VideoFavouriteAdd,VideoFavourite>();
+            Mapper.CreateMap<VideoFavourite,VideoFavouriteAdd>();
         }
 
         protected void Application_BeginRequest(object sender,EventArgs e)

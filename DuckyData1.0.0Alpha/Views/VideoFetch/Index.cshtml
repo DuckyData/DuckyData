@@ -14,7 +14,8 @@
         <div class="video-search-item pull-left" ng-repeat="item in videoFetchData.videoList">
             <img alt="cover" data-toggle="modal" ng-click="videoFetchData.selectedVideo = item;playVideo();" data-target="#videoPlayer" ng-src={{item.snippet.thumbnails.high.url}} />
             <div class="video-info pull-right">
-                <div class="width-100 title text-ellipsis">{{item.snippet.title}}</div>
+                <a class="fui-heart" ng-click="addToMyVideoFavourite(item)"></a>
+                <div class="width-100 title text-ellipsis video-title">{{item.snippet.title}}</div>
                 <div class="width-100 youtube-channel-link text-ellipsis"><span class="fui-youtube"></span><a ng-href={{'https://www.youtube.com/channel/'+item.snippet.channelId}}>{{item.snippet.channelTitle}}</a></div>
                 <div class="width-100 title video-publish-date text-ellipsis">Published on {{item.snippet.publishedAt | date:'MMM dd yyyy'}}</div>
                 <div class="width-100 video-desc">{{item.snippet.description}}</div>

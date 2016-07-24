@@ -170,4 +170,24 @@ namespace DuckyData1._0._0Alpha.Models
         public string CreatedBy { get; set; }
     }
 
+    public class MusicFavourite {
+        [Key]
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string MusicURL { get; set; }
+        public string MusicTitle {get; set;}
+        public string Artist { get; set; }
+        public string Album { get; set; }
+        public string AlbumCover { get; set; }
+    }
+
+    public class VideoFavourite
+    {
+        [Key]
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string VideoId { get; set; }
+        public string VideoTitle { get; set; }
+        public string VideoImg { get; set; }
+    }
 }

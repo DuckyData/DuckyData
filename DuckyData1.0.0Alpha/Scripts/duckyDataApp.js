@@ -127,8 +127,24 @@ duckyData.factory('musicFetchFactory', function (APISwitch, $q, $http) {
         return deferred.promise;
     }
 
+    function addToMyFavourite(item){
+        var deferred = $q.defer();
+        var config = {
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        }
+
+        $http.post('AddFavourite', JSON.stringify(item),config).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.resolve({ Status: 500 });
+        });
+        return deferred.promise;
+    }
+
     return {
-        jumpAlbumPage: jumuPage
+        jumpAlbumPage: jumuPage,
+        addToMyFavourite: addToMyFavourite
     };
 });
 

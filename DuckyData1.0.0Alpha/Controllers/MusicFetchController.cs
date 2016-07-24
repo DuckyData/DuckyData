@@ -6,7 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using DuckyData1._0._0Alpha.Models;
+using DuckyData1._0._0Alpha.ViewModels.MusicFetch;
+using DuckyData1._0._0Alpha.Factory.FavouriteFactory;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -14,15 +17,12 @@ namespace DuckyData1._0._0Alpha.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private Manager m = new Manager();
-        
+        private FavouriteFactory favouriteFactory = new FavouriteFactory();
+
         public ActionResult Index()
         {
             return View();
         }
-
-		
-		
-		
 
         public ActionResult Input()
         {
@@ -226,5 +226,33 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public JsonResult AddFavourite(MusicFavouriteAdd music) {
+
+            if(ModelState.IsValid)
+            {
+                string userId = User.Identity.GetUserId();
+                if(userId == null)
+                {
+                    return Json(new { Status = 400,message = "User name not found, please login and retry" });
+                }
+                else {
+                    music.UserId = userId;
+                }
+                
+                if(favouriteFactory.addMusicFavourite(music))
+                {
+                    return Json(new { Status = 200 ,message = "["+music.MusicTitle+"] saved to your favourite list" });
+                }
+                else {
+                    return Json(new { Status = 500,message = "[" + music.MusicTitle + "] already in your favourite list" });
+                }
+            }
+            else {
+                return Json(new { Status = 400,message = "Failed to save to favourite" });
+            }
+        }
+
     }
 }
