@@ -56,6 +56,30 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\gnsdk\wrappers\gnsdk_csharp\lib\gnsdk_csharp.dll</HintPath>
     </Reference>
+    <Reference Include="Json.NET.Web, Version=1.0.49.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Json.NET.Web.1.0.49\lib\portable45-net45+win8+wpa81\Json.NET.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MCI.Converters, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MCI.Converters.0.9.1.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\MCI.Converters.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MCI.Core, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MCI.Core.0.9.1.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\MCI.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MCI.Reactive, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MCI.Reactive.0.9.1.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\MCI.Reactive.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MediaServer, Version=1.0.3116.40321, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MediaServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MediaToolkit, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediaToolkit.1.1.0.1\lib\net40\MediaToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.1.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
       <Private>True</Private>
@@ -90,6 +114,22 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -225,6 +265,7 @@
     <Compile Include="Controllers\Manager.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\MusicFetchController.cs" />
+    <Compile Include="Controllers\VideoFetchController.cs" />
     <Compile Include="Factory\Account\AccountFactory.cs" />
     <Compile Include="Factory\BugReports\BugRereportFactory.cs" />
     <Compile Include="Factory\DatabaseConnection.cs" />
@@ -263,8 +304,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\BugReport\listBugReport.css" />
     <Content Include="Content\helper.css" />
+    <Content Include="Content\MusicFetch\audioUploader.css" />
     <Content Include="Content\MusicFetch\MusicFetchIndex.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\VideoFetch\VideoFetchIndex.css" />
+    <Content Include="Content\VideoFetch\VideoFetchIndexPlayer.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\jquery\jquery-ui.css" />
     <Content Include="Content\jquery\jquery-ui.min.css" />
@@ -292,6 +336,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="images\logo.PNG" />
     <Content Include="libacrcloud_extr_tool.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -302,6 +347,7 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-file-uploader.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-message-format.js" />
@@ -320,6 +366,8 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\client.js" />
+    <Content Include="Scripts\duckyDataApp.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
     <Content Include="Scripts\ckeditor\ckeditor.asp" />
@@ -778,6 +826,7 @@
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\musicFetch.js" />
+    <Content Include="Scripts\musicFetchCreate.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -786,7 +835,9 @@
     <Content Include="Scripts\restangular.min.js" />
     <Content Include="Scripts\video-js.swf" />
     <Content Include="Scripts\video.js" />
+    <Content Include="Scripts\videoFetch.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Shared\pagination.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -848,6 +899,8 @@
     <Content Include="Views\MusicFetch\Details.cshtml" />
     <Content Include="Views\MusicFetch\Edit.cshtml" />
     <Content Include="Views\MusicFetch\Index.cshtml" />
+    <Content Include="Views\MusicFetch\Upload.cshtml" />
+    <Content Include="Views\MusicFetch\CallBack.cshtml" />
     <Content Include="Views\MusicFetch\Input.cshtml" />
     <Content Include="Views\MusicFetch\_MediaInput.cshtml" />
     <Content Include="Views\Message\ACRTest.cshtml" />
@@ -867,6 +920,12 @@
     <Content Include="Views\Account\RoleCreate.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Account\Flags.cshtml" />
+    <Content Include="Views\VideoFetch\Create.cshtml" />
+    <Content Include="Views\VideoFetch\Delete.cshtml" />
+    <Content Include="Views\VideoFetch\Details.cshtml" />
+    <Content Include="Views\VideoFetch\Edit.cshtml" />
+    <Content Include="Views\VideoFetch\Index.cshtml" />
+    <Content Include="Views\Account\EmailSent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

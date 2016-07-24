@@ -1,0 +1,90 @@
+﻿@model DuckyData1._0._0Alpha.Models.Video
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Video</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.fileName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fileName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.mediaType)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.mediaType)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fileData)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fileData)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.releaseDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.releaseDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.director)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.director)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.producer)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.producer)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.cast)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.cast)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.poster)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.poster)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

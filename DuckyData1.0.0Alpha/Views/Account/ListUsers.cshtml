@@ -1,17 +1,16 @@
 ﻿@model PagedList.IPagedList<DuckyData1._0._0Alpha.ViewModels.Account.userAdd>
-
+@Styles.Render("~/Content/Account/ListUsers.css")
 @using PagedList.Mvc;
 <div id="list-user">
     <div class="list-user-header">
         @using(Html.BeginForm())
         {     
-            <h3>List Users</h3>
-            <div class="input-group pull-right">
-                <input type="text" class="form-control input-sm col-lg-6" id="SearchString" name="SearchString" placeholder="Search for name">
-                <span class="input-group-btn pull-left">
-                    <button type="submit" class="btn btn-primary btn-sm"> Search </button>
-                </span>
-            </div>
+        <div class="input-group pull-right">
+            <input type="text" class="form-control input-sm col-lg-6" id="SearchString" name="SearchString" placeholder="Search for name">
+            <span class="input-group-btn pull-left">
+                <button type="submit" class="btn btn-primary btn-sm"> Search </button>
+            </span>
+        </div>
         }
     </div>
     <div class="list-user-body">

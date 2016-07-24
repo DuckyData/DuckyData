@@ -184,7 +184,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult ListUsers(string searchString, int? page)
         {
             IEnumerable<userAdd> userList = accountFactory.getUserList(searchString);
-            int pageSize = 3;
+            int pageSize = 20;
             int pageNumber = (page ?? 1);
 
             return View(userList.ToPagedList(pageNumber,pageSize));
@@ -257,6 +257,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
                     await appEmailService.SendActivationAsync(model.Email, callbackUrl);
                     accountFactory.createRegiseInfo(model, code);
+                    return RedirectToAction("EmailSent", "Account");
                 }
                 AddErrors(result);
             }
@@ -277,6 +278,10 @@ namespace DuckyData1._0._0Alpha.Controllers
             return builder.ToString();
         }
 
+        [HttpGet]
+        public ActionResult EmailSent() {
+            return View();
+        }
 
         //
         // GET: /Account/ConfirmEmail
@@ -287,6 +292,8 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 return View("Error");
             }
+
+            code = code.Replace("%2", "+");
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }

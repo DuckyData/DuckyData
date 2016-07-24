@@ -29,7 +29,6 @@ namespace DuckyData1._0._0Alpha
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
                       "~/Scripts/flat-ui.min.js",
                       "~/Scripts/respond.js"));
 

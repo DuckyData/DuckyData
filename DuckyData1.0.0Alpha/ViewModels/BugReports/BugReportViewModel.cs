@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DuckyData1._0._0Alpha.ViewModels
 {
@@ -16,6 +17,7 @@ namespace DuckyData1._0._0Alpha.ViewModels
         [Display(Name = "Subject")]
         public string subject { get; set; }
         [Required]
+        [AllowHtml]
         [Display(Name = "Description")]
         public string body { get; set; }
         [Required]

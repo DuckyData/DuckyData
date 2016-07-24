@@ -28,6 +28,9 @@ using DuckyData1._0._0Alpha.Controllers;
 using System.Drawing;
 using DuckyData1._0._0Alpha.ViewModels;
 using DuckyData1._0._0Alpha.Models;
+using Newtonsoft.Json.Linq;
+using Softpae.Media;
+using MediaToolkit;
 
 namespace ACRCloud
 {
@@ -554,8 +557,8 @@ namespace ACRCloud
         {
             var config = new Dictionary<string, object>();
             config.Add("host", "eu-west-1.api.acrcloud.com");
-            config.Add("access_key", "7da0390dbe51ed34546ea918c61d41fc");
-            config.Add("access_secret", "jNhWf46Snkq2SCfYlX9ebFlz9gMDT9XDXezuX03C");
+            config.Add("access_key", "258850c6dca54b43185a33194c22113a");
+            config.Add("access_secret", "bodqWwyBff9Ub3NL8lIv9HWnBBTfdaBEmxW9RUDF");
             config.Add("timeout", 10); // seconds
 
             /**
@@ -573,7 +576,7 @@ namespace ACRCloud
 
             // It will skip 0 seconds from the beginning of test.mp3.
             //string result = re.RecognizeByFile("test.mp3", 20);
-            
+
             //Console.WriteLine(result);
 
             /**
@@ -587,94 +590,25 @@ namespace ACRCloud
             //var file = File.ReadAllBytes("test.mp3");
 
 
-
-
+            /*
+            if (input.input.ContentType.Contains("video"))
+            {
+                Engine e = new Engine();
+                string path = HttpContext.Current.Server.MapPath("~/" + input.input.FileName);
+                System.IO.File.WriteAllBytes(path, input.bytes);
+                 
+            }*/
             // It will skip 0 seconds from the beginning of datas.
             var result = re.RecognizeByFileBuffer(input.bytes, input.bytes.Length, 30);
-            //Console.WriteLine(result);
-            result = result.Replace("}", "");
-            result = result.Replace("{", "");
-            result = result.Replace("\"", "");
-            result = result.Replace(",", " ");
+            var json = JObject.Parse(result);
+            var obj = json["metadata"]["music"];
+            var album = (string)obj[0]["album"]["name"];
+            album = album.Replace("}", "");
+            album = album.Replace("{", "");
 
-            var time = m.Between(result, "timestamp_utc", "result_type");
-            if (time.StartsWith(":"))
-            {
-                time = time.Substring(1);
-            }
-
-            result = result.Replace(":", " ");
             acr unknown = new acr();
-            unknown.album = m.Between(result, "album name", "artists");
-            /*  unknown.song = m.Between(result, "title", "duration");
-              char[] values = new char[]{':',',' };
-              var title = m.Between(result, "title", "duration");
-              unknown.duration = m.Between(result, "duration", "genres");
-              var duration = m.Between(result, "duration", "genres");
-              unknown.duration = unknown.duration.Replace("_ms ", "");
-              duration = duration.Replace("_ms ", "");
-              var ms = Convert.ToDouble(unknown.duration);
-              var s = ms / 1000.0;
-              unknown.duration = Math.Round(s,0) + " seconds";
-              unknown.genre = m.Between(result, "genres", "acrid");
-              var genre = m.Between(result, "genres", "acrid");
-              var gcount = unknown.genre.Count(x => x == '[');
-            unknown.artist = m.Between(result, "artists", "timestamp_utc");
-            var acount = unknown.artist.Count(x => x == '[');
-
             
-            //result = "title: " + title + "<br>";
-           // result += "duration: " + duration + "<br>";
-           // result += "album: " + album + "<br>";
-           // result += "timestamp: " + time + "<br>";
-
-
-
-            if (acount == 1)
-            {
-                unknown.artist = unknown.artist.Replace("[", "");
-                unknown.artist = unknown.artist.Replace("]", "");
-                unknown.artist = unknown.artist.Replace("name ", "");
-                //result += "artist: " + unknown.artist + "<br>";
-            }
-            else
-            {
-                unknown.artist = unknown.artist.Replace("][", "].[");
-                var artists = unknown.artist.Split('.');
-                //result += "artists: ";
-                for (int i = 0; i > artists.Length; i++)
-                {
-                    artists[i] = artists[i].Replace("[", "");
-                    artists[i] = artists[i].Replace("]", "");
-                    if(i == 0) { unknown.artist = artists[i] + "<br>"; }
-                    unknown.artist += artists[i] + "<br>";
-                }
-            }
-            
-
-
-            if (gcount == 1)
-            {
-                unknown.genre = unknown.genre.Replace("[", "");
-                unknown.genre = unknown.genre.Replace("]", "");
-                unknown.genre = unknown.genre.Replace("name ", "");
-                result += "genre: " + unknown.genre;
-            }
-            else
-            {
-                unknown.genre = unknown.genre.Replace("][", "].[");
-                var genres = unknown.genre.Split('.');
-                result += "genres: ";
-                for (int i = 0; i > genres.Length; i++)
-                {
-                    genres[i] = genres[i].Replace("[", "");
-                    genres[i] = genres[i].Replace("]", "");
-                    if (i == 0) { unknown.genre = genres[i] + "<br>"; }
-                    unknown.genre += genres[i] + "<br>";
-                }
-            } 
-            */
-
+            unknown.album = album;
             return unknown;
             //ACRCloudExtrTool acrTool = new ACRCloudExtrTool();
             //byte[] fp = acrTool.CreateFingerprintByFile("test.mp3", 80, 12, false);
