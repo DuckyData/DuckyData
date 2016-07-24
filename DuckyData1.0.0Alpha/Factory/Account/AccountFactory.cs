@@ -15,15 +15,12 @@ namespace DuckyData1._0._0Alpha.Factory.Account
         private DataContext database;
         private ApplicationDbContext userDB = new ApplicationDbContext();
 
-        public AccountFactory()
-        {
+        public AccountFactory(){
             this.database = conn.getConnection();
         }
 
-        public void getDatabase()
-        {
-            if (this.database == null)
-            {
+        public void getDatabase(){
+            if (this.database == null){
                 this.database = conn.getConnection();
             }
         }

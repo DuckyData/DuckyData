@@ -257,6 +257,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
                     await appEmailService.SendActivationAsync(model.Email, callbackUrl);
                     accountFactory.createRegiseInfo(model, code);
+                    return RedirectToAction("EmailSent", "Account");
                 }
                 AddErrors(result);
             }
@@ -277,6 +278,10 @@ namespace DuckyData1._0._0Alpha.Controllers
             return builder.ToString();
         }
 
+        [HttpGet]
+        public ActionResult EmailSent() {
+            return View();
+        }
 
         //
         // GET: /Account/ConfirmEmail
@@ -287,6 +292,8 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 return View("Error");
             }
+
+            code = code.Replace("%2", "+");
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
