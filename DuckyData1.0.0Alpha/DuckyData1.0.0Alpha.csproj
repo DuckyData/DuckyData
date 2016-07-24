@@ -225,6 +225,7 @@
     <Compile Include="Controllers\Manager.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\MusicFetchController.cs" />
+    <Compile Include="Controllers\VideoFavouritesController.cs" />
     <Compile Include="Controllers\VideoFetchController.cs" />
     <Compile Include="Factory\Account\AccountFactory.cs" />
     <Compile Include="Factory\BugReports\BugRereportFactory.cs" />
@@ -898,6 +899,11 @@
     <Content Include="Views\VideoFetch\Index.cshtml" />
     <Content Include="Views\VideoFetch\oauth2callback.cshtml" />
     <Content Include="Views\VideoFetch\Upload.cshtml" />
+    <Content Include="Views\VideoFavourites\Create.cshtml" />
+    <Content Include="Views\VideoFavourites\Delete.cshtml" />
+    <Content Include="Views\VideoFavourites\Details.cshtml" />
+    <Content Include="Views\VideoFavourites\Edit.cshtml" />
+    <Content Include="Views\VideoFavourites\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
