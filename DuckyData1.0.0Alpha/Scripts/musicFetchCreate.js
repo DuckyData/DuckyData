@@ -12,7 +12,7 @@
         disableUploadAll: false
     }
 
-    $scope.audioFileUploader = duckyDataFileUploader.uploader;
+    $scope.audioFileUploader = duckyDataFileUploader.uploaderAudio;
 
     SC.initialize({
         client_id: 'd468660bb9056f5d8e48361dd5327c80',

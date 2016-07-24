@@ -43,7 +43,7 @@ namespace DuckyData1._0._0Alpha.Factory.FollowUps
                 return false;
             }
             else {
-                BugReport bug = appDB.BugReports.Include("supportRep").FirstOrDefault(f => f.Id == 1);
+                BugReport bug = appDB.BugReports.Include("supportRep").FirstOrDefault(f => f.Id == followUp.report.Id);
                 if(bug == null)
                 {
                     return false;

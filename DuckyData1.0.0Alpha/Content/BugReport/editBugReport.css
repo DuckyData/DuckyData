@@ -1,0 +1,27 @@
+﻿#closeTheReport .modal-content{
+    width: 670px;
+    position: absolute;    
+    top: 40px !important;
+    left: calc(50vw - 340px) !important;
+}
+
+#closeTheReport .modal-content .modal-header{
+    padding: 2px 15px;
+}
+
+#closeTheReport .modal-content .modal-header button{
+    margin-top: 10px;
+}
+
+#closeTheReport .modal-content .modal-header button:focus,
+#closeTheReport .modal-content .modal-header button:active{
+    outline: none;
+}
+
+#edit-bug-report .form-group{
+    margin-bottom: 0;
+}
+
+#edit-bug-report .form-group div.col-md-10{
+    padding: 5px;
+}

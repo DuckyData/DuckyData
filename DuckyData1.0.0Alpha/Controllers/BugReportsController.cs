@@ -148,8 +148,6 @@ namespace DuckyData1._0._0Alpha.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "TechSupport")]
         [HttpGet]
         // GET: BugReports/FollowUps/5
         public ActionResult FollowUps(int? id) {
@@ -169,8 +167,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(newFollowUp);
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "TechSupport")]
+    
         [HttpPost]
         // POST: BugReports/FollowUps/5
         public ActionResult FollowUps(FollowUpAddForm newFollowUp)
