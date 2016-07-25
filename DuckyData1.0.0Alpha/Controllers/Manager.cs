@@ -11,15 +11,51 @@ using System.Web;
 using ACRCloud;
 using static System.Net.WebRequestMethods;
 using System.IO;
+using DuckyData1._0._0Alpha.ViewModels.Account;
+using System.Web.Security;
+using DuckyData1._0._0Alpha.Factory.Account;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
     public class Manager
     {
         private ApplicationDbContext ds = new ApplicationDbContext();
-
+        private AccountFactory af = new AccountFactory();
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
+
+        ICollection<userRole> AuthUsers()
+        {
+            IEnumerable<userAdd> users = af.getUserList(null);
+            ICollection<userRole> aUsers = null;
+            foreach (var user in users)
+            {
+                if (Roles.IsUserInRole("Admin"))
+                {
+                    aUsers.Add(new userRole
+                    {
+                        Id = user.Id,
+                        Role = "Admin",
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
+                    });
+                }
+                if(Roles.IsUserInRole("TechSupport"))
+                {
+                    aUsers.Add(new userRole
+                    {
+                        Id = user.Id,
+                        Role = "TechSupport",
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
+                    });
+                }
+            }
+
+            return (aUsers == null) ? null : aUsers;
+        }
 
         public acr RunQuery(fileInput input)
         {

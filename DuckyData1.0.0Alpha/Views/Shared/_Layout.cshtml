@@ -22,7 +22,7 @@
     <script type="text/javascript" src="~/Scripts/duckyDataApp.js"></script>
 
 </head>
-<body ng-app="duckyData" >
+<body ng-app="duckyData">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img class="navbar-logo" src="@Url.Content("~/images/logo.png")" alt="Logo" />
+                <img class="navbar-logo" src="~/Images/logo.PNG")" alt="Logo" />
                 @* @Html.Label("DuckyData", new { @class = "navbar-brand" })*@
             </div>
 
@@ -41,14 +41,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-							<li>@Html.ActionLink("About", "About", "Home")</li>
-							<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-							<li>@Html.ActionLink("Messages", "Inbox", "Message")</li>
-							<li>@Html.ActionLink("Bug Reports", "Index", "BugReports")</li>
-							<li>@Html.ActionLink("Follow Ups", "Index", "FollowUps")</li>
-							<li>@Html.ActionLink("Music Fetch", "Index", "MusicFetch")</li>
-							<li>@Html.ActionLink("ACRtest", "ACRQuery", "MusicFetch")</li>
-                            <li>@Html.ActionLink("Input", "Input", "MusicFetch")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Messages", "Inbox", "Message")</li>
                         </ul>
                     </li>
                     <li class="dropdown">

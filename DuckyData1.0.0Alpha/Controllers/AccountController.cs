@@ -19,9 +19,13 @@ using System.Collections.Generic;
 using PagedList;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DuckyData1._0._0Alpha.Service.EmailService;
+using System.Web.Security;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
+
+
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -199,7 +203,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult ActivateAccount() {
+        public ActionResult ActivateAccount()
+        {
             string activation_code = null;
             activation_code = Request.QueryString["code"];
             if (activation_code != null)
@@ -208,10 +213,10 @@ namespace DuckyData1._0._0Alpha.Controllers
                 if (userInfo != null)
                 {
                     ApplicationUser user = accountFactory.findUserByEmail(userInfo.User_Account);
-                    Response.Redirect("CompleteRegister?id="+user.Id);
+                    Response.Redirect("CompleteRegister?id=" + user.Id);
                 }
             }
-           return View();
+            return View();
         }
 
         // GET: /Account/CompleteRegister
@@ -232,7 +237,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult CompleteRegister(userAdd userInfo)
         {
             accountFactory.updateUserInfo(userInfo);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -248,14 +253,15 @@ namespace DuckyData1._0._0Alpha.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user,isPersistent: false,rememberBrowser: false);
-                   // string code = RandomString();
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    // string code = RandomString();
                     //var callbackUrl = Url.Action("ActivateAccount","Account",new { userId = user.Id,code = code },protocol: Request.Url.Scheme);
-                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-                    await appEmailService.SendActivationAsync(model.Email,callbackUrl);
+                    await appEmailService.SendActivationAsync(model.Email, callbackUrl);
                     accountFactory.createRegiseInfo(model, code);
+                    return RedirectToAction("EmailSent", "Account");
                 }
                 AddErrors(result);
             }
@@ -276,6 +282,10 @@ namespace DuckyData1._0._0Alpha.Controllers
             return builder.ToString();
         }
 
+        [HttpGet]
+        public ActionResult EmailSent() {
+            return View();
+        }
 
         //
         // GET: /Account/ConfirmEmail
@@ -287,7 +297,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 return View("Error");
             }
 
-            code = code.Replace("%2","+");
+            code = code.Replace("%2", "+");
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -310,7 +320,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-               // var user = accountFactory.findUserByEmail(model.Email);
+                // var user = accountFactory.findUserByEmail(model.Email);
                 if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -320,12 +330,12 @@ namespace DuckyData1._0._0Alpha.Controllers
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword","Account",new { userId = user.Id,code = code },protocol: Request.Url.Scheme);
-                if(accountFactory.resetCode(user.Email,code))
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                if (accountFactory.resetCode(user.Email, code))
                 {
-                    await appEmailService.SendResetPasswordAsync(user.Email,callbackUrl);
+                    await appEmailService.SendResetPasswordAsync(user.Email, callbackUrl);
                 }
-                
+
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -347,14 +357,15 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult ResetPassword(string code)
         {
 
-            if(code == null)
+            if (code == null)
             {
                 return View("Error");
             }
-            else {
-                code = code.Replace(" ","+");
+            else
+            {
+                code = code.Replace(" ", "+");
                 User_Activation_Code userCode = accountFactory.findUserCodeByCode(code);
-                if(userCode == null)
+                if (userCode == null)
                 {
                     return View("Error");
                 }
@@ -366,7 +377,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                     return View(model);
                 }
             }
-           
+
         }
 
         //
@@ -386,8 +397,8 @@ namespace DuckyData1._0._0Alpha.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var resetPasswordToken = model.Code.Replace(" ","+");
-            var result = await UserManager.ResetPasswordAsync(user.Id,resetPasswordToken, model.Password);
+            var resetPasswordToken = model.Code.Replace(" ", "+");
+            var result = await UserManager.ResetPasswordAsync(user.Id, resetPasswordToken, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -860,8 +871,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             ViewBag.Users = new SelectList(users);
             return View("RoleAddToUser");
         }
-
-
+        
 
 
 
