@@ -227,7 +227,6 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Manager.cs" />
-    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\MusicFetchController.cs" />
     <Compile Include="Controllers\VideoFavouritesController.cs" />
     <Compile Include="Controllers\VideoFetchController.cs" />
@@ -239,8 +238,6 @@
     <Compile Include="Factory\WebAPI\Gracenote\GNAjax.cs" />
     <Compile Include="Factory\WebAPI\Gracenote\GNQueryBuilder.cs" />
     <Compile Include="Controllers\MessageController.cs" />
-    <Compile Include="Factory\Account\AccountFactory.cs" />
-    <Compile Include="Factory\DatabaseConnection.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -249,7 +246,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Service\EmailService\AppEmailService.cs" />
-    <Compile Include="recognizer.cs" />
     <Compile Include="ViewModels\Account\AccountViewModel.cs" />
     <Compile Include="ViewModels\Account\User_Activation_Code.cs" />
     <Compile Include="Models\DataContext.cs" />
@@ -270,7 +266,6 @@
     <Content Include="Content\Account\ListUsers.css" />
     <Content Include="Content\Account\Register.css" />
     <Content Include="Content\Account\SignIn.css" />
-    <Compile Include="ViewModels\Messages_VM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="acrcloud_extr_tool.h" />
@@ -785,6 +780,7 @@
     <Content Include="acrcloud_extr_tool.h">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include=".bin\node.cmd" />
     <None Include="Properties\PublishProfiles\DuckyData.pubxml" />
     <Content Include="Scripts\ckeditor\lang\de-ch.js" />
     <Content Include="Scripts\ckeditor\lang\ku.js" />
@@ -1496,9 +1492,6 @@
     <Content Include="Views\VideoFavourites\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="images\MsgAttach\" />
-    <Folder Include="Views\NewFolder1\" />
     <Content Include="Views\Message\Create.cshtml" />
     <Content Include="Views\Message\Inbox.cshtml" />
     <Content Include="Views\Message\Sent.cshtml" />
@@ -1511,8 +1504,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\MsgAttach\" />
     <Folder Include="img\MsgAttach\" />
     <Folder Include="Views\Image\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
