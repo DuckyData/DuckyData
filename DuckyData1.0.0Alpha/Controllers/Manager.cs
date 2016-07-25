@@ -10,58 +10,20 @@ using System.Linq;
 using System.Web;
 using ACRCloud;
 using static System.Net.WebRequestMethods;
-using System.IO;
-using DuckyData1._0._0Alpha.ViewModels.Account;
-using System.Web.Security;
-using DuckyData1._0._0Alpha.Factory.Account;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
     public class Manager
     {
         private ApplicationDbContext ds = new ApplicationDbContext();
-        private AccountFactory af = new AccountFactory();
+
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
 
-        ICollection<userRole> AuthUsers()
-        {
-            IEnumerable<userAdd> users = af.getUserList(null);
-            ICollection<userRole> aUsers = null;
-            foreach (var user in users)
-            {
-                if (Roles.IsUserInRole("Admin"))
-                {
-                    aUsers.Add(new userRole
-                    {
-                        Id = user.Id,
-                        Role = "Admin",
-                        Email = user.Email,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName
-                    });
-                }
-                if(Roles.IsUserInRole("TechSupport"))
-                {
-                    aUsers.Add(new userRole
-                    {
-                        Id = user.Id,
-                        Role = "TechSupport",
-                        Email = user.Email,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName
-                    });
-                }
-            }
-
-            return (aUsers == null) ? null : aUsers;
-        }
-
-        public acr RunQuery(fileInput input)
+        public acr RunTest()
         {
             Program p = new Program();
-            var result =  p.go(input);
-            
+            acr result = new acr { result = p.go() };
             return result;
         }
 
@@ -88,17 +50,9 @@ namespace DuckyData1._0._0Alpha.Controllers
             newItem.UserId = uID;
             newItem.UserName = uNm;
             newItem.viewed = false;
-            Message msg = new Message();
-            msg.Recipient = newItem.Recipient;
-            msg.SentDate = newItem.SentDate;
-            msg.Subject = newItem.Subject;
-            msg.UserId = newItem.UserId;
-            msg.UserName = newItem.UserName;
-            msg.viewed = newItem.viewed;
-            msg.Body = newItem.Body;
-            var addedItem = ds.Messages.Add(msg);
-            //var addedItem = ds.Messages.Add(Mapper.Map<Message>(newItem));
-           if (newItem.Attachments != null)
+            var addedItem = ds.Messages.Add(Mapper.Map<Message>(newItem));
+
+            if (newItem.Attachments != null)
             {
                 byte[] logoBytes = new byte[newItem.Attachments.ContentLength];
                 newItem.Attachments.InputStream.Read(logoBytes, 0, newItem.Attachments.ContentLength);
@@ -111,7 +65,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 //string[] tmps = newItem.Attachments.FileName.Split(new char[] { '\\' });
                 addedItem.ContentName = newItem.Attachments.FileName;
                 ds.SaveChanges();
-                string path = HttpContext.Current.Server.MapPath("~/images/MsgAttach/" + addedItem.Id + newItem.Attachments.FileName);
+                string path = HttpContext.Current.Server.MapPath("~/img/MsgAttach/" + addedItem.Id + newItem.Attachments.FileName);
                 System.IO.File.WriteAllBytes(path, logoBytes);
             }
             else
@@ -121,14 +75,6 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
             
                 return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
-        }
-
-        public IEnumerable<MessageBase> AllMsg()
-        {
-            var messages = ds.Messages.AsEnumerable();
-
-            return (messages == null) ? null
-                : Mapper.Map<IEnumerable<MessageBase>>(messages);
         }
 
         public MessageBase GetMessageById(int id)
@@ -155,11 +101,11 @@ namespace DuckyData1._0._0Alpha.Controllers
             return (messages == null) ? null : Mapper.Map<IEnumerable<MessageBase>>(messages);
         } 
 
-        public IEnumerable<Message> Inbox()
+        public IEnumerable<MessageBase> Inbox()
         {
-            var messages = ds.Messages.SqlQuery("Select * from dbo.Messages").Where(x => x.Recipient == uNm);
+            var messages = ds.Messages.Where(x => x.Recipient == uNm);
 
-            return (messages == null) ? null : messages;
+            return (messages == null) ? null : Mapper.Map<IEnumerable<MessageBase>>(messages);
         }
 
         public IEnumerable<MessageBase> UnreadMessages()
@@ -190,7 +136,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             var toEdit = ds.Messages.SingleOrDefault(i => i.Id == toApply.Id);
 
-            if(toEdit == null || (uNm != toEdit.UserName && !HttpContext.Current.User.IsInRole("admin"))) { return null; }
+            if(toEdit == null) { return null; }
             else
             {
                 toApply.Attachment = toEdit.Attachment;
@@ -218,7 +164,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public bool DeleteMessage(int id)
         {
             var toDel = ds.Messages.SingleOrDefault(i => i.Id == id);
-            if (toDel == null || (uNm != toDel.UserName && !HttpContext.Current.User.IsInRole("admin")))
+            if (toDel == null || uNm != toDel.Recipient)
             {
                 return false;
             }

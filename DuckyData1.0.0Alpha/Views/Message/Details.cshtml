@@ -69,34 +69,34 @@
                                         {
                                         <dd>
                                             <audio controls>
-                                                <source src="@string.Format("~/images/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
+                                                <source src="@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
                                                 Audio playback not supported.
                                             </audio> <br />
-                                            <a href='@string.Format("~/images/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download audio</a>
+                                            <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download audio</a>
                                         </dd>
                                         }
                                         else if (Model.ContentType.Contains("video"))
                                         {
                                             <dd>
                                                 <video width="300" height="280" controls>
-                                                    <source src="@string.Format("~/images/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
+                                                    <source src="@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
                                                     Video playback not supported.
                                                 </video> <br />
-                                                <a href='@string.Format("~/images/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download video</a>
+                                                <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download video</a>
                                             </dd>
                                         }
                                         else if (Model.ContentType.Contains("image"))
                                         {
                                             <dd>
-                                                <a href='@string.Format("~/images/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>
-                                                    <images src='@string.Format("~/images/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' alt="@Model.ContentName" title="@Model.ContentType" style="width: 400px; height:400px;" />
+                                                <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>
+                                                    <img src='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' alt="@Model.ContentName" title="@Model.ContentType" style="width: 400px; height:400px;" />
                                                 </a>
                                             </dd>
                                         }
                                         else
                                         {
                                             <dd>
-                                                <a href='@string.Format("~/images/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>File - @Model.ContentType</a>
+                                                <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>File - @Model.ContentType</a>
                                             </dd>
                                         }
                                     }

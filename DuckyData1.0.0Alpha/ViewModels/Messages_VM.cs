@@ -28,7 +28,10 @@ namespace DuckyData1._0._0Alpha.ViewModels
 
     }
 
-    
+    public class acr
+    {
+        public string result { get; set; }
+    }
 
     public class MessageAttachment
     {

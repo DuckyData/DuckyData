@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DuckyData1._0._0Alpha.Models.Message>
+﻿@model IEnumerable<DuckyData1._0._0Alpha.ViewModels.MessageBase>
 
 
 @{
@@ -39,7 +39,7 @@
             <tr>
                     <td>
                         <a href="~/Message/Delete/@item.Id">
-                            <img src='~/images/icons/png/delete.png' alt="Delete" title="Delete" style="width: 30px; height: 30px;" />
+                            <img src='~/img/icons/png/delete.png' alt="Delete" title="Delete" style="width: 30px; height: 30px;" />
                         </a>
                     </td>
                 <td>
@@ -47,12 +47,12 @@
                         if (item.viewed == true)
                         {
                             <a href="@Url.Action("MarkUnread", "Message", new { id = item.Id})">
-                                <img src='~/images/icons/png/read.png' alt='Mark As Unread' title='Mark As Unread' style='width: 30px; height: 30px;' />
+                                <img src='~/img/icons/png/read.png' alt='Mark As Unread' title='Mark As Unread' style='width: 30px; height: 30px;' />
                             </a>
                         }
                         else
                         {
-                            <img src='~/images/icons/png/unread.png' alt="unread" title="unread" style="width: 30px; height: 30px;" />
+                            <img src='~/img/icons/png/unread.png' alt="unread" title="unread" style="width: 30px; height: 30px;" />
                         }
                     }
                 </td>
