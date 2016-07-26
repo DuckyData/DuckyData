@@ -317,7 +317,6 @@
     <Content Include="Content\VideoFetch\VideoFetchIndex.css" />
     <Content Include="Content\VideoFetch\VideoFetchIndexPlayer.css" />
     <Content Include="Content\VideoFetch\VideoFetchUpload.css" />
-
     <Content Include="favicon.ico" />
     <Content Include="Content\jquery\jquery-ui.css" />
     <Content Include="Content\jquery\jquery-ui.min.css" />
@@ -949,6 +948,7 @@
     <Content Include="Views\Account\EmailSent.cshtml" />
     <Content Include="Views\Account\ListUsers.cshtml" />
     <Content Include="Views\Shared\_AdminTools.cshtml" />
+    <Content Include="Views\Shared\_TsTools.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

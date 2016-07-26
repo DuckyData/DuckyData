@@ -46,20 +46,10 @@
                             <li>@Html.ActionLink("Messages", "Inbox", "Message")</li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Roles", "RoleIndex", "Account")</li>
-                            <li>@Html.ActionLink("Create Role", "RoleCreate", "Account")</li>
-                            <li>@Html.ActionLink("Apply Role to User", "RoleAddToUser", "Account")</li>
-                            <li>@Html.ActionLink("Users", "ListUsers", "Account")</li>
-                            <li>@Html.ActionLink("Messages", "Index", "Message")</li>
-                            <li>@Html.ActionLink("Report a Bug", "Create", "BugReports")</li>
-                        </ul>
-                    </li>
                     
-                    @{ if(HttpContext.Current.User.IsInRole("Admin")){ Html.RenderAction("_AdminTools", "Home"); } 
-
+                    @{ 
+                        if (HttpContext.Current.User.IsInRole("Admin")){ Html.RenderAction("_AdminTools", "Home"); }
+                        else if (HttpContext.Current.User.IsInRole("TechSupport")) { Html.RenderAction("_TsTools", "Home"); }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
