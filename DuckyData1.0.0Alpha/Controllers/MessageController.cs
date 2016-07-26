@@ -12,13 +12,15 @@ using ACRCloud;
 using static System.Net.WebRequestMethods;
 using System.IO;
 using System.Web.Mvc;
+using DuckyData1._0._0Alpha.Factory.Account;
+using System.Data.Entity.Validation;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
     public class MessageController : Controller
     {
         private Manager m = new Manager();
-
+        private AccountFactory ac = new AccountFactory();
         static private string uID = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
         // GET: Message
@@ -82,7 +84,6 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var addedItem = m.SendMessage(newItem);
                 return RedirectToAction("Inbox", "Message");
             }
@@ -104,9 +105,14 @@ namespace DuckyData1._0._0Alpha.Controllers
         [HttpPost]
         public ActionResult Create(MessageAdd newItem)
         {
+            var user = ac.findUserById(uID);
+            if (user.gagged)
+            {
+                ModelState.AddModelError("SentDate", "Please select an option");
+                return View();
+            }
             if (ModelState.IsValid)
             {
-
                 var addedItem = m.SendMessage(newItem);
                 return RedirectToAction("Inbox", "Message");
             }
