@@ -879,7 +879,6 @@
     <Content Include="Views\ApplicationUsers\Details.cshtml" />
     <Content Include="Views\ApplicationUsers\Edit.cshtml" />
     <Content Include="Views\Account\CompleteRegister.cshtml" />
-    <Content Include="Views\Account\ListUsers.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\BugReports\Delete.cshtml" />
@@ -919,13 +918,15 @@
     <Content Include="Views\Account\RoleAddToUser.cshtml" />
     <Content Include="Views\Account\RoleCreate.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
-    <Content Include="Views\Account\Flags.cshtml" />
     <Content Include="Views\VideoFetch\Create.cshtml" />
     <Content Include="Views\VideoFetch\Delete.cshtml" />
     <Content Include="Views\VideoFetch\Details.cshtml" />
     <Content Include="Views\VideoFetch\Edit.cshtml" />
     <Content Include="Views\VideoFetch\Index.cshtml" />
     <Content Include="Views\Account\EmailSent.cshtml" />
+    <Content Include="Views\Account\Flags.cshtml" />
+    <Content Include="Views\Account\ListUsers.cshtml" />
+    <Content Include="Views\Shared\_AdminTools.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

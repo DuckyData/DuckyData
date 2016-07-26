@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using PagedList;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DuckyData1._0._0Alpha.Service.EmailService;
+using Microsoft.Owin.Security.Infrastructure;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -29,6 +30,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         private ApplicationUserManager _userManager;
         private AccountFactory accountFactory = new AccountFactory();
         private AppEmailService appEmailService = new AppEmailService();
+        private ApplicationDbContext db = new ApplicationDbContext();
         // private Manager manager = new Manager();
 
 
@@ -71,6 +73,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            //UserManager.UserLockoutEnabledByDefault = true;
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -90,10 +94,19 @@ namespace DuckyData1._0._0Alpha.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+            var user = await UserManager.FindByNameAsync(model.Email);
+            var locked = UserManager.GetLockoutEnabled(user.Id);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    if (!locked)
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        return View("Lockout");
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -104,6 +117,35 @@ namespace DuckyData1._0._0Alpha.Controllers
                     return View(model);
             }
         }
+
+
+
+        [Authorize]
+        public ActionResult Activate(string id)
+        {
+            UserManager.SetLockoutEnabled(id, false);
+            var user = UserManager.Users.FirstOrDefault(i => i.Id == id);
+            user.LockoutEndDateUtc = DateTime.Now;
+            db.SaveChanges();
+            return RedirectToAction("ListUsers", "Account");
+        }
+
+        [Authorize]
+        public ActionResult Deactivate(string id)
+        {
+            UserManager.SetLockoutEnabled(id, true);
+            var user = UserManager.Users.FirstOrDefault(i => i.Id == id);
+            user.LockoutEndDateUtc = new DateTime(9999, 12, 30);
+            db.SaveChanges();
+            return RedirectToAction("ListUsers", "Account");
+        }
+        
+        public bool LockoutStatus(string id)
+        {
+            var status = UserManager.GetLockoutEnabled(id);
+            return status;
+        }
+
 
         //
         // GET: /Account/VerifyCode
@@ -183,11 +225,39 @@ namespace DuckyData1._0._0Alpha.Controllers
         [Authorize(Roles ="Admin")]
         public ActionResult ListUsers(string searchString, int? page)
         {
-            IEnumerable<userAdd> userList = accountFactory.getUserList(searchString);
+            IEnumerable<userFlags> userList = accountFactory.getUserList(searchString);
+            foreach(var user in userList)
+            {
+                var tmp = accountFactory.findUserById(user.Id);
+                
+            }
+            
+
+            
+
             int pageSize = 20;
             int pageNumber = (page ?? 1);
 
             return View(userList.ToPagedList(pageNumber,pageSize));
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult PurgeUserFlags()
+        {
+            string n = null;
+            IEnumerable<ApplicationUser> userList = accountFactory.getAppUsers(n);
+            foreach(var user in userList)
+            {
+                var usr = new adminEditUser();
+                usr = Mapper.Map<adminEditUser>(user);
+                usr.flagged = false;
+                usr.gagged = false;
+                usr.banned = false;
+                accountFactory.adminUpdateUserInfo(user, usr);
+            }
+
+            return RedirectToAction("ListUsers", "Account");
         }
 
         //
@@ -654,6 +724,31 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditFlags(string uid, bool flag, bool gag, bool ban)
+        {
+            ApplicationUser dest = accountFactory.findUserById(uid);
+            adminEditUser user = new adminEditUser
+            {
+                flagged = flag,
+                gagged = gag,
+                banned = ban,
+                FirstName = dest.firstName,
+                LastName = dest.lastName,
+                PhoneNumber = dest.PhoneNumber
+            };
+            if (dest.banned && !UserManager.GetLockoutEnabled(dest.Id))
+            {
+                UserManager.SetLockoutEnabled(dest.Id, true);
+                dest.LockoutEndDateUtc = DateTime.Now.AddMonths(6);
+                db.SaveChanges();
+            }
+            accountFactory.adminUpdateUserInfo(dest, user);
+            return RedirectToAction("ListUsers", "Account");
+
+        }
 
 
 

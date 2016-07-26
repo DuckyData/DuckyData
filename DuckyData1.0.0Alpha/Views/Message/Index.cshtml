@@ -20,9 +20,6 @@
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Recipient)
             </th>
             <th>
@@ -55,16 +52,13 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Recipient)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Body)
+                @Html.Raw(item.Body)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.viewed)
@@ -87,5 +81,3 @@
     }
     
     </table>
-</body>
-</html>

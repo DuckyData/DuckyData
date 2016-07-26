@@ -1,6 +1,16 @@
 ﻿using AutoMapper;
+using DuckyData1._0._0Alpha;
+using DuckyData1._0._0Alpha.Models;
 using DuckyData1._0._0Alpha.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using ACRCloud;
+using static System.Net.WebRequestMethods;
+using System.IO;
 using System.Web.Mvc;
 
 namespace DuckyData1._0._0Alpha.Controllers
@@ -9,7 +19,8 @@ namespace DuckyData1._0._0Alpha.Controllers
     {
         private Manager m = new Manager();
 
-        
+        static private string uID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+
         // GET: Message
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
@@ -114,10 +125,8 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 return HttpNotFound();
             }
-            if (DateTime.Compare(fetchedObject.SentDate, DateTime.Now) > 300)
-            {
-                return RedirectToAction("Inbox", "Message");
-            }
+            //if (DateTime.Compare(fetchedObject.SentDate, DateTime.Now) > 300)
+            
             return View(Mapper.Map<MessageEditForm>(fetchedObject));
             
         }
@@ -184,7 +193,10 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             if (!id.HasValue) { return HttpNotFound(); }
 
-
+            if( uID != m.GetMessageById(id.Value).UserId && !User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Inbox", "Message");
+            }
             // Attempt to delete the item
             m.DeleteMessage(id.Value);
 

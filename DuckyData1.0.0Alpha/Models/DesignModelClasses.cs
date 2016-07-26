@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +8,11 @@ using System.Web;
 
 namespace DuckyData1._0._0Alpha.Models
 {
+    public class myHub : Hub
+    {
+
+    }
+
     public class fileInput
     {
         public HttpPostedFileBase input { get; set; }

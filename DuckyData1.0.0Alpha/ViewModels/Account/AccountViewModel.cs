@@ -16,6 +16,15 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         public string Email { set; get; }
     }
 
+    public class userFlags: userBase
+    {
+        [Key]
+        public string Id { set; get; }
+   
+        public bool flagged { set; get; }
+        public bool gagged { set; get; }
+        public bool banned { set; get; }
+    }
 
     public class userAdd:userBase
     {
@@ -30,15 +39,18 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         [Display(Name = "Phone Number")]
         [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$",ErrorMessage = "Please enter valid phone number.")]
         public string PhoneNumber { set; get; }
+        public bool flagged { set; get; }
+        public bool gagged { set; get; }
+        public bool banned { set; get; }
     }
 
     public class Flags
     {
         [Key]
         public string Id { set; get; }
-        public string flagged { get; set; }
-        public string gagged { get; set; }
-        public string banned { get; set; }
+        public bool flagged { get; set; }
+        public bool gagged { get; set; }
+        public bool banned { get; set; }
     }
 
 }
