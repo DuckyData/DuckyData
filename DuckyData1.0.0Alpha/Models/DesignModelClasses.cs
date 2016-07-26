@@ -189,5 +189,6 @@ namespace DuckyData1._0._0Alpha.Models
         public string VideoId { get; set; }
         public string VideoTitle { get; set; }
         public string VideoImg { get; set; }
+        public string VideoURL { get; set; }
     }
 }

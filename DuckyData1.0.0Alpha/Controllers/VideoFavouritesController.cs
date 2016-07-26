@@ -1,23 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using DuckyData1._0._0Alpha.Models;
+using Microsoft.AspNet.Identity;
+using DuckyData1._0._0Alpha.Factory.FavouriteFactory;
+using DuckyData1._0._0Alpha.ViewModels.VideoFetch;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
     public class VideoFavouritesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        private FavouriteFactory favouriteFactory = new FavouriteFactory();
         // GET: VideoFavourites
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter,string searchString,int? page)
         {
-            return View(db.VideoFavourites.ToList());
+            string userId = User.Identity.GetUserId();
+            if(searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            IEnumerable<VideoFavouriteDisplay> videos = favouriteFactory.getVideoList(userId, searchString);
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            return View(videos.ToPagedList(pageNumber,pageSize));
         }
 
         // GET: VideoFavourites/Details/5
@@ -110,6 +125,10 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             VideoFavourite videoFavourite = db.VideoFavourites.Find(id);
+            if(videoFavourite == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             db.VideoFavourites.Remove(videoFavourite);
             db.SaveChanges();
             return RedirectToAction("Index");

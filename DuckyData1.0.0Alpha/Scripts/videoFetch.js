@@ -105,7 +105,7 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
 
     $scope.addToMyVideoFavourite = function (video) {
         console.log(video);
-        musicFetchFactory.addToMyFavourite({ VideoId: video.id.videoId, VideoTitle: video.snippet.title, VideoImg: video.snippet.thumbnails.default.url }).then(function (data) {
+        musicFetchFactory.addToMyFavourite({ VideoId: video.id.videoId, VideoTitle: video.snippet.title, VideoImg: video.snippet.thumbnails.default.url ,VideoURL:"https://www.youtube.com/watch?v=" + video.id.videoId}).then(function (data) {
             if (data.data.Status == 200) {
                 toastr.success(data.data.message);
             } else {

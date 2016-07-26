@@ -283,6 +283,7 @@
     <Content Include="Content\MusicFetch\audioUploader.css" />
     <Content Include="Content\MusicFetch\MusicFetchIndex.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\VideoFetch\VideoFavouriteList.css" />
     <Content Include="Content\VideoFetch\VideoFetchIndex.css" />
     <Content Include="Content\VideoFetch\VideoFetchIndexPlayer.css" />
     <Content Include="Content\VideoFetch\VideoFetchUpload.css" />
