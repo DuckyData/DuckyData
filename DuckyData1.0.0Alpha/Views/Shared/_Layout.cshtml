@@ -54,8 +54,13 @@
                             <li>@Html.ActionLink("Apply Role to User", "RoleAddToUser", "Account")</li>
                             <li>@Html.ActionLink("Users", "ListUsers", "Account")</li>
                             <li>@Html.ActionLink("Messages", "Index", "Message")</li>
+                            <li>@Html.ActionLink("Report a Bug", "Create", "BugReports")</li>
                         </ul>
                     </li>
+                    
+                    @{ if(HttpContext.Current.User.IsInRole("Admin")){ Html.RenderAction("_AdminTools", "Home"); } 
+
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

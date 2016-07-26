@@ -11,51 +11,16 @@ using System.Web;
 using ACRCloud;
 using static System.Net.WebRequestMethods;
 using System.IO;
-using DuckyData1._0._0Alpha.ViewModels.Account;
-using System.Web.Security;
-using DuckyData1._0._0Alpha.Factory.Account;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
     public class Manager
     {
         private ApplicationDbContext ds = new ApplicationDbContext();
-        private AccountFactory af = new AccountFactory();
+
+        private AccountController a = new AccountController();
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
-
-        ICollection<userRole> AuthUsers()
-        {
-            IEnumerable<userAdd> users = af.getUserList(null);
-            ICollection<userRole> aUsers = null;
-            foreach (var user in users)
-            {
-                if (Roles.IsUserInRole("Admin"))
-                {
-                    aUsers.Add(new userRole
-                    {
-                        Id = user.Id,
-                        Role = "Admin",
-                        Email = user.Email,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName
-                    });
-                }
-                if(Roles.IsUserInRole("TechSupport"))
-                {
-                    aUsers.Add(new userRole
-                    {
-                        Id = user.Id,
-                        Role = "TechSupport",
-                        Email = user.Email,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName
-                    });
-                }
-            }
-
-            return (aUsers == null) ? null : aUsers;
-        }
 
         public acr RunQuery(fileInput input)
         {
@@ -85,6 +50,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         public MessageBase SendMessage(MessageAdd newItem)
         {
             //var user = ds.Users.SingleOrDefault(i => i.Id == uID);
+           // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
+           // if(usr.gagged) { return null; }
             newItem.UserId = uID;
             newItem.UserName = uNm;
             newItem.viewed = false;
@@ -125,10 +92,26 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public IEnumerable<MessageBase> AllMsg()
         {
-            var messages = ds.Messages.AsEnumerable();
+            var fetched = ds.Messages.AsEnumerable();
+            ICollection<MessageBase> messages = new List<MessageBase>();
+            foreach(var item in fetched)
+            {
+                var tmp = new MessageBase();
+                tmp.Id = item.Id;
+                tmp.Attachment = item.Attachment;
+                tmp.Body = item.Body;
+                tmp.ContentName = item.ContentName;
+                tmp.ContentType = item.ContentType;
+                tmp.Recipient = item.Recipient;
+                tmp.SentDate = item.SentDate;
+                tmp.Subject = item.Subject;
+                tmp.UserId = item.UserId;
+                tmp.UserName = item.UserName;
+                tmp.viewed = item.viewed;
+                messages.Add(tmp);
+            }
 
-            return (messages == null) ? null
-                : Mapper.Map<IEnumerable<MessageBase>>(messages);
+            return (messages == null) ? null : messages;
         }
 
         public MessageBase GetMessageById(int id)

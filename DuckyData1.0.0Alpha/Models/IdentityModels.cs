@@ -18,9 +18,9 @@ namespace DuckyData1._0._0Alpha.Models
         public override string Id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public string flagged { get; set; }
-        public string gagged { get; set; }
-        public string banned { get; set; }
+        public bool flagged { get; set; }
+        public bool gagged { get; set; }
+        public bool banned { get; set; }
 
         public ApplicationUser(string email, string password)
         {

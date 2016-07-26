@@ -41,17 +41,8 @@ namespace DuckyData1._0._0Alpha.Controllers
                 //return RedirectToAction("ACRQuery", "MusicFetch", newItem);
                 var result = m.RunQuery(newItem);
                 var album = result.album;
-                album = album.Substring(1, album.Length - 1);
-                album = album.Replace("  ", " ");
                 string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
-                if (tmp.Contains("acrid"))
-                {
-                    int indexOf = tmp.IndexOf(" acrid");
-                    if (indexOf >= 0)
-                    {
-                        tmp = tmp.Remove(indexOf);
-                    }
-                }
+                
                 return Redirect(tmp);
             }
             return View();
@@ -74,6 +65,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 newItem.bytes = new byte[newItem.input.ContentLength];
                 newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
                 var result = m.RunQuery(newItem);
+
                 var album = result.album;
                 string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
                 return Redirect(tmp);

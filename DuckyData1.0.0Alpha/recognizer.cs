@@ -29,6 +29,7 @@ using System.Drawing;
 using DuckyData1._0._0Alpha.ViewModels;
 using DuckyData1._0._0Alpha.Models;
 using Newtonsoft.Json.Linq;
+using MediaToolkit;
 
 namespace ACRCloud
 {
@@ -597,14 +598,20 @@ namespace ACRCloud
                  
             }*/
             // It will skip 0 seconds from the beginning of datas.
+            acr unknown = new acr();
+
             var result = re.RecognizeByFileBuffer(input.bytes, input.bytes.Length, 30);
             var json = JObject.Parse(result);
+            if(!json["status"].ToString().Contains("Success")) {
+                unknown.album = "";
+                return unknown;
+            }
             var obj = json["metadata"]["music"];
             var album = (string)obj[0]["album"]["name"];
             album = album.Replace("}", "");
             album = album.Replace("{", "");
 
-            acr unknown = new acr();
+            
             
             unknown.album = album;
             return unknown;

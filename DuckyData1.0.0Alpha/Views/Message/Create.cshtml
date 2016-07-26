@@ -16,6 +16,7 @@
         
         <div class="form-horizontal">
             <h4>MessageAddForm</h4>
+            @Html.ValidationMessage("isGagged","You have been Gagged due to inapropiate comments of content. You may Connect again: ", new { @class = "text-danger" })
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">

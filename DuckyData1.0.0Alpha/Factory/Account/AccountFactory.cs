@@ -25,7 +25,36 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             }
         }
 
-        public IEnumerable<userAdd> getUserList(string searchString)
+        public ICollection<userFlags> getUserList(string searchString)
+        {
+
+            var userList = from u in userDB.Users select u;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                userList = userList.Where(s => s.lastName.Contains(searchString)
+                                      || s.firstName.Contains(searchString));
+            }
+            userList = userList.OrderBy(us => us.firstName);
+            getDatabase();
+            ICollection<userFlags> users = new List<userFlags>();
+            
+            foreach (var user in userList)
+            {
+                users.Add(new userFlags {
+                    Id = user.Id,
+                    FirstName = user.firstName,
+                    LastName = user.lastName,
+                    Email = user.Email,
+                    flagged = user.flagged,
+                    gagged = user.gagged,
+                    banned = user.banned
+                });
+            }
+            
+            return users;
+        }
+
+        public ICollection<ApplicationUser> getAppUsers(string searchString)
         {
 
             var userList = from u in userDB.Users select u;
@@ -37,9 +66,9 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             userList = userList.OrderBy(us => us.firstName);
             getDatabase();
 
-            return Mapper.Map<IEnumerable<userAdd>>(userList);
+            ICollection<ApplicationUser> usrs = new List<ApplicationUser>(userList);
+            return usrs;
         }
-
         public User_Activation_Code getRegiseInfoByCode(string activationCode)
         {
             getDatabase();
@@ -116,6 +145,9 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             dest.firstName = src.FirstName;
             dest.lastName = src.LastName;
             dest.PhoneNumber = src.PhoneNumber;
+            dest.flagged = src.flagged;
+            dest.gagged = src.gagged;
+            dest.banned = src.banned;
             userDB.SaveChanges();
         }
 
