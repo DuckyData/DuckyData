@@ -1,0 +1,64 @@
+﻿@model PagedList.IPagedList< DuckyData1._0._0Alpha.ViewModels.MusicFetch.MusicFavouriteDisplay>
+@using PagedList.Mvc;
+@Styles.Render("~/Content/MusicFetch/AudioFavouriteList.css")
+
+<div id="list-favourite-audio">
+    <div id="list-favourite-audio-header">
+        @using(Html.BeginForm())
+        {
+            <div class="input-group pull-right">
+                <input type="text" class="form-control input-sm col-lg-6" id="searchString" name="searchString" placeholder="Search">
+                <span class="input-group-btn pull-left">
+                    <button type="submit" class="btn btn-info btn-sm"> Search </button>
+                </span>
+            </div>
+        }
+    </div>
+    <table class="table">
+        <tr>
+            <th>
+                Album Art
+            </th>
+            <th>
+                Artist
+            </th>
+            <th>
+                Album
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                SoundCloud
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.AlbumCover" alt="coverArt" height="100">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Album)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MusicTitle)
+                </td>
+                <td>
+                    <a href="@item.MusicURL">Listen</a>
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete","Delete",new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+@Html.PagedListPager(Model,page => Url.Action("Index",new { page,currentFilter = ViewBag.CurrentFilter }))

@@ -227,6 +227,7 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Manager.cs" />
+    <Compile Include="Controllers\MusicFavouritesController.cs" />
     <Compile Include="Controllers\MusicFetchController.cs" />
     <Compile Include="Controllers\VideoFavouritesController.cs" />
     <Compile Include="Controllers\VideoFetchController.cs" />
@@ -280,6 +281,7 @@
     <Content Include="Content\BugReport\editBugReport.css" />
     <Content Include="Content\BugReport\listBugReport.css" />
     <Content Include="Content\helper.css" />
+    <Content Include="Content\MusicFetch\AudioFavouriteList.css" />
     <Content Include="Content\MusicFetch\audioUploader.css" />
     <Content Include="Content\MusicFetch\MusicFetchIndex.css" />
     <Content Include="Content\PagedList.css" />
@@ -1491,6 +1493,8 @@
     <Content Include="Views\VideoFavourites\Details.cshtml" />
     <Content Include="Views\VideoFavourites\Edit.cshtml" />
     <Content Include="Views\VideoFavourites\Index.cshtml" />
+    <Content Include="Views\MusicFavourites\Delete.cshtml" />
+    <Content Include="Views\MusicFavourites\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Message\Create.cshtml" />

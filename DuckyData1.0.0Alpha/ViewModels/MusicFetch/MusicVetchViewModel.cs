@@ -17,4 +17,18 @@ namespace DuckyData1._0._0Alpha.ViewModels.MusicFetch
         public string Album { get; set; }
         public string AlbumCover { get; set; }
     }
+
+    public class MusicFavouriteDisplay
+    {
+        public int Id { set; get; }
+        [Required]
+        public string MusicURL { get; set; }
+        [Required]
+        [Display(Name = "Music Title")]
+        public string MusicTitle { get; set; }
+        public string Artist { get; set; }
+        public string Album { get; set; }
+        [Display(Name ="Album Art")]
+        public string AlbumCover { get; set; }
+    }
 }

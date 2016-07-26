@@ -41,6 +41,8 @@ namespace DuckyData1._0._0Alpha
             Mapper.CreateMap<VideoFavourite,VideoFavouriteAdd>();
             Mapper.CreateMap<VideoFavourite,VideoFavouriteDisplay>();
             Mapper.CreateMap<VideoFavouriteDisplay,VideoFavourite>();
+            Mapper.CreateMap<MusicFavouriteDisplay,MusicFavourite>();
+            Mapper.CreateMap<MusicFavourite,MusicFavouriteDisplay>();
         }
 
         protected void Application_BeginRequest(object sender,EventArgs e)

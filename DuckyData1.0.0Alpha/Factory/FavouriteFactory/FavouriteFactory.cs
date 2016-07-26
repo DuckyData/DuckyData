@@ -59,8 +59,6 @@ namespace DuckyData1._0._0Alpha.Factory.FavouriteFactory
             }
         }
 
-
-
         //
         public IEnumerable<VideoFavouriteDisplay> getVideoList(string userId,string query) {
 
@@ -68,13 +66,52 @@ namespace DuckyData1._0._0Alpha.Factory.FavouriteFactory
             var videoList = from b in appDB.VideoFavourites select b;
             if(!String.IsNullOrEmpty(query))
             {
-                videoList = videoList.Where(b => b.VideoTitle.Contains(query) && b.UserId.Equals(userId)
-
-                                            ).OrderBy(g => g.VideoTitle);
+                videoList = videoList.Where(b => b.VideoTitle.Contains(query) && b.UserId.Equals(userId)).OrderBy(g => g.VideoTitle);
             }
             videoList = videoList.Where(b=>b.UserId.Equals(userId)).OrderBy(b => b.VideoTitle);
             return Mapper.Map<IEnumerable<VideoFavouriteDisplay>>(videoList);
 
+        }
+
+        public IEnumerable<MusicFavouriteDisplay> getAudioList(string userId,string query)
+        {
+            getDatabase();
+            var audioList = from b in appDB.MusicFavourites select b;
+            if(!String.IsNullOrEmpty(query))
+            {
+                audioList = audioList.Where(b => b.Album.Contains(query)
+                                      || b.Artist.Contains(query)
+                                      || b.MusicTitle.Equals(query)
+                                      && b.UserId.Equals(userId)).OrderBy(b => b.Album).ThenBy(b=>b.Artist).ThenBy(b=>b.MusicTitle);
+            }
+            audioList = audioList.Where(b => b.UserId.Equals(userId)).OrderBy(b => b.Album);
+            return Mapper.Map<IEnumerable<MusicFavouriteDisplay>>(audioList);
+        }
+
+        public MusicFavourite findFavAudioById(int? id) {
+            getDatabase();
+            try {
+                var audio = appDB.MusicFavourites.Find(id);
+                return audio;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+
+        public bool removeFavAudioById(int id) {
+            getDatabase();
+            try
+            {
+                var audio = appDB.MusicFavourites.Find(id);
+                appDB.MusicFavourites.Remove(audio);
+                appDB.SaveChanges();
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
         }
     }
 }
