@@ -30,33 +30,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(addForm);
         }
         
-        [HttpPost]
-        public ActionResult Input(fileInput newItem)
-        {
-            if (ModelState.IsValid)
-            {
-
-                newItem.bytes = new byte[newItem.input.ContentLength];
-                newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
-                //return RedirectToAction("ACRQuery", "MusicFetch", newItem);
-                var result = m.RunQuery(newItem);
-                var album = result.album;
-                album = album.Substring(1, album.Length - 1);
-                album = album.Replace("  ", " ");
-                string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
-                if (tmp.Contains("acrid"))
-                {
-                    int indexOf = tmp.IndexOf(" acrid");
-                    if (indexOf >= 0)
-                    {
-                        tmp = tmp.Remove(indexOf);
-                    }
-                }
-                return Redirect(tmp);
-            }
-            return View();
-        }
-
+       
 
         public ActionResult _MediaInput()
         {
@@ -65,20 +39,18 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [HttpPost]
-        public ActionResult _MediaInput(fileInput newItem)
+        public string _MediaInput(int? id, fileInput newItem)
         {
-
             if (ModelState.IsValid)
             {
-
                 newItem.bytes = new byte[newItem.input.ContentLength];
                 newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
                 var result = m.RunQuery(newItem);
                 var album = result.album;
-                string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
-                return Redirect(tmp);
+                string tmp = string.Format("http://localhost:8102/MusicFetch/Index?album={0}", album);
+                return tmp;
             }
-            return View();
+            return "";
 
         }
 

@@ -13,22 +13,34 @@
     </p>
     <div class="width-100" id="file-identify-upload-box">
         <div class="width-100 file-drop-area">
-            <div class="width-45 pull-left" nv-file-drop uploader="singAudioUploader" ng-click="inputTagTrigger('#audio-indentift-select-tag')">
-                drag and drop audio file here <br> or click here to select file{{singAudioUploader.queue[0]._file.name}}
+            <div class="width-100 pull-left medi-drop-box" nv-file-drop uploader="singAudioUploader" ng-click="inputTagTrigger('#audio-indentift-select-tag')">
+                drag and drop audio file here v <br> or click here to select file
+                <br><br>
+                <div class="width-100">
+                    <div class="file-name-to-indetify pull-left">{{singAudioUploader.queue[0]._file.name}}</div>
+                    <span class="pull-right remove-identify-file" ng-click="singAudioUploader.queue.splice(0,1);$event.stopPropagation()" ng-if="singAudioUploader.queue.length>0">&#10005</span>
+                </div>
             </div>
            
-            <div class="width-45 pull-right" nv-file-drop uploader="singVideoUploader" ng-click="inputTagTrigger('#video-indentift-select-tag')">
+            @*<div class="width-45 pull-right" nv-file-drop uploader="singVideoUploader" ng-click="inputTagTrigger('#video-indentift-select-tag')">
                 drag and drop audio file here <br> or click here to select file
-            </div>
+                <br><br>
+                <div class="width-100">
+                    <div class="file-name-to-indetify pull-left">{{singVideoUploader.queue[0]._file.name}} </div>
+                    <span class="pull-right remove-identify-file" ng-click="singVideoUploader.queue.splice(0,1);$event.stopPropagation()" ng-if="singVideoUploader.queue.length >0">&#10005</span>
+                </div>
+            </div>*@
             <div class="width-100 hidden-input-tag">
                 <input type="file" id="audio-indentift-select-tag" nv-file-select uploader="singAudioUploader" class="invisible">
-                <input type="file" id="video-indentift-select-tag" nv-file-select uploader="singVideoUploader" class="invisible">
+                @*<input type="file" id="video-indentift-select-tag" nv-file-select uploader="singVideoUploader" class="invisible">*@
             </div>
         </div>
         <div class="width-100 file-indentify-btn-group">
-            <button class="btn btn-primary width-45 pull-left">Indentify Audio</button>
-            <button class="btn btn-primary width-45 pull-right">Indentify Video</button>
+            <button class="btn btn-primary width-45 pull-left" ng-click="identifyAudio()">Indentify Media File</button>
+            <button class="btn btn-primary width-45 pull-right">Indentify Media File and Search</button>
         </div>
     </div>
-
 </div>
+<script>
+
+</script>

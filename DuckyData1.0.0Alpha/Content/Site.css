@@ -117,13 +117,13 @@ body div.navbar-fixed-top{
     position: relative;
 }
 
-#jumbotron #file-identify-upload-box div.width-45{
+#jumbotron #file-identify-upload-box div.medi-drop-box{
     background-color: #fff;
     height: 190px;
     padding: 10px;
 }
 
-#jumbotron #file-identify-upload-box .width-45:hover{
+#jumbotron #file-identify-upload-box .medi-drop-box:hover{
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -135,4 +135,19 @@ body div.navbar-fixed-top{
 #jumbotron #file-identify-upload-box .file-indentify-btn-group{
     position: absolute;
     bottom: 0;
+}
+
+
+.file-name-to-indetify{
+    width: calc(100% - 40px);
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    overflow: hidden;
+}
+
+.hidden-input-tag > input{
+    display: none;
+}
+.remove-identify-file {
+    cursor: pointer;
 }
