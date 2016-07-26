@@ -26,7 +26,6 @@
     height: 120px;
     width:calc(100% - 155px);
 }
-<<<<<<< HEAD
 
 #MusicFetchIndex #back-to-possible-album-list {
     height: 120px;
@@ -204,7 +203,6 @@
     transition: left 0.7s;
 }
 
->>>>>>> master2Clone
 #track-preview-module #preview-album-cover, #track-preview-module #preview-album-cover img{
     width: 120px;
     height: 120px;
@@ -237,7 +235,6 @@
 }
 #track-preview-module.show-preview-module{
     left: 5px;
-<<<<<<< HEAD
 }
 
 #track-preview-module.show-preview-module span.fui-arrow-left{
@@ -261,9 +258,6 @@
     margin-top: 20px;
 }
 
-=======
-}
-
 #track-preview-module.show-preview-module span.fui-arrow-left{
     display: block !important;
 }
@@ -285,7 +279,6 @@
     margin-top: 20px;
 }
 
->>>>>>> master2Clone
 #possible-album-list #possible-album-holder{
     width: 100%;
     height: auto;
@@ -361,7 +354,6 @@
 
 #possible-album-list .album-repeat .ablum-track-nb label{
     margin-right: 10px;
-<<<<<<< HEAD
 }
 
 #possible-album-list .album-repeat .ablum-artist{
@@ -374,8 +366,6 @@
     margin-right: 10px;
 }
 
-=======
-}
 
 #possible-album-list .album-repeat .ablum-artist{
     height: 30px;
@@ -387,7 +377,6 @@
     margin-right: 10px;
 }
 
->>>>>>> master2Clone
 .possible-album-info{
     width: calc(100% - 160px);
     height: 100%;
@@ -416,8 +405,4 @@
         padding: 10px 5px;
         height: 120px;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master2Clone

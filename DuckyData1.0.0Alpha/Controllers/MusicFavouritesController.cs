@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 using DuckyData1._0._0Alpha.Models;

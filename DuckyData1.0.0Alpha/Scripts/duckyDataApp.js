@@ -91,6 +91,10 @@ duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
 duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
     var uploaderAudio = new FileUploader();
     var uploaderVideo = new FileUploader();
+
+    var singAudioUploader = new FileUploader();
+    var singVideoUploader = new FileUploader();
+
     uploaderAudio.filters.push({
         name: 'audioFilter',
         fn: function (item, options) {
@@ -106,7 +110,9 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
 
     return {
         uploaderAudio: uploaderAudio,
-        uploaderVideo: uploaderVideo
+        uploaderVideo: uploaderVideo,
+        singVideoUploader: singVideoUploader,
+        singAudioUploader: singAudioUploader
     }
 });
 
