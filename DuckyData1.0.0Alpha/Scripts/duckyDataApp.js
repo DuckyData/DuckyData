@@ -100,7 +100,6 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
         fn: function (item, options) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
 
-            console.log(item);
             if ('|mp3|wav|x-wav|x-pn-wav|ogg|aiff|x-aiff|mpeg|x-mpeg|flac|x-aac|x-ms-wma|'.indexOf(type) !== -1) {
                 return true;
             } else {

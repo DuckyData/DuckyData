@@ -4,7 +4,6 @@
 @Scripts.Render("~/Scripts/homeController.js")
 
 <div id="jumbotron" class="jumbotron" ng-controller="homeCtrl">
-
     <h4>Search Meatdata</h4>
     <p>
         Our site support audio and video metadata search
@@ -18,7 +17,7 @@
     <div class="width-100" id="file-identify-upload-box">
         <div class="width-100 file-drop-area">
             <div class="width-100 pull-left medi-drop-box" nv-file-drop uploader="singAudioUploader" ng-click="inputTagTrigger('#audio-indentift-select-tag')">
-                drag and drop audio file here  <br> or click here to select file (1GM Maximun)
+                drag and drop audio file here  <br> or click here to select file (1GB Maximun)
                 <br><br>
                 <div class="width-100">
                     <div class="file-name-to-indetify pull-left">{{singAudioUploader.queue[0]._file.name}}</div>
@@ -31,8 +30,8 @@
             </div>
         </div>
         <div class="width-100 file-indentify-btn-group">
-            <button class="btn btn-primary width-45 pull-left" ng-click="identifyAudio(1)" ng-disabled="homePageUICtrl.disableIfentifyButton">Indentify Media File</button>
-            <button class="btn btn-primary width-45 pull-right" ng-click="identifyAudio(2)" ng-disabled="homePageUICtrl.disableIfentifyButton">Indentify Media File and Search</button>
+            <button class="btn btn-primary width-45 pull-left text-ellipsis" ng-click="identifyAudio(1)" ng-disabled="homePageUICtrl.disableIfentifyButton">Indentify Media File</button>
+            <button class="btn btn-primary width-45 pull-right text-ellipsis" ng-click="identifyAudio(2)" ng-disabled="homePageUICtrl.disableIfentifyButton">Indentify Media File and Search</button>
         </div>
     </div>
 </div>

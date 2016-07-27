@@ -329,6 +329,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult EmailSent() {
             return View();
         }
