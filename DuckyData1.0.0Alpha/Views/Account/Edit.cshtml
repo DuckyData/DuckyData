@@ -2,16 +2,16 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("/Scripts/editUserProfileController.js")
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="form-horizontal" ng-controller="editUserProfileCtrl">
         <h4>Update Your Profile</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
@@ -23,28 +23,28 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                <input class="form-control text-box single-line valid" id="FirstName" name="FirstName" placeholder="First Name" type="text" value=@Model.FirstName aria-invalid="false">
+                <div class="text-danger">{{editUserProfileMsg.fname}}</div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                <input class="form-control text-box single-line valid" id="LastName" name="LastName" placeholder="Last Name" type="text" value=@Model.LastName aria-invalid="false">
+                <div class="text-danger">{{editUserProfileMsg.lname}}</div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "9999999999" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                <input class="form-control text-box single-line valid" id="PhoneNumber" name="PhoneNumber" placeholder="9999999999" type="text" value=@Model.PhoneNumber aria-invalid="false">
+                <div class="text-danger">{{editUserProfileMsg.phone}}</div>
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="col-md-10">
+                <input type="submit" value="Save" ng-disabled="editUserProfileUI.disableButton" class="btn btn-primary col-lg-12" />
             </div>
         </div>
     </div>

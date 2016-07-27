@@ -8,8 +8,10 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
 {
     public class userBase {
         [Display(Name = "First Name")]
+        [StringLength(20)]
         public string FirstName { set; get; }
         [Display(Name = "Last Name")]
+        [StringLength(20)]
         public string LastName { set; get; }
         [Display(Name = "Email")]
         [EmailAddress]
@@ -37,7 +39,7 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         [Key]
         public string Id { set; get; }
         [Display(Name = "Phone Number")]
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$",ErrorMessage = "Please enter valid phone number.")]
+        [RegularExpression("/^[0-9]{10}$/",ErrorMessage = "Please enter valid phone number.")]
         public string PhoneNumber { set; get; }
         public bool flagged { set; get; }
         public bool gagged { set; get; }
