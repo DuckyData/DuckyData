@@ -396,6 +396,7 @@
     <Content Include="Scripts\ConfirmEmailController.js" />
     <Content Include="Scripts\cors_upload.js" />
     <Content Include="Scripts\client.js" />
+    <Content Include="Scripts\createBugreportController.js" />
     <Content Include="Scripts\duckyDataApp.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
