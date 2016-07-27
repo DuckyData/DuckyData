@@ -313,8 +313,10 @@ namespace DuckyData1._0._0Alpha.Controllers
                // var user = accountFactory.findUserByEmail(model.Email);
                 if (user == null)
                 {
+                    ModelState.AddModelError("Email-error", "Email was not found.");
+
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View();
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
