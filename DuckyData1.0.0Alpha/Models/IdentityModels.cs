@@ -18,9 +18,9 @@ namespace DuckyData1._0._0Alpha.Models
         public override string Id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public string flagged { get; set; }
-        public string gagged { get; set; }
-        public string banned { get; set; }
+        public bool flagged { get; set; }
+        public bool gagged { get; set; }
+        public bool banned { get; set; }
 
         public ApplicationUser(string email, string password)
         {
@@ -65,9 +65,7 @@ namespace DuckyData1._0._0Alpha.Models
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.FollowUp> FollowUps { get; set; }
 
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.MediaFile> MediaFiles { get; set; }
-
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.Account.User_Activation_Code> User_Activation_Codes { get; set; }
-
 
         public DbSet<Message> Messages { get; set; }
         /**

@@ -13,9 +13,9 @@ namespace DuckyData1._0._0Alpha.Controllers
     {
 
         public ActionResult Index()
-        {   /*  
-            UNCOMMENT AND ENTER EMAIL TO GRANT ADMIN
-
+        {     
+            //UNCOMMENT AND ENTER EMAIL TO GRANT ADMIN
+            /*
             using (var context = new ApplicationDbContext())
             { 
                 var roleStore = new RoleStore<IdentityRole>(context);
@@ -29,7 +29,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 var user = userManager.FindByEmail("msdoherty@myseneca.ca");
                 userManager.AddToRole(user.Id, "Admin");
                 context.SaveChanges();
-            } */
+            } */ 
             return View();
         }
 
@@ -46,5 +46,13 @@ namespace DuckyData1._0._0Alpha.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
+        [ChildActionOnly]
+        public ActionResult _AdminTools()
+        {
+            return PartialView();
+        }
+
     }
 }

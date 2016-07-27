@@ -1,6 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <UnreferencedDlls>*.dll</UnreferencedDlls>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CopyAllFilesToSingleFolderForPackageDependsOn>
+      CustomCollectFiles;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn);
+    </CopyAllFilesToSingleFolderForPackageDependsOn>
+  </PropertyGroup>
+  <Target Name="AfterBuild">
+    <Message Text="Copying unreferenced DLLs to bin" Importance="High" />
+    <CreateItem Include="$(UnreferencedDlls)">
+      <Output TaskParameter="Include" ItemName="_UnReferencedDLLs" />
+    </CreateItem>
+    <Copy SourceFiles="@(_UnReferencedDLLs)" DestinationFolder="bin\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+  <Target Name="CustomCollectFiles">
+    <Message Text="Publishing unreferenced DLLs" Importance="High" />
+    <ItemGroup>
+      <_CustomFiles Include="$(UnreferencedDlls)" />
+      <FilesForPackagingFromProject Include="%(_CustomFiles.Identity)">
+        <DestinationRelativePath>bin\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
     <UseIISExpress>true</UseIISExpress>
     <WebStackScaffolding_ControllerDialogWidth>1440</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsLayoutPageSelected>False</WebStackScaffolding_IsLayoutPageSelected>

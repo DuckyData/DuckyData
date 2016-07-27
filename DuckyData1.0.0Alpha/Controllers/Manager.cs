@@ -18,6 +18,7 @@ namespace DuckyData1._0._0Alpha.Controllers
     {
         private ApplicationDbContext ds = new ApplicationDbContext();
 
+        private AccountController a = new AccountController();
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
 
@@ -49,6 +50,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         public MessageBase SendMessage(MessageAdd newItem)
         {
             //var user = ds.Users.SingleOrDefault(i => i.Id == uID);
+           // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
+           // if(usr.gagged) { return null; }
             newItem.UserId = uID;
             newItem.UserName = uNm;
             newItem.viewed = false;
@@ -93,10 +96,26 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public IEnumerable<MessageBase> AllMsg()
         {
-            var messages = ds.Messages.AsEnumerable();
+            var fetched = ds.Messages.AsEnumerable();
+            ICollection<MessageBase> messages = new List<MessageBase>();
+            foreach(var item in fetched)
+            {
+                var tmp = new MessageBase();
+                tmp.Id = item.Id;
+                tmp.Attachment = item.Attachment;
+                tmp.Body = item.Body;
+                tmp.ContentName = item.ContentName;
+                tmp.ContentType = item.ContentType;
+                tmp.Recipient = item.Recipient;
+                tmp.SentDate = item.SentDate;
+                tmp.Subject = item.Subject;
+                tmp.UserId = item.UserId;
+                tmp.UserName = item.UserName;
+                tmp.viewed = item.viewed;
+                messages.Add(tmp);
+            }
 
-            return (messages == null) ? null
-                : Mapper.Map<IEnumerable<MessageBase>>(messages);
+            return (messages == null) ? null : messages;
         }
 
         public MessageBase GetMessageById(int id)
