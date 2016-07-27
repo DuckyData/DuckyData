@@ -348,6 +348,7 @@
     <Content Include="Scripts\autosize.js" />
     <Content Include="Scripts\client.js" />
     <Content Include="Scripts\client_plusone.js" />
+    <Content Include="Scripts\ConfirmEmailController.js" />
     <Content Include="Scripts\cors_upload.js" />
     <Content Include="Scripts\duckyDataApp.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -1386,6 +1387,7 @@
     <Content Include="Scripts\musicFetch.js" />
     <Content Include="Scripts\musicFetchCreate.js" />
     <Content Include="Scripts\radiocheck.js" />
+    <Content Include="Scripts\RegisterController.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />

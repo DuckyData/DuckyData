@@ -51,7 +51,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
                         createPageList(Math.ceil(data.total / 25));
                         $scope.albumPagination.current = $scope.albumFilter.params.index == 0 ? 1 : $scope.albumFilter.params.index % 25;
                     } else {
-                        toastr.error('Cannot find information about this album', 'Sorry');
+                        toastr.error('We cannot find anything public accessable infornation for this album', 'Sorry');
                         createPageList(0);
                         $scope.musicFetchData.showNoMachedResult = false;
                     }

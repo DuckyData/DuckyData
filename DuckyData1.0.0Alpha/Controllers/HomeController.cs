@@ -11,7 +11,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 {
     public class HomeController : Controller
     {
-
+        [Authorize]
         public ActionResult Index()
         {   /*  
             UNCOMMENT AND ENTER EMAIL TO GRANT ADMIN
