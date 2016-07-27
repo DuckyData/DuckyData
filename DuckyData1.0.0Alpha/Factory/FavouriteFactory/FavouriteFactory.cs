@@ -60,7 +60,7 @@ namespace DuckyData1._0._0Alpha.Factory.FavouriteFactory
         }
 
         //
-        public IEnumerable<VideoFavouriteDisplay> getVideoList(string userId,string query) {
+        public List<VideoFavouriteDisplay> getVideoList(string userId,string query) {
 
             getDatabase();
             var videoList = from b in appDB.VideoFavourites select b;
@@ -69,11 +69,11 @@ namespace DuckyData1._0._0Alpha.Factory.FavouriteFactory
                 videoList = videoList.Where(b => b.VideoTitle.Contains(query) && b.UserId.Equals(userId)).OrderBy(g => g.VideoTitle);
             }
             videoList = videoList.Where(b=>b.UserId.Equals(userId)).OrderBy(b => b.VideoTitle);
-            return Mapper.Map<IEnumerable<VideoFavouriteDisplay>>(videoList);
+            return Mapper.Map<List<VideoFavouriteDisplay>>(videoList);
 
         }
 
-        public IEnumerable<MusicFavouriteDisplay> getAudioList(string userId,string query)
+        public List<MusicFavouriteDisplay> getAudioList(string userId,string query)
         {
             getDatabase();
             var audioList = from b in appDB.MusicFavourites select b;
@@ -85,7 +85,7 @@ namespace DuckyData1._0._0Alpha.Factory.FavouriteFactory
                                       && b.UserId.Equals(userId)).OrderBy(b => b.Album).ThenBy(b=>b.Artist).ThenBy(b=>b.MusicTitle);
             }
             audioList = audioList.Where(b => b.UserId.Equals(userId)).OrderBy(b => b.Album);
-            return Mapper.Map<IEnumerable<MusicFavouriteDisplay>>(audioList);
+            return Mapper.Map<List<MusicFavouriteDisplay>>(audioList);
         }
 
         public MusicFavourite findFavAudioById(int? id) {
