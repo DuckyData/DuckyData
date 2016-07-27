@@ -1541,12 +1541,10 @@
     <Content Include="Views\VideoFetch\Index.cshtml" />
     <Content Include="Views\VideoFetch\oauth2callback.cshtml" />
     <Content Include="Views\VideoFetch\Upload.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\EmailSent.cshtml" />
     <Content Include="Views\Account\ListUsers.cshtml" />
     <Content Include="Views\Shared\_AdminTools.cshtml" />
     <Content Include="Views\Shared\_TsTools.cshtml" />
-=======
     <Content Include="Views\VideoFavourites\Create.cshtml" />
     <Content Include="Views\VideoFavourites\Delete.cshtml" />
     <Content Include="Views\VideoFavourites\Details.cshtml" />
@@ -1565,7 +1563,6 @@
     <Content Include="Views\Message\_Inbox.cshtml" />
     <Content Include="Views\Message\Reply.cshtml" />
     <Content Include="Views\Message\ACRTest.cshtml" />
->>>>>>> Daniel
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
