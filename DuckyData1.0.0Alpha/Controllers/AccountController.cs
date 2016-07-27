@@ -286,27 +286,6 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View();
         }
 
-        // GET: /Account/CompleteRegister
-        [AllowAnonymous]
-        public ActionResult CompleteRegister()
-        {
-            string userId = null;
-            userId = Request.QueryString["id"];
-            ApplicationUser user = accountFactory.getUserById(userId);
-            userAdd newUser = Mapper.Map<userAdd>(user);
-
-            return View(newUser);
-        }
-
-        // POST: /Account/CompleteRegister
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult CompleteRegister(userAdd userInfo)
-        {
-            accountFactory.updateUserInfo(userInfo);
-            return RedirectToAction("Index", "Home");
-        }
-
         //
         // POST: /Account/Register
         [HttpPost]
@@ -320,7 +299,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     // string code = RandomString();
                     //var callbackUrl = Url.Action("ActivateAccount","Account",new { userId = user.Id,code = code },protocol: Request.Url.Scheme);
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -603,7 +582,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

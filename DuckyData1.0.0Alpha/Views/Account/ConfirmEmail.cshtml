@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Confirm Email";
 }
-
-<h2>@ViewBag.Title.</h2>
-<div>
+@Scripts.Render("~/Scripts/ConfirmEmailController.js")
+<h2>Account Registered</h2>
+<div ng-controller="ConfirmEmailCtrl">
     <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        Thank you for confirming your email.<br> We will redirect you to complete your profile in <span class="title">{{counter}}</span> s
     </p>
 </div>

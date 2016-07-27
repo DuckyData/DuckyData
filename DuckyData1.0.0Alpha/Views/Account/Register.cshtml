@@ -2,7 +2,12 @@
 @{
     ViewBag.Title = "Register Account";
 }
-<div id="Regiester">
+@Scripts.Render("~/Scripts/RegisterController.js")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+
+<div id="Regiester" ng-controller="registerAccountCtrl">
     <h2>@ViewBag.Title</h2>
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -12,7 +17,7 @@
 
         <div class="form-group">
             <div class="col-md-12">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                <input class="form-control" ng-model="registerAccountData.email" ng-change="validTheEmailAddress()" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Email" name="Email" placeholder="Email" type="text" value="">
             </div>
         </div>
         <div class="form-group">
@@ -32,8 +37,3 @@
         </div>
     }
 </div>
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

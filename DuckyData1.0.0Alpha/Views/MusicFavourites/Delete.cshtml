@@ -1,0 +1,50 @@
+﻿@model DuckyData1._0._0Alpha.ViewModels.MusicFetch.MusicFavouriteDisplay
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MusicFavourite</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumCover)
+        </dt>
+    
+        <dd>
+            <img src="@Model.AlbumCover" alt="coverArt" height="100">
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Artist)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Artist)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Album)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Album)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.MusicTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MusicTitle)
+        </dd>
+    
+    </dl>
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+    
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-primary" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -56,6 +56,99 @@
     text-align: center;
 }
 #music-data-info #track-title{
+    width: calc(100% - 305px);
+}
+
+#music-data-info #add-track-favourite{
+    width: 50px;
+    text-align: center;
+}
+
+#music-data-info #track-pause{
+    width: 50px;
+    text-align: center;
+}
+#music-data-info #track-duration{
+    width: 70px;
+}
+#music-data-info .track-repeat{
+    border-bottom: 1px solid #f1f1f1;
+    height: 50px;
+    line-height: 50px;
+   -webkit-transition: box-shadow 0.15s; /* For Safari 3.1 to 6.0 */
+    transition: box-shadow 0.15s;
+
+}
+#music-data-info .track-repeat:hover{
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+#music-data-info .track-repeat a.fui-link,
+#music-data-info .track-repeat a.fui-play,
+#music-data-info .track-repeat a.fui-pause,
+#music-data-info .track-repeat a.fui-heart
+ {
+    visibility: hidden;   
+    cursor: pointer;
+}
+
+#music-data-info .track-repeat:hover a.fui-link,
+#music-data-info .track-repeat:hover a.fui-play,
+#music-data-info .track-repeat:hover a.fui-pause,
+#music-data-info .track-repeat:hover a.fui-heart {
+    visibility: visible;
+}
+
+#music-data-info .track-repeat.visible a.fui-link,
+#music-data-info .track-repeat.visible a.fui-play,
+#music-data-info .track-repeat.visible a.fui-pause,
+#music-data-info .track-repeat.visible a.fui-heart{
+    visibility: visible;
+}
+
+#track-preview-module{
+    position: fixed;
+    bottom:20px;
+    left:-530px;
+    background: #00BFA5;
+    width: 550px;
+    height: 120px;
+    z-index: 1000 !important;
+    -webkit-transition: left 0.7s; /* For Safari 3.1 to 6.0 */
+    transition: left 0.7s;
+}
+
+=======
+
+#MusicFetchIndex #back-to-possible-album-list {
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+    cursor: pointer;
+    background: #EEEEEE;
+    width:30px;
+}
+#album-detail-info .artist-label{
+    width: 70px;
+}
+#album-detail-info .album-title{
+    font-size: 115%;   
+    font-weight: 600;
+}
+#music-data-info #track-index{
+    width: 35px;
+    text-align: center;
+}
+
+#music-data-info #track-download{
+    width: 50px;
+    text-align: center;
+}
+#music-data-info #track-playing{
+    width: 50px;
+    text-align: center;
+}
+#music-data-info #track-title{
     width: calc(100% - 255px);
 }
 
@@ -165,6 +258,27 @@
     margin-top: 20px;
 }
 
+#track-preview-module.show-preview-module span.fui-arrow-left{
+    display: block !important;
+}
+#track-preview-module span.fui-arrow-left{
+    display: none !important;
+}
+#track-preview-module.show-preview-module span.fui-arrow-right{
+    display: none;
+}
+#track-preview-module span.fui-arrow-right{
+    display: block;
+}
+#possible-album-list{
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    padding: 0 !important;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
 #possible-album-list #possible-album-holder{
     width: 100%;
     height: auto;
@@ -241,6 +355,17 @@
 #possible-album-list .album-repeat .ablum-track-nb label{
     margin-right: 10px;
 }
+
+#possible-album-list .album-repeat .ablum-artist{
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px 0 0px;
+}
+
+#possible-album-list .album-repeat .ablum-artist label{
+    margin-right: 10px;
+}
+
 
 #possible-album-list .album-repeat .ablum-artist{
     height: 30px;

@@ -31,6 +31,9 @@
                 <div class="width-100 track-repeat" ng-repeat="track in musicFetchData.albumTrackList" ng-class="{'visible':track.id==musicFetchData.currentPreview.id}">
                     <div id="track-index" class="pull-left">{{$index + 1}}</div>
                     <div id="track-title" class="pull-left text-ellipsis">{{track.title_short}}</div>
+                    <div id="add-track-favourite" title="Add to favourite" class="pull-left">
+                        <a class="fui-heart" ng-click="addToMyAudioFavourite(track)"></a>
+                    </div>
                     <div id="track-playing" title="preview" class="pull-left">
                         <a class="fui-play" ng-click="musicFetchData.currentPreview = track;playPausePreview('play')"></a>
                     </div>
