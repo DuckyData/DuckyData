@@ -6,7 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using DuckyData1._0._0Alpha.Models;
+using DuckyData1._0._0Alpha.ViewModels.MusicFetch;
+using DuckyData1._0._0Alpha.Factory.FavouriteFactory;
+using System.Drawing;
+using System.IO;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -14,15 +19,12 @@ namespace DuckyData1._0._0Alpha.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private Manager m = new Manager();
-        
+        private FavouriteFactory favouriteFactory = new FavouriteFactory();
+
         public ActionResult Index()
         {
             return View();
         }
-
-		
-		
-		
 
         public ActionResult Input()
         {
@@ -30,24 +32,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(addForm);
         }
         
-        [HttpPost]
-        public ActionResult Input(fileInput newItem)
-        {
-            if (ModelState.IsValid)
-            {
-
-                newItem.bytes = new byte[newItem.input.ContentLength];
-                newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
-                //return RedirectToAction("ACRQuery", "MusicFetch", newItem);
-                var result = m.RunQuery(newItem);
-                var album = result.album;
-                string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
-                
-                return Redirect(tmp);
-            }
-            return View();
-        }
-
+       
 
         public ActionResult _MediaInput()
         {
@@ -56,21 +41,29 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [HttpPost]
-        public ActionResult _MediaInput(fileInput newItem)
+        public string _MediaInput(int? id, fileInput newItem)
         {
-
             if (ModelState.IsValid)
             {
-
                 newItem.bytes = new byte[newItem.input.ContentLength];
                 newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
                 var result = m.RunQuery(newItem);
+                string qry, tmp = "";
 
-                var album = result.album;
-                string tmp = string.Format("~/MusicFetch/Index?album={0}", album);
-                return Redirect(tmp);
+
+                if (newItem.input.ContentType.Contains("audio"))
+                {
+                    qry = result.album;
+                    tmp = string.Format("MusicFetch/Index?album={0}", qry);
+                }
+                else if (newItem.input.ContentType.Contains("video"))
+                {
+                    qry = result.title;
+                    tmp = string.Format("VideoFetch/Index?video={0}", qry);
+                }
+                return tmp;
             }
-            return View();
+            return "";
 
         }
 
@@ -207,5 +200,37 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public JsonResult AddFavourite(MusicFavouriteAdd music) {
+
+            if(ModelState.IsValid)
+            {
+                string userId = User.Identity.GetUserId();
+                if(userId == null)
+                {
+                    return Json(new { Status = 400,message = "User name not found, please login and retry" });
+                }
+                else {
+                    music.UserId = userId;
+                }
+                
+                if(favouriteFactory.addMusicFavourite(music))
+                {
+                    return Json(new { Status = 200 ,message = "["+music.MusicTitle+"] saved to your favourite list" });
+                }
+                else {
+                    return Json(new { Status = 500,message = "[" + music.MusicTitle + "] already in your favourite list" });
+                }
+            }
+            else {
+                return Json(new { Status = 400,message = "Failed to save to favourite" });
+            }
+        }
+
+
+
+
+        
     }
 }

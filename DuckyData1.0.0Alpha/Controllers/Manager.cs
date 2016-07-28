@@ -11,6 +11,11 @@ using System.Web;
 using ACRCloud;
 using static System.Net.WebRequestMethods;
 using System.IO;
+using DuckyData1._0._0Alpha.Factory.Account;
+using DuckyData1._0._0Alpha.ViewModels.Account;
+using System.Web.Security;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -21,12 +26,71 @@ namespace DuckyData1._0._0Alpha.Controllers
         private AccountController a = new AccountController();
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
+        static private AccountFactory af = new AccountFactory();
+        IEnumerable<userRole> AuthUsers()
+        {
+            IEnumerable<userFlags> users = af.getUserList(null);
+            ICollection<userRole> aUsers = null;
+            foreach (var user in users)
+            {
+                if (Roles.IsUserInRole("Admin"))
+                {
+                    aUsers.Add(new userRole
+                    {
+                        Id = user.Id,
+                        Role = "Admin",
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
+                    });
+                }
+                if (Roles.IsUserInRole("TechSupport"))
+                {
+                    aUsers.Add(new userRole
+                    {
+                        Id = user.Id,
+                        Role = "TechSupport",
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
+                    });
+                }
+            }
+            IEnumerable<userRole> sorted = null;
+            if (aUsers != null)
+            {
+                sorted = aUsers.OrderBy(r => r.Role).AsEnumerable();
+            }
+            return (sorted == null) ? null : sorted;
+        }
+
+        public string GetMimeType(Image i)
+        {
+            var imgguid = i.RawFormat.Guid;
+            foreach (ImageCodecInfo codec in ImageCodecInfo.GetImageDecoders())
+            {
+                if (codec.FormatID == imgguid)
+                    return codec.MimeType;
+            }
+            return "image/unknown";
+        }
 
         public acr RunQuery(fileInput input)
         {
             Program p = new Program();
             var result =  p.go(input);
-            
+            var art = LastFmAlbumArt.AlbumArt(result.album, result.artist);
+            var ms = new MemoryStream();
+            if (art != null)
+            {
+                art.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+
+                result.albumArt = ms.ToArray();
+                result.artMime = GetMimeType(art);
+            }
+            //TagLib.File file = TagLib.File.Create("mysong.mp3");
+            //tag.Album = 
+
             return result;
         }
 
@@ -69,7 +133,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 byte[] logoBytes = new byte[newItem.Attachments.ContentLength];
                 newItem.Attachments.InputStream.Read(logoBytes, 0, newItem.Attachments.ContentLength);
-
+                
 
                 //addedItem.Attachment = logoBytes;
                 addedItem.ContentType = newItem.Attachments.ContentType;

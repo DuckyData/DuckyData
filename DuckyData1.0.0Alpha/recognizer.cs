@@ -588,32 +588,70 @@ namespace ACRCloud
               **/
             //var file = File.ReadAllBytes("test.mp3");
 
-
-            /*
-            if (input.input.ContentType.Contains("video"))
-            {
-                Engine e = new Engine();
-                string path = HttpContext.Current.Server.MapPath("~/" + input.input.FileName);
-                System.IO.File.WriteAllBytes(path, input.bytes);
-                 
-            }*/
+            
             // It will skip 0 seconds from the beginning of datas.
             acr unknown = new acr();
-
+            var b = input.bytes;
             var result = re.RecognizeByFileBuffer(input.bytes, input.bytes.Length, 30);
             var json = JObject.Parse(result);
             if(!json["status"].ToString().Contains("Success")) {
                 unknown.album = "";
                 return unknown;
             }
+
+            if (input.input.ContentType.Contains("video"))
+            {
+
+                var ob = json["metadata"]["music"];
+                var title = (string)ob[0]["title"];
+                title = title.Replace("}", "");
+                title = title.Replace("{", "");
+                unknown.title = title;
+                return unknown;
+            }
+
+
+
+
             var obj = json["metadata"]["music"];
             var album = (string)obj[0]["album"]["name"];
-            album = album.Replace("}", "");
-            album = album.Replace("{", "");
-
-            
+            var releaseDate = (string)obj[0]["release_date"];
+            var label = (string)obj[0]["label"];
+            var mtitle = (string)obj[0]["title"];
+            var duration = (string)obj[0]["duration_ms"];
+            var genrez = obj[0]["genres"];
+            string genres = "";
+            if (genrez != null)
+            {
+                if (genrez.Count() == 1) { genres = (string)genrez[0]["name"]; }
+                else
+                {
+                    foreach (var genre in genrez)
+                    {
+                        genres += ((string)genre["name"] + ", ");
+                    }
+                }
+                genres = genres.TrimEnd(',');
+            }
+            var artistz = obj[0]["artists"];
+            string artists = "";
+            if (artistz.Count() == 1) { artists = (string)artistz[0]["name"]; }
+            else
+            {
+                foreach (var artist in artistz)
+                {
+                    artists += ((string)artist["name"] + ", ");
+                }
+            }
+            artists = artists.TrimEnd(',');
             
             unknown.album = album;
+            unknown.releaseDate = releaseDate;
+            unknown.artist = artists;
+            unknown.duration = duration;
+            unknown.producer = label;
+            unknown.genre = genres;
+            unknown.title = mtitle;
             return unknown;
             //ACRCloudExtrTool acrTool = new ACRCloudExtrTool();
             //byte[] fp = acrTool.CreateFingerprintByFile("test.mp3", 80, 12, false);
