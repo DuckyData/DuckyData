@@ -4,14 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+    <link rel="stylesheet" href="~/Content/Site.css"></link>
+     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/helper.css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/Scripts/ckeditor/ckeditor_basic.js")
-
+   
     <script type="text/javascript" src="../../Scripts/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" src="../../Scripts/client.js"></script>
     <script type="text/javascript" src="../../Scripts/angular.js"></script>
+    <script type="text/javascript" src="../../Scripts/client.js"></script>
     <script type="text/javascript" src="../../Scripts/angular-resource.js"></script>
     <script type="text/javascript" src="../../Scripts/angular-cookies.js"></script>
     <script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
@@ -21,7 +22,7 @@
     <script type="text/javascript" src="~/Scripts/duckyDataApp.js"></script>
 
 </head>
-<body ng-app="duckyData">
+<body ng-app="duckyData" ng-cloak>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">

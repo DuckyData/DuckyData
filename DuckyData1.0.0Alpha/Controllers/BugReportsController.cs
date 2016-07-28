@@ -26,6 +26,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         private BugRereportFactory bugRereportFactory = new BugRereportFactory();
         private FollowUpsFactory followUpsFactory = new FollowUpsFactory();
         // GET: BugReports
+        [Authorize(Roles = "Admin, admin")]
         public ActionResult Index(int? page)
         {
             var bugList = TempData["bugList"] as List<BugReportList>;
@@ -75,6 +76,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Create(BugReportAdd bugReport)
         {
             if(ModelState.IsValid)
@@ -83,7 +85,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 bugRereportFactory.createBugReport(bugReport,userId);
                 Service.EmailService.AppEmailService service = new Service.EmailService.AppEmailService();
                 await service.SendBugReportCreated(User.Identity.Name);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             return View(bugReport);

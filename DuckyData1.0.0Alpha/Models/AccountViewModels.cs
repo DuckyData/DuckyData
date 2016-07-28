@@ -71,7 +71,7 @@ namespace DuckyData1._0._0Alpha.Models
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
+        [RegularExpression(@"/^.*(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$/",ErrorMessage = "Please enter valid password.")]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
