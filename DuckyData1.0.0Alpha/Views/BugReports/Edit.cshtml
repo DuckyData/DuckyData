@@ -56,16 +56,15 @@
             </div>
         </div>
       
-        <div class="@(Model.status == "Close"?"hide form-group":"form-group")">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" name="command" value="Save the Change" class="btn col-md-10 btn-primary" />
-            </div>
-        </div>
-        <div  class="@(Model.status == "Close"?"hide form-group":"form-group")">
-            <div class="col-md-offset-2 col-md-10">
-               <input readonly value="Close the Bug Report" class="btn col-md-10 btn-danger" data-toggle="modal" data-target="#closeTheReport" />
-            </div>
-        </div>
+            @if(Model.status == "Open")
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input readonly value="Close the Bug Report" class="btn col-md-10 btn-danger" data-toggle="modal" data-target="#closeTheReport" />
+                    </div>
+                </div>
+            }
+        
     </div>
 }
 

@@ -84,6 +84,13 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
             }
         }
 
+        public ApplicationUser findBugOwnerByBugId(int id) {
+            getDatabase();
+            var bug = appDB.BugReports.Include("regUser").FirstOrDefault(b => b.Id == id);
+            return bug.regUser;
+        }
+
+
         // function to create bug report
         public void createBugReport(BugReportBase report, string userId) {
             getDatabase();

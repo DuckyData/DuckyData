@@ -114,20 +114,14 @@ namespace DuckyData1._0._0Alpha.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin, TechSupport")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BugReport bugReport, string command)
+        public async Task<ActionResult> Edit(BugReport bugReport)
         {
-            if(command == "Save the Change")
-            {
-                if(ModelState.IsValid)
-                {
-                    db.Entry(bugReport).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-            }
-            else {
-                bugRereportFactory.closeTheBugReport(bugReport.Id);
-            }
+            Service.EmailService.AppEmailService service = new Service.EmailService.AppEmailService();
+            
+            var user = bugRereportFactory.findBugOwnerByBugId(bugReport.Id);
+            await service.SendEditBugReportStatus(user.UserName);
+            bugRereportFactory.closeTheBugReport(bugReport.Id);
+           
             return RedirectToAction("Details","BugReports",new { id = bugReport.Id });
         }
 

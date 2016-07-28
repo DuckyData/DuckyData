@@ -1,7 +1,7 @@
 ﻿@model DuckyData1._0._0Alpha.Models.BugReport
 @Styles.Render("~/Content/BugReport/listBugReport.css")
 <div>
-    <h4>BugReport</h4>
+    <h4>Bug Report</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -79,6 +79,10 @@
 
 </div>
 <p>
-    @Html.ActionLink("Create FollowUps","FollowUps", new { id = Model.Id }) |
+    @if(Model.status == "Open")
+    {
+        @Html.ActionLink("Create Follow Ups","FollowUps",new { id = Model.Id }) 
+    }
+
     @Html.ActionLink("Back to List", "Index")
 </p>
