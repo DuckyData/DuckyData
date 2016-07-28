@@ -316,8 +316,9 @@ namespace DuckyData1._0._0Alpha.Controllers
                     db.SaveChanges();
 
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    var url = "http://myvmlab.senecacollege.ca:5340/Account/ConfirmEmail?userId=" + System.Web.HttpUtility.UrlEncode(user.Id) + "&code=" + System.Web.HttpUtility.UrlEncode(code);
 
-                    await appEmailService.SendActivationAsync(model.Email, callbackUrl);
+                    await appEmailService.SendActivationAsync(model.Email,url);
                     accountFactory.createRegiseInfo(model, code);
                     return RedirectToAction("EmailSent", "Account");
                 }
@@ -392,9 +393,10 @@ namespace DuckyData1._0._0Alpha.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                var url = "http://myvmlab.senecacollege.ca:5340/Account/ResetPassword?userId=" + System.Web.HttpUtility.UrlEncode(user.Id) + "&code=" + System.Web.HttpUtility.UrlEncode(code);
                 if (accountFactory.resetCode(user.Email, code))
                 {
-                    await appEmailService.SendResetPasswordAsync(user.Email, callbackUrl);
+                    await appEmailService.SendResetPasswordAsync(user.Email, url);
                 }
 
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");

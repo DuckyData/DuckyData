@@ -16,7 +16,7 @@
 
     SC.initialize({
         client_id: 'd468660bb9056f5d8e48361dd5327c80',
-        redirect_uri: 'http://localhost:8102/MusicFetch/CallBack'
+        redirect_uri: 'http://myvmlab.senecacollege.ca:5340/MusicFetch/CallBack'
     });
     $scope.inputTagClick = function(){
         $("#audio-file-select-tag").click();
