@@ -229,17 +229,13 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         // GET: /Account/ListUsers
         [Authorize(Roles ="Admin")]
-        public ActionResult ListUsers(string searchString, int? page)
+        public ActionResult ListUsers(int? page)
         {
-            IEnumerable<userFlags> userList = accountFactory.getUserList(searchString);
-            foreach(var user in userList)
+            var userList = TempData["searchUserList"] as List<userFlags>;
+            if(userList == null)
             {
-                var tmp = accountFactory.findUserById(user.Id);
-                
+                userList = accountFactory.getUserList(null);
             }
-            
-
-            
 
             int pageSize = 20;
             int pageNumber = (page ?? 1);
@@ -247,6 +243,12 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(userList.ToPagedList(pageNumber,pageSize));
         }
 
+        public ActionResult searchUser(string searchString)
+        {
+            List<userFlags> searchUserList = accountFactory.getUserList(searchString);
+            TempData["searchUserList"] = searchUserList.ToList();
+            return RedirectToAction("ListUsers");
+        }
 
         [Authorize(Roles = "Admin")]
         public ActionResult PurgeUserFlags()
@@ -291,27 +293,6 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View();
         }
 
-        // GET: /Account/CompleteRegister
-        [AllowAnonymous]
-        public ActionResult CompleteRegister()
-        {
-            string userId = null;
-            userId = Request.QueryString["id"];
-            ApplicationUser user = accountFactory.getUserById(userId);
-            userAdd newUser = Mapper.Map<userAdd>(user);
-
-            return View(newUser);
-        }
-
-        // POST: /Account/CompleteRegister
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult CompleteRegister(userAdd userInfo)
-        {
-            accountFactory.updateUserInfo(userInfo);
-            return RedirectToAction("Index", "Home");
-        }
-
         //
         // POST: /Account/Register
         [HttpPost]
@@ -325,7 +306,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     // string code = RandomString();
                     //var callbackUrl = Url.Action("ActivateAccount","Account",new { userId = user.Id,code = code },protocol: Request.Url.Scheme);
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -360,6 +341,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult EmailSent() {
             return View();
         }
@@ -400,8 +382,10 @@ namespace DuckyData1._0._0Alpha.Controllers
                 // var user = accountFactory.findUserByEmail(model.Email);
                 if (user == null)
                 {
+                    ModelState.AddModelError("Email-error", "Email was not found.");
+
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View();
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -613,7 +597,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

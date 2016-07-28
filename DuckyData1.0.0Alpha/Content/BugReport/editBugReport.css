@@ -2,7 +2,6 @@
     width: 670px;
     position: absolute;    
     top: 40px !important;
-    left: calc(50vw - 340px) !important;
 }
 
 #closeTheReport .modal-content .modal-header{

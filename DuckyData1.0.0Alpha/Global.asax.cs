@@ -25,7 +25,7 @@ namespace DuckyData1._0._0Alpha
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //localdb
-            // System.Data.Entity.Database.SetInitializer(new Models.StoreInitializer());
+            //System.Data.Entity.Database.SetInitializer(new Models.StoreInitializer());
             ConfigureMaps.ForMessage();
             Mapper.CreateMap<ApplicationUser,userAdd>();
             Mapper.CreateMap<userAdd,ApplicationUser>();
@@ -33,6 +33,8 @@ namespace DuckyData1._0._0Alpha
             Mapper.CreateMap<userAdd,ApplicationUser>();
             Mapper.CreateMap<ApplicationUser,adminEditUser>();
             Mapper.CreateMap<BugReportBase,BugReport>();
+            Mapper.CreateMap<BugReport,BugReportEdit>();
+            Mapper.CreateMap<BugReportEdit,BugReport>();
             Mapper.CreateMap<BugReport,BugReportList>();
             Mapper.CreateMap<FollowUpAddForm,FollowUp>();
             Mapper.CreateMap<MusicFavourite,MusicFavouriteAdd>();
@@ -43,6 +45,9 @@ namespace DuckyData1._0._0Alpha
             Mapper.CreateMap<VideoFavouriteDisplay,VideoFavourite>();
             Mapper.CreateMap<MusicFavouriteDisplay,MusicFavourite>();
             Mapper.CreateMap<MusicFavourite,MusicFavouriteDisplay>();
+
+            Mapper.CreateMap<MessageBase,Message>();
+            Mapper.CreateMap<Message,MessageBase>();
         }
 
         protected void Application_BeginRequest(object sender,EventArgs e)

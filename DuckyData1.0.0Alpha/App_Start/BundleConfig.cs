@@ -34,8 +34,7 @@ namespace DuckyData1._0._0Alpha
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/FlatUI/flat-ui.css",
-                      "~/Content/site.css"));
+                      "~/FlatUI/flat-ui.css"));
         }
     }
 }

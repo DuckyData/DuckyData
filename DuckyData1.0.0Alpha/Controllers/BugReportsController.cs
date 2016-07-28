@@ -16,6 +16,7 @@ using PagedList;
 using DuckyData1._0._0Alpha.Factory.FollowUps;
 using DuckyData1._0._0Alpha.ViewModels.FollowUps;
 using DuckyData1._0._0Alpha.Factory.WebAPI.Gracenote;
+using System.Threading.Tasks;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -25,21 +26,29 @@ namespace DuckyData1._0._0Alpha.Controllers
         private BugRereportFactory bugRereportFactory = new BugRereportFactory();
         private FollowUpsFactory followUpsFactory = new FollowUpsFactory();
         // GET: BugReports
-        public ActionResult Index(string query,int? page)
+        [Authorize(Roles = "Admin, TechSupport")]
+        public ActionResult Index(int? page)
         {
-
-            GNQueryBuilder qbuilder = new GNQueryBuilder();
-            qbuilder.ALBUM_SEARCH("flying lotus","until the quiet comes","all in");
-
-            IEnumerable<BugReportList> bugList = bugRereportFactory.getBugReports(query);
+            var bugList = TempData["bugList"] as List<BugReportList>;
+            if(bugList == null) {
+                bugList = bugRereportFactory.getBugReports(null);
+            }
             int pageSize = 20;
             int pageNumber = (page ?? 1);
             return View(bugList.ToPagedList(pageNumber,pageSize));
         }
 
+        public ActionResult searchBug(string query)
+        {
+            List<BugReportList> bugList = bugRereportFactory.getBugReports(query);
+            TempData["bugList"] = bugList.ToList();
+            return RedirectToAction("Index");
+        }
+
+
         // GET: BugReports/Details/5
         // view buy report and followup associaed
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         public ActionResult Details(int? id)
         {
             if(id == null)
@@ -67,20 +76,23 @@ namespace DuckyData1._0._0Alpha.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BugReportBase bugReport)
+        [Authorize]
+        public async Task<ActionResult> Create(BugReportAdd bugReport)
         {
             if(ModelState.IsValid)
             {
                 string userId = User.Identity.GetUserId();
                 bugRereportFactory.createBugReport(bugReport,userId);
-                return RedirectToAction("Index");
+                Service.EmailService.AppEmailService service = new Service.EmailService.AppEmailService();
+                await service.SendBugReportCreated(User.Identity.Name);
+                return RedirectToAction("Index","Home");
             }
 
             return View(bugReport);
         }
 
         // GET: BugReports/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         public ActionResult Edit(int? id)
         {
             if(id == null)
@@ -100,27 +112,21 @@ namespace DuckyData1._0._0Alpha.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BugReport bugReport, string command)
+        public async Task<ActionResult> Edit(BugReport bugReport)
         {
-            if(command == "Save the Change")
-            {
-                if(ModelState.IsValid)
-                {
-                    db.Entry(bugReport).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-            }
-            else {
-                bugRereportFactory.closeTheBugReport(bugReport.Id);
-            }
+            Service.EmailService.AppEmailService service = new Service.EmailService.AppEmailService();
+            
+            var user = bugRereportFactory.findBugOwnerByBugId(bugReport.Id);
+            await service.SendEditBugReportStatus(user.UserName);
+            bugRereportFactory.closeTheBugReport(bugReport.Id);
+           
             return RedirectToAction("Details","BugReports",new { id = bugReport.Id });
         }
 
         // GET: BugReports/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         public ActionResult Delete(int? id)
         {
             if(id == null)
@@ -136,7 +142,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // POST: BugReports/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -148,6 +154,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, TechSupport")]
         // GET: BugReports/FollowUps/5
         public ActionResult FollowUps(int? id) {
             if(id == null)
@@ -168,6 +175,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
     
         [HttpPost]
+        [Authorize(Roles = "Admin, TechSupport")]
         // POST: BugReports/FollowUps/5
         public ActionResult FollowUps(FollowUpAddForm newFollowUp)
         {

@@ -24,6 +24,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         private ApplicationDbContext ds = new ApplicationDbContext();
 
         private AccountController a = new AccountController();
+        private ApplicationDbContext userDB = new ApplicationDbContext();
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
         static private AccountFactory af = new AccountFactory();
@@ -94,14 +95,14 @@ namespace DuckyData1._0._0Alpha.Controllers
             return result;
         }
 
-        public string Between(string strSource, string strStart, string strEnd)
+        public string Between(string strSource,string strStart,string strEnd)
         {
             int Start, End;
-            if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+            if(strSource.Contains(strStart) && strSource.Contains(strEnd))
             {
-                Start = strSource.IndexOf(strStart, 0) + strStart.Length;
-                End = strSource.IndexOf(strEnd, Start);
-                return strSource.Substring(Start, End - Start);
+                Start = strSource.IndexOf(strStart,0) + strStart.Length;
+                End = strSource.IndexOf(strEnd,Start);
+                return strSource.Substring(Start,End - Start);
             }
             else
             {
@@ -114,8 +115,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         public MessageBase SendMessage(MessageAdd newItem)
         {
             //var user = ds.Users.SingleOrDefault(i => i.Id == uID);
-           // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
-           // if(usr.gagged) { return null; }
+            // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
+            // if(usr.gagged) { return null; }
             newItem.UserId = uID;
             newItem.UserName = uNm;
             newItem.viewed = false;
@@ -129,11 +130,10 @@ namespace DuckyData1._0._0Alpha.Controllers
             msg.Body = newItem.Body;
             var addedItem = ds.Messages.Add(msg);
             //var addedItem = ds.Messages.Add(Mapper.Map<Message>(newItem));
-           if (newItem.Attachments != null)
+            if(newItem.Attachments != null)
             {
                 byte[] logoBytes = new byte[newItem.Attachments.ContentLength];
                 newItem.Attachments.InputStream.Read(logoBytes, 0, newItem.Attachments.ContentLength);
-                
 
                 //addedItem.Attachment = logoBytes;
                 addedItem.ContentType = newItem.Attachments.ContentType;
@@ -143,15 +143,15 @@ namespace DuckyData1._0._0Alpha.Controllers
                 addedItem.ContentName = newItem.Attachments.FileName;
                 ds.SaveChanges();
                 string path = HttpContext.Current.Server.MapPath("~/images/MsgAttach/" + addedItem.Id + newItem.Attachments.FileName);
-                System.IO.File.WriteAllBytes(path, logoBytes);
+                System.IO.File.WriteAllBytes(path,logoBytes);
             }
             else
             {
 
                 ds.SaveChanges();
             }
-            
-                return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
+
+            return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
         }
 
         public IEnumerable<MessageBase> AllMsg()
@@ -182,25 +182,30 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             var fetchedObject = (ds.Messages.SingleOrDefault(i => i.Id == id));
             var newstate = fetchedObject;
-            if (fetchedObject.viewed == false && fetchedObject.Recipient == uNm)
-            {
-                newstate.viewed = true;
-                ds.Entry(fetchedObject).CurrentValues.SetValues(newstate);
-                ds.SaveChanges();
+            if(fetchedObject != null) {
+                if(fetchedObject.viewed == false && fetchedObject.Recipient == uNm)
+                {
+                    newstate.viewed = true;
+                    ds.Entry(fetchedObject).CurrentValues.SetValues(newstate);
+                    ds.SaveChanges();
+                }
+            } else {
+                return null;
             }
+            
             return (fetchedObject == null) ? null
-                : Mapper.Map < MessageBase > (fetchedObject);
+                : Mapper.Map<MessageBase>(fetchedObject);
         }
 
-        
+
 
         public IEnumerable<MessageBase> Outbox()
         {
-            var messages = ds.Messages.Where(x => x.UserId == uID ).OrderBy(d => d.SentDate);
+            var messages = ds.Messages.Where(x => x.UserId == uID).OrderBy(d => d.SentDate);
 
 
             return (messages == null) ? null : Mapper.Map<IEnumerable<MessageBase>>(messages);
-        } 
+        }
 
         public IEnumerable<Message> Inbox()
         {
@@ -253,7 +258,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public void MarkAsUnread(int id)
         {
             var omsg = ds.Messages.SingleOrDefault(i => i.Id == id);
-            if (uNm == omsg.Recipient)
+            if(uNm == omsg.Recipient)
             {
                 var rmsg = omsg;
                 rmsg.viewed = false;
@@ -265,7 +270,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public bool DeleteMessage(int id)
         {
             var toDel = ds.Messages.SingleOrDefault(i => i.Id == id);
-            if (toDel == null || (uNm != toDel.UserName && !HttpContext.Current.User.IsInRole("admin")))
+            if(toDel == null || (uNm != toDel.UserName && !HttpContext.Current.User.IsInRole("admin")))
             {
                 return false;
             }

@@ -55,4 +55,29 @@ namespace DuckyData1._0._0Alpha.ViewModels
     {
         public ApplicationUser regUser { get; set; }
     }
+
+    public class BugReportEdit {
+
+        public int Id { get; set; }
+        [Display(Name = "Data Submitted")]
+        public DateTime date { get; set; }
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Subject")]
+        public string subject { get; set; }
+        [Required]
+        [Display(Name = "Description")]
+        public string body { get; set; }
+        [Required]
+        [Display(Name = "category")]
+        public string category { get; set; }
+        [Required]
+        [Display(Name = "Submitted By")]
+        public string submittedBy { get; set; }
+        public ApplicationUser regUser { get; set; }
+        [Display(Name = "Assign To")]
+        public SelectList assignTo { get; set; }
+        [Display(Name = "Status")]
+        public string status { get; set; }
+    }
 }

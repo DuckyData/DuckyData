@@ -2,10 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Web;
 
 namespace DuckyData1._0._0Alpha.Models
@@ -21,14 +18,9 @@ namespace DuckyData1._0._0Alpha.Models
         public string result { get; set; }
         public string album { get; set; }
         public string artist { get; set; }
-        public string title { get; set; }
+        public string song { get; set; }
         public string duration { get; set; }
         public string genre { get; set; }
-        public string producer { get; set; }
-        public string director { get; set; }
-        public string releaseDate { get; set; }
-        public byte[] albumArt { get; set; }
-        public string artMime { get; set; }
 
 
     }
@@ -198,40 +190,5 @@ namespace DuckyData1._0._0Alpha.Models
         public string VideoTitle { get; set; }
         public string VideoImg { get; set; }
         public string VideoURL { get; set; }
-    }
-
-    public class LastFmAlbumArt
-    {
-        public static string AbsUrlOfArt(string album, string artist)
-        {
-            Lastfm.Services.Session session = new Lastfm.Services.Session("c4c683261f4ee4b4b757b60c3b473d2d", "8cedb96695f0824b3855cb9c600a20bd");
-            Lastfm.Services.Artist lArtist = new Lastfm.Services.Artist(artist, session);
-            Lastfm.Services.Album lAlbum = new Lastfm.Services.Album(lArtist, album, session);
-
-            return lAlbum.GetImageURL();
-        }
-
-        public static Image AlbumArt(string album, string artist)
-        {
-            Stream stream = null;
-            try
-            {
-                WebRequest req = WebRequest.Create(AbsUrlOfArt(album, artist));
-                WebResponse response = req.GetResponse();
-                stream = response.GetResponseStream();
-                Image img = Image.FromStream(stream);
-
-                return img;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Dispose();
-            }
-        }
     }
 }

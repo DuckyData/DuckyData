@@ -4,15 +4,20 @@
 }
 <p>&nbsp;</p>
 <div class="spacerBody">
-    @Html.ActionLink("Create New Role", "RoleCreate") | @Html.ActionLink("Add Role to User", "RoleAddToUser")
-    <h2>Role index</h2>
+    <h4>Role List</h4>
     @foreach (string s in Model)
     {
-        <p>
-            @s
-            <span onclick=" return confirm('Are you sure to delete?') ">
-                <a href="/Account/RoleDelete?RoleName=@s" class="delLink">Delete</a>
-            </span>
-        </p>
+        <div class="col-lg-12">
+            <div class="col-lg-8">@s</div>
+            <div class="col-lg-4">
+                @if(@s != "Admin" && @s != "TechSupport")
+                {
+                    <span onclick="return confirm('Are you sure to delete?') ">
+                        <a href="/Account/RoleDelete?RoleName=@s" class="delLink">Delete</a>
+                    </span>
+                }
+            </div>
+        </div>
     }
 </div>
+@Html.ActionLink("Create New Role","RoleCreate") | @Html.ActionLink("Add Role to User","RoleAddToUser")

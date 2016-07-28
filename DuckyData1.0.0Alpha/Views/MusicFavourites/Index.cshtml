@@ -4,15 +4,14 @@
 
 <div id="list-favourite-audio">
     <div id="list-favourite-audio-header">
-        @using(Html.BeginForm())
-        {
+        <form action="/MusicFavourites/searchAudio" method="post" class="ng-pristine ng-valid">
             <div class="input-group pull-right">
                 <input type="text" class="form-control input-sm col-lg-6" id="searchString" name="searchString" placeholder="Search">
                 <span class="input-group-btn pull-left">
                     <button type="submit" class="btn btn-info btn-sm"> Search </button>
                 </span>
             </div>
-        }
+        </form>
     </div>
     <table class="table">
         <tr>
@@ -61,4 +60,4 @@
 
     </table>
 </div>
-@Html.PagedListPager(Model,page => Url.Action("Index",new { page,currentFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model,page => Url.Action("Index",new { page}))

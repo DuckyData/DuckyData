@@ -1,4 +1,4 @@
-﻿duckyData.controller('videoUploadCtrl', function ($scope, $location, $timeout, $window, $cookies, $q, GAPIFactory, duckyDataFileUploader, toastr) {
+﻿duckyData.controller('videoUploadCtrl', function ($scope, $timeout, $window, $cookies, $q, GAPIFactory, duckyDataFileUploader, toastr) {
     $scope.videoFileUploader = duckyDataFileUploader.uploaderVideo;
     $scope.videoFileUploader.failedQueue = [];
     $scope.videoFileUploader.onAfterAddingFile = function (fileItem) {

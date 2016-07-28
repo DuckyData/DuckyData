@@ -55,32 +55,22 @@
                 @Html.DisplayFor(model => model.status)
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2 title">
-                @Html.DisplayNameFor(model => model.assignTo)
-            </label>
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.assignTo)
-            </div>
-        </div>
       
-        <div class="@(Model.status == "Close"?"hide form-group":"form-group")">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" name="command" value="Save the Change" class="btn col-md-10 btn-primary" />
-            </div>
-        </div>
-        <div  class="@(Model.status == "Close"?"hide form-group":"form-group")">
-            <div class="col-md-offset-2 col-md-10">
-               <input readonly value="Close the Bug Report" class="btn col-md-10 btn-danger" data-toggle="modal" data-target="#closeTheReport" />
-            </div>
-        </div>
+            @if(Model.status == "Open")
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input readonly value="Close the Bug Report" class="btn col-md-10 btn-danger" data-toggle="modal" data-target="#closeTheReport" />
+                    </div>
+                </div>
+            }
+        
     </div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index") | 
-    @Html.ActionLink("Create Follow Ups","Create","FollowUps")
+    @Html.ActionLink("Create Follow Ups","FollowUps",new { id = Model.Id })
 </div>
 
 <div class="modal fade confirm-modal" id="closeTheReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

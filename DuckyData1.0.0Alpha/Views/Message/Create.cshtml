@@ -1,86 +1,72 @@
 ﻿@model DuckyData1._0._0Alpha.ViewModels.MessageAddForm
 
-
+@Scripts.Render("~/Scripts/messageControllerCollection.js")
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-
+<h4>Send Message</h4>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>MessageAddForm</h4>
-            @Html.ValidationMessage("isGagged","You have been Gagged due to inapropiate comments of content. You may Connect again: ", new { @class = "text-danger" })
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.SentDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SentDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SentDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Recipient, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Recipient, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Recipient, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <script>
-                CKEDITOR.replace( 'Body' );
-            </script> 
-
-            
-
-            <div class="form-group">
-                @Html.Label("Attachment", new { @class = "control-label col-md-2" })
-      
-
-
-                <div class="editor-field">
-                    @Html.TextBox("Attachments", "", new { type = "file" })
-                </div>
-
-
-
-
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
+    <div class="form-horizontal" ng-controller="messageCreateCtrl">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SentDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SentDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SentDate, "", new { @class = "text-danger" })
             </div>
         </div>
-    }
-    
-    <div>
-                @Html.ActionLink("Inbox", "Inbox") |
-                @Html.ActionLink("Sent", "Sent")
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipient, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line ui-autocomplete-input" placeholder="Email" ng-model="messageCreateData.recipient" ng-change="validCreateRecipient()" data-val="true" id="Recipient" name="Recipient" type="text" value="" autocomplete="off">
+                <div class="text-danger">{{messageCreateMsg.recipient}}</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" ng-model="messageCreateData.subject" ng-change="validCreateSubject()"  placeholder="Subject (100 characters maximum)" id="Subject" name="Subject" type="text" value="">
+                <div class="text-danger">{{messageCreateMsg.subject}}</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <script>
+            CKEDITOR.replace('Body');
+        </script>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send the message" ng-disabled="messageCreateUI.disableBtn" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
+}
+
+<div>
+    @Html.ActionLink("Inbox", "Inbox") |
+    @Html.ActionLink("Sent", "Sent")
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/site.js")"></script>
+
+<script>
+    $(document).ready(function () {
+        BindAutocomplete("@Html.IdFor(model => model.Recipient)", '@Url.Content("~/Message")/GetRecipientSuggestions');
+    });
+</script>
 

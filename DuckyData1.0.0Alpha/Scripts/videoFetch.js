@@ -1,7 +1,22 @@
 ﻿// view controller
-duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GAPIFactory, musicFetchFactory, toastr) {
+duckyData.controller('videoFetchCtrl', function ($scope, $timeout, GAPIFactory, musicFetchFactory, toastr) {
     var OAUTH2_CLIENT_ID = '254706105392-sac4crqcmko7lagnmkng0krfsdg1ongg';
     var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
+
+    // helper function to get param from URL
+    function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
 
     $scope.videoFetchData = {
         videoList: [],
@@ -19,7 +34,7 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
     }
 
     $timeout(function () {
-        GAPIFactory.searchVideo($location.search().video,{nextPageToken: null, prevPageToken: null}).then(function (searchResult) {
+        GAPIFactory.searchVideo(getUrlParameter('video'), { nextPageToken: null, prevPageToken: null }).then(function (searchResult) {
             console.log(searchResult);
             $scope.videoFetchDataPageInfo.nextPageToken = searchResult.nextPageToken;
             $scope.videoFetchDataPageInfo.prevPageToken = searchResult.prevPageToken;
@@ -64,7 +79,7 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
     $scope.pageNavigation = function (pageType) {
         if (pageType > 0) {
             // go next
-            GAPIFactory.searchVideo($location.search().video, { nextPageToken: $scope.videoFetchDataPageInfo.nextPageToken, prevPageToken:null }).then(function (searchResult) {
+            GAPIFactory.searchVideo(getUrlParameter('video'), { nextPageToken: $scope.videoFetchDataPageInfo.nextPageToken, prevPageToken: null }).then(function (searchResult) {
                 console.log(searchResult);
                 $scope.videoFetchDataPageInfo.nextPageToken = searchResult.nextPageToken;
                 $scope.videoFetchDataPageInfo.prevPageToken = searchResult.prevPageToken;
@@ -83,7 +98,7 @@ duckyData.controller('videoFetchCtrl', function ($scope, $location, $timeout, GA
             })
         } else {
             // go prev
-            GAPIFactory.searchVideo($location.search().video, { nextPageToken: null, prevPageToken: $scope.videoFetchDataPageInfo.prevPageToken }).then(function (searchResult) {
+            GAPIFactory.searchVideo(getUrlParameter('video'), { nextPageToken: null, prevPageToken: $scope.videoFetchDataPageInfo.prevPageToken }).then(function (searchResult) {
                 console.log(searchResult);
                 $scope.videoFetchDataPageInfo.nextPageToken = searchResult.nextPageToken;
                 $scope.videoFetchDataPageInfo.prevPageToken = searchResult.prevPageToken;

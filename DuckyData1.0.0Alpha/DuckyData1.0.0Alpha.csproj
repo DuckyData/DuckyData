@@ -401,8 +401,10 @@
     <Content Include="Scripts\autosize.js" />
     <Content Include="Scripts\client.js" />
     <Content Include="Scripts\client_plusone.js" />
+    <Content Include="Scripts\ConfirmEmailController.js" />
     <Content Include="Scripts\cors_upload.js" />
     <Content Include="Scripts\client.js" />
+    <Content Include="Scripts\createBugreportController.js" />
     <Content Include="Scripts\duckyDataApp.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
@@ -748,6 +750,8 @@
     <Content Include="Scripts\ckeditor\skins\v2\skin.js" />
     <Content Include="Scripts\ckeditor\skins\v2\templates.css" />
     <Content Include="Scripts\ckeditor\themes\default\theme.js" />
+    <Content Include="Scripts\custom-file-input.js" />
+    <Content Include="Scripts\EditUserProfileController.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -1421,6 +1425,7 @@
     <Content Include="Scripts\ckeditor\skins\v2\templates.css" />
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Scripts\ckeditor\themes\default\theme.js" />
+    <Content Include="Scripts\messageControllerCollection.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
@@ -1436,16 +1441,19 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
+    <Content Include="Scripts\loginController.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\musicFetch.js" />
     <Content Include="Scripts\musicFetchCreate.js" />
     <Content Include="Scripts\radiocheck.js" />
+    <Content Include="Scripts\RegisterController.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\restangular.js" />
     <Content Include="Scripts\restangular.min.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Scripts\video-js.swf" />
     <Content Include="Scripts\video.js" />
     <Content Include="Scripts\videoFetch.js" />
@@ -1554,6 +1562,8 @@
     <Content Include="Views\VideoFavourites\Delete.cshtml" />
     <Content Include="Views\VideoFavourites\Details.cshtml" />
     <Content Include="Views\VideoFavourites\Edit.cshtml" />
+    <Content Include="Views\Shared\_TsTools.cshtml" />
+    <Content Include="Views\VideoFavourites\Delete.cshtml" />
     <Content Include="Views\VideoFavourites\Index.cshtml" />
     <Content Include="Views\MusicFavourites\Delete.cshtml" />
     <Content Include="Views\MusicFavourites\Index.cshtml" />

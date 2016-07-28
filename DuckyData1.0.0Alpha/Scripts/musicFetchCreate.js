@@ -1,4 +1,4 @@
-﻿duckyData.controller('musicFetchCreateCtrl', function ($scope, $interval, $timeout, $location, $q, $interval, toastr, duckyDataFileUploader) {
+﻿duckyData.controller('musicFetchCreateCtrl', function ($scope, $interval, $timeout, $q, $interval, toastr, duckyDataFileUploader) {
     $scope.musicFetchCreateData = {
         file: null,
         buttonLogo: 'GO',
@@ -16,7 +16,7 @@
 
     SC.initialize({
         client_id: 'd468660bb9056f5d8e48361dd5327c80',
-        redirect_uri: $location.protocol() + "://" + $location.host() + ":" + $location.port() + '/MusicFetch/CallBack'
+        redirect_uri: 'http://localhost:8102/MusicFetch/CallBack'
     });
     $scope.inputTagClick = function(){
         $("#audio-file-select-tag").click();

@@ -34,7 +34,9 @@ namespace DuckyData1._0._0Alpha.Controllers
         [Authorize]
         public ActionResult Inbox()
         {
-            return View(m.Inbox());
+            var messageList = m.Inbox();
+
+            return View(Mapper.Map<IEnumerable<MessageBase>>(messageList));
         }
 
         // GET: Message
@@ -105,6 +107,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         [HttpPost]
         public ActionResult Create(MessageAdd newItem)
         {
+            var uID = System.Web.HttpContext.Current.User.Identity.GetUserId();
             var user = ac.findUserById(uID);
             if (user.gagged)
             {
@@ -198,7 +201,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult Delete(int? id, FormCollection collection)
         {
             if (!id.HasValue) { return HttpNotFound(); }
-
+            var uID = System.Web.HttpContext.Current.User.Identity.GetUserId();
             if( uID != m.GetMessageById(id.Value).UserId && !User.IsInRole("Admin"))
             {
                 return RedirectToAction("Inbox", "Message");

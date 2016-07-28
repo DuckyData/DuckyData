@@ -3,37 +3,45 @@
 @{
     ViewBag.Title = "SIGN IN";
 }
+@Scripts.Render("~/Scripts/loginController.js")
 
-<div id="sign-in">
-    <h2>@ViewBag.Title</h2>
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
+<div id="sign-in" ng-controller="loginAccountCtrl">
+    <div class="col-lg-6">
+        <h4>@ViewBag.Title</h4>
+        @using(Html.BeginForm("Login","Account",new { ReturnUrl = ViewBag.ReturnUrl },FormMethod.Post,new { @class = "form-horizontal",role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true,"",new { @class = "text-danger" })
             <div class="form-group">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                <div  class="text-danger">{{loginAccountErrorMsg.emailMsg}}</div>
+                <input class="form-control" data-val="true"  ng-model="loginAccountData.email" ng-change="validTheLogInEmailAddress()" id="Email" name="Email" placeholder="Email" type="text" value="" aria-required="true" aria-describedby="Email-error" aria-invalid="true">
             </div>
             <div class="form-group">
-                <div class="col-md-10 no-padding">
-                    <input type="submit" value="SIGN IN" class="btn col-md-12 btn-primary" />
-                </div>
+                <input class="form-control" ng-model="loginAccountData.password" ng-change="validThePassword()" id="Password" name="Password" placeholder="Password" type="password" aria-required="true" aria-describedby="Password-error" aria-invalid="false">
+                <div class="text-danger">{{loginAccountErrorMsg.passwordMsg}}</div>
+                <div class="text-danger">{{loginAccountErrorMsg.passwordMsgTwo}}</div>
+                <div class="text-danger">{{loginAccountErrorMsg.passwordMsgThree}}</div>
             </div>
             <div class="form-group">
-                <div class="col-md-10 no-padding">
-                    <a class="btn btn-info" href="Register">Register</a>
-                </div>
+                <input type="submit" value="SIGN IN" ng-disabled="loginAccountUI.disableBtn" class="btn col-md-12 btn-primary" />
             </div>
             <p>
-                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                @Html.ActionLink("Forgot your password?","ForgotPassword")
             </p>
-    }
+        }
+    </div>
 </div>
 
+
+<div class="col-lg-6">
+    <h4>DuckyData</h4>
+    <p class="lead">DuckyData is a free web application for searching and keeping track of media file metadata.</p>
+
+    <p>
+        DuckyData gives you a quick and easy way to search and merge media files with metadata, keep track of your upload history, favourite your media and so much more. Imagine a
+        website that gives you full control over your metadata.
+    </p>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

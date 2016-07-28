@@ -28,7 +28,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         // function to get bugreport list with filters
-        public IEnumerable<BugReportList> getBugReports(string query) {
+        public List<BugReportList> getBugReports(string query) {
             getDatabase();
             var bugList = from b in appDB.BugReports select b;
             if(!String.IsNullOrEmpty(query))
@@ -39,7 +39,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
                                       || b.body.Contains(query)).OrderBy(g=>g.category);
             }
             bugList = bugList.OrderBy(b => b.date);
-            return Mapper.Map<IEnumerable<BugReportList>>(bugList);
+            return Mapper.Map<List<BugReportList>>(bugList);
         }
 
         public BugReport findBugReprtById(int? id) {
@@ -83,6 +83,13 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
                 return null;
             }
         }
+
+        public ApplicationUser findBugOwnerByBugId(int id) {
+            getDatabase();
+            var bug = appDB.BugReports.Include("regUser").FirstOrDefault(b => b.Id == id);
+            return bug.regUser;
+        }
+
 
         // function to create bug report
         public void createBugReport(BugReportBase report, string userId) {

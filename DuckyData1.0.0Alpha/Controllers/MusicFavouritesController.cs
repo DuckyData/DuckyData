@@ -7,6 +7,7 @@ using DuckyData1._0._0Alpha.Factory.FavouriteFactory;
 using PagedList;
 using DuckyData1._0._0Alpha.ViewModels.MusicFetch;
 using AutoMapper;
+using System.Linq;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -16,27 +17,33 @@ namespace DuckyData1._0._0Alpha.Controllers
         private FavouriteFactory favouriteFactory = new FavouriteFactory();
 
         // GET: MusicFavourites
-        public ActionResult Index(string currentFilter,string searchString,int? page)
+        [Authorize]
+        public ActionResult Index(int? page)
         {
             string userId = User.Identity.GetUserId();
-            if(searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
 
-            ViewBag.CurrentFilter = searchString;
+            var audioList = TempData["fAudioList"] as List<MusicFavouriteDisplay>;
 
-            IEnumerable<MusicFavouriteDisplay> videos = favouriteFactory.getAudioList(userId,searchString);
+            if(audioList == null) {
+                audioList = favouriteFactory.getAudioList(userId,null);
+            }
             int pageSize = 20;
             int pageNumber = (page ?? 1);
-            return View(videos.ToPagedList(pageNumber,pageSize));
+            return View(audioList.ToPagedList(pageNumber,pageSize));
         }
 
+        [Authorize]
+        public ActionResult searchAudio(string searchString) {
+            string userId = User.Identity.GetUserId();
+            List<MusicFavouriteDisplay> audioList = favouriteFactory.getAudioList(userId,searchString);
+            TempData["fAudioList"] = audioList.ToList();
+
+            return RedirectToAction("Index");
+        }
+
+
         // GET: MusicFavourites/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -54,6 +61,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         // POST: MusicFavourites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
 

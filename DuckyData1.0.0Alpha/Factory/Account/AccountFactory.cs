@@ -25,18 +25,19 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             }
         }
 
-        public ICollection<userFlags> getUserList(string searchString)
+        public List<userFlags> getUserList(string searchString)
         {
 
             var userList = from u in userDB.Users select u;
             if (!String.IsNullOrEmpty(searchString))
             {
                 userList = userList.Where(s => s.lastName.Contains(searchString)
-                                      || s.firstName.Contains(searchString));
+                                      || s.firstName.Contains(searchString)
+                                      || s.Email.Contains(searchString));
             }
             userList = userList.OrderBy(us => us.firstName);
             getDatabase();
-            ICollection<userFlags> users = new List<userFlags>();
+            List<userFlags> users = new List<userFlags>();
             
             foreach (var user in userList)
             {
@@ -200,6 +201,8 @@ namespace DuckyData1._0._0Alpha.Factory.Account
                 return null;
             }
         }
+
+        
 
     }
 }
