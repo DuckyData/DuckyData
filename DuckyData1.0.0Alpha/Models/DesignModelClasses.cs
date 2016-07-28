@@ -18,9 +18,14 @@ namespace DuckyData1._0._0Alpha.Models
         public string result { get; set; }
         public string album { get; set; }
         public string artist { get; set; }
-        public string song { get; set; }
+        public string title { get; set; }
         public string duration { get; set; }
         public string genre { get; set; }
+        public string producer { get; set; }
+        public string director { get; set; }
+        public string releaseDate { get; set; }
+        public byte[] albumArt { get; set; }
+        public string artMime { get; set; }
 
 
     }

@@ -80,15 +80,15 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             Program p = new Program();
             var result =  p.go(input);
-            var art = LastFmAlbumArt.AlbumArt(result.album, result.artist);
-            var ms = new MemoryStream();
-            if (art != null)
-            {
-                art.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            //var art = LastFmAlbumArt.AlbumArt(result.album, result.artist);
+            //var ms = new MemoryStream();
+            //if (art != null)
+            //{
+            //    art.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
 
-                result.albumArt = ms.ToArray();
-                result.artMime = GetMimeType(art);
-            }
+            //    result.albumArt = ms.ToArray();
+            //    result.artMime = GetMimeType(art);
+            //}
             //TagLib.File file = TagLib.File.Create("mysong.mp3");
             //tag.Album = 
 
