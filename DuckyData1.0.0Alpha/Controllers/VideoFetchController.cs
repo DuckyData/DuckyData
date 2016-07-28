@@ -7,12 +7,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DuckyData1._0._0Alpha.Models;
+using DuckyData1._0._0Alpha.ViewModels.VideoFetch;
+using Microsoft.AspNet.Identity;
+using DuckyData1._0._0Alpha.Factory.FavouriteFactory;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
     public class VideoFetchController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private FavouriteFactory favouriteFactory = new FavouriteFactory();
 
         // GET: VideoFetch
         public ActionResult Index()
@@ -133,6 +137,37 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult Upload()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult AddFavourite(VideoFavouriteAdd video)
+        {
+
+            if(ModelState.IsValid)
+            {
+                string userId = User.Identity.GetUserId();
+                if(userId == null)
+                {
+                    return Json(new { Status = 400,message = "User name not found, please login and retry" });
+                }
+                else
+                {
+                    video.UserId = userId;
+                }
+
+                if(favouriteFactory.addVideoFavourite(video))
+                {
+                    return Json(new { Status = 200,message = "[" + video.VideoTitle + "] saved to your favourite list" });
+                }
+                else
+                {
+                    return Json(new { Status = 500,message = "["+ video.VideoTitle + "] already in your favourite list" });
+                }
+            }
+            else
+            {
+                return Json(new { Status = 400,message = "Failed to save to favourite" });
+            }
         }
     }
 }

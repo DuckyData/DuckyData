@@ -47,9 +47,11 @@
                         </ul>
                     </li>
                     
-                    @{ 
-                        if (HttpContext.Current.User.IsInRole("Admin")){ Html.RenderAction("_AdminTools", "Home"); }
-                        else if (HttpContext.Current.User.IsInRole("TechSupport")) { Html.RenderAction("_TsTools", "Home"); }
+                    @{
+                        if (HttpContext.Current.User.IsInRole("Admin")) { Html.RenderAction("_AdminTools", "Home"); }
+                        else if (HttpContext.Current.User.IsInRole("TechSupport"))
+                        {
+                            <li>@Html.ActionLink("Bug Reports", "Index", "BugReports")</li> }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

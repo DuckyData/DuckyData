@@ -1,0 +1,3 @@
+host: eu-west-1.api.acrcloud.com
+access key: 7f0ed07a5cfb82d0d945ca514f2508d3
+access secret: Y2JfuIzDuTSQREDjlEOfGbfLxJfMr5MG5OPZLOeD

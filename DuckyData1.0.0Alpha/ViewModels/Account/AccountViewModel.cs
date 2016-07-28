@@ -26,6 +26,14 @@ namespace DuckyData1._0._0Alpha.ViewModels.Account
         public bool banned { set; get; }
     }
 
+    public class userRole : userBase
+    {
+        [Key]
+        public string Id { set; get; }
+
+        public string Role { set; get; }
+    }
+
     public class userAdd:userBase
     {
         [Key]

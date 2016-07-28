@@ -42,7 +42,28 @@
     width: calc(100% - 215px);
     height: 100%;
     padding: 0 5px;
+    position: relative;
 }
+
+#video-search-result .video-search-item .video-info .video-title{
+    width: calc(100% - 20px);
+}
+
+#video-search-result .video-search-item .video-info > div{
+    position: relative;
+}
+
+#video-search-result .video-search-item .video-info .fui-heart{
+    position: absolute;
+    right: 5px;
+    top: -3px;
+    visibility: hidden;
+}
+
+#video-search-result .video-search-item:hover .video-info .fui-heart{
+    visibility:visible;
+}
+
 .video-desc {
    width: 100%;
    height: 85px;

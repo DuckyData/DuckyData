@@ -1,0 +1,32 @@
+﻿#list-favourite-video{
+    width: 100%;
+    overflow:hidden;
+    min-height: calc(100vh - 165px);
+    height: auto;
+    background: #F1F1F1
+}
+
+#list-favourite-video-header {
+    padding: 5px;
+    height: 45px;
+    width: 100%;
+    background: #E3E3E3;
+}
+
+#list-favourite-video-headerr h3{
+    width: 100px;
+    overflow-y: hidden;
+    display: inline;
+    margin: 0;
+}
+
+#list-favourite-video-header form > div{
+    width: 340px;
+}
+
+#list-favourite-video-header button{
+    height: 35px;
+    border: none;
+    color: #fff;
+    background: #1ABC9C;
+}

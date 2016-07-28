@@ -12,7 +12,6 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
     public class BugRereportFactory
     {
         private DatabaseConnection conn = new DatabaseConnection();
-        private DataContext database;
         private ApplicationDbContext appDB;
 
         public BugRereportFactory()
@@ -44,7 +43,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public BugReport findBugReprtById(int? id) {
-
+            getDatabase();
             BugReport bug = appDB.BugReports.Include("FollowUps").FirstOrDefault(b => b.Id == id);
    
             if(bug != null)
@@ -58,6 +57,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public BugReport findBugReprtOnlyById(int? id) {
+            getDatabase();
             BugReport bug = appDB.BugReports.FirstOrDefault(b => b.Id == id);
 
             if(bug != null)
@@ -71,6 +71,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public BugReport findBugReprtForEdit(int? id) {
+            getDatabase();
             BugReport bug = appDB.BugReports.Include("supportRep").FirstOrDefault(b => b.Id == id);
 
             if(bug != null)
@@ -100,6 +101,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public bool closeTheBugReport(int id) {
+            getDatabase();
             var bug = appDB.BugReports.FirstOrDefault(b => b.Id == id);
             if(bug == null) {
                 return false;
