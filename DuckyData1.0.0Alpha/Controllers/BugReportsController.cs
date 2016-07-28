@@ -26,16 +26,24 @@ namespace DuckyData1._0._0Alpha.Controllers
         private BugRereportFactory bugRereportFactory = new BugRereportFactory();
         private FollowUpsFactory followUpsFactory = new FollowUpsFactory();
         // GET: BugReports
-        public ActionResult Index(string query,int? page)
+        public ActionResult Index(int? page)
         {
-            GNQueryBuilder qbuilder = new GNQueryBuilder();
-            qbuilder.ALBUM_SEARCH("flying lotus","until the quiet comes","all in");
-
-            IEnumerable<BugReportList> bugList = bugRereportFactory.getBugReports(query);
+            var bugList = TempData["bugList"] as List<BugReportList>;
+            if(bugList == null) {
+                bugList = bugRereportFactory.getBugReports(null);
+            }
             int pageSize = 20;
             int pageNumber = (page ?? 1);
             return View(bugList.ToPagedList(pageNumber,pageSize));
         }
+
+        public ActionResult searchBug(string query)
+        {
+            List<BugReportList> bugList = bugRereportFactory.getBugReports(query);
+            TempData["bugList"] = bugList.ToList();
+            return RedirectToAction("Index");
+        }
+
 
         // GET: BugReports/Details/5
         // view buy report and followup associaed
@@ -66,9 +74,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(BugReportBase bugReport)
+        public ActionResult Create(BugReportAdd bugReport)
         {
             if(ModelState.IsValid)
             {

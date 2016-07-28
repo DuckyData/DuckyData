@@ -12,7 +12,6 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
     public class BugRereportFactory
     {
         private DatabaseConnection conn = new DatabaseConnection();
-        private DataContext database;
         private ApplicationDbContext appDB;
 
         public BugRereportFactory()
@@ -29,7 +28,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         // function to get bugreport list with filters
-        public IEnumerable<BugReportList> getBugReports(string query) {
+        public List<BugReportList> getBugReports(string query) {
             getDatabase();
             var bugList = from b in appDB.BugReports select b;
             if(!String.IsNullOrEmpty(query))
@@ -40,11 +39,11 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
                                       || b.body.Contains(query)).OrderBy(g=>g.category);
             }
             bugList = bugList.OrderBy(b => b.date);
-            return Mapper.Map<IEnumerable<BugReportList>>(bugList);
+            return Mapper.Map<List<BugReportList>>(bugList);
         }
 
         public BugReport findBugReprtById(int? id) {
-
+            getDatabase();
             BugReport bug = appDB.BugReports.Include("FollowUps").FirstOrDefault(b => b.Id == id);
    
             if(bug != null)
@@ -58,6 +57,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public BugReport findBugReprtOnlyById(int? id) {
+            getDatabase();
             BugReport bug = appDB.BugReports.FirstOrDefault(b => b.Id == id);
 
             if(bug != null)
@@ -71,6 +71,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public BugReport findBugReprtForEdit(int? id) {
+            getDatabase();
             BugReport bug = appDB.BugReports.Include("supportRep").FirstOrDefault(b => b.Id == id);
 
             if(bug != null)
@@ -100,6 +101,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
         }
 
         public bool closeTheBugReport(int id) {
+            getDatabase();
             var bug = appDB.BugReports.FirstOrDefault(b => b.Id == id);
             if(bug == null) {
                 return false;

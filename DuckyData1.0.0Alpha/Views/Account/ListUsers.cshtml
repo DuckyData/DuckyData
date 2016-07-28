@@ -1,48 +1,89 @@
-﻿@model PagedList.IPagedList<DuckyData1._0._0Alpha.ViewModels.Account.userAdd>
-@Styles.Render("~/Content/Account/ListUsers.css")
-@using PagedList.Mvc;
-<div id="list-user">
-    <div class="list-user-header">
-        @using(Html.BeginForm())
-        {     
-        <div class="input-group pull-right">
-            <input type="text" class="form-control input-sm col-lg-6" id="SearchString" name="SearchString" placeholder="Search for name">
-            <span class="input-group-btn pull-left">
-                <button type="submit" class="btn btn-primary btn-sm"> Search </button>
-            </span>
-        </div>
-        }
-    </div>
-    <div class="list-user-body">
-        <table class="table">
-            <tr>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Email</th>
-            </tr>
+﻿@model IEnumerable<DuckyData1._0._0Alpha.ViewModels.Account.userFlags>
 
-            @foreach(var item in Model)
+@Html.ActionLink("Purge User flags", "PurgeUserFlags")
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.flagged)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gagged)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.banned)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            @using (Html.BeginForm("EditFlags", "Account"))
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit","Edit",new { id = item.Id }) |
-                        @Html.ActionLink("Details","Details",new { id = item.Id }) |
-                        @Html.ActionLink("Flags", "Flags", new { id = item.Id })
-                    </td>
-                </tr>
+                @Html.AntiForgeryToken()
+                @Html.Hidden("uid", item.Id)
+            <td>
+                @{
+                    if (item.flagged)
+                    {
+                        @Html.CheckBox("flag", true)
+                    }
+                    else
+                    {
+                        @Html.CheckBox("flag")
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.gagged)
+                    {
+                        @Html.CheckBox("gag", true)
+                    }
+                    else
+                    {
+                        @Html.CheckBox("gag")
+                    }
+                }
+            </td>
+            <td>
+               @{
+                   if (item.banned)
+                   {
+                    @Html.CheckBox("ban", true)
+                   }
+                   else
+                   {
+                    @Html.CheckBox("ban")
+                   }
             }
-        </table>
-    </div>
-    <div class="list-user-footer">
-        @Html.PagedListPager(Model,page => Url.Action("ListUsers",new { page}))
-    </div>
-</div>
+            </td>
+
+            <td><input type="submit" value="update flags" /></td>
+                   }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })| <br />
+                @{
+                    var tmp = Html.Action("LockoutStatus", new { id = item.Id });
+                    if (tmp.ToString() == "True")
+                    {
+                        @Html.ActionLink("Activate", "Activate", new { id = item.Id })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Deactivate", "Deactivate", new { id = item.Id })
+                    }
+                }
+            </td>
+        </tr>
+    }
+    
+    </table>

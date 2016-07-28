@@ -3,10 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 namespace DuckyData1._0._0Alpha.Models
 {
@@ -18,9 +16,9 @@ namespace DuckyData1._0._0Alpha.Models
         public override string Id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public string flagged { get; set; }
-        public string gagged { get; set; }
-        public string banned { get; set; }
+        public bool flagged { get; set; }
+        public bool gagged { get; set; }
+        public bool banned { get; set; }
 
         public ApplicationUser(string email, string password)
         {
@@ -67,7 +65,8 @@ namespace DuckyData1._0._0Alpha.Models
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.MediaFile> MediaFiles { get; set; }
 
         public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.ViewModels.Account.User_Activation_Code> User_Activation_Codes { get; set; }
-
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.MusicFavourite> MusicFavourites { get; set; }
+        public System.Data.Entity.DbSet<DuckyData1._0._0Alpha.Models.VideoFavourite> VideoFavourites { get; set; }
 
         public DbSet<Message> Messages { get; set; }
         /**

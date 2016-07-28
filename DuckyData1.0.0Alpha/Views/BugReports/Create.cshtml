@@ -2,13 +2,14 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/Scripts/createBugreportController.js")
 @Styles.Render("~/Content/BugReport/createBugReport.css")
 <script type="text/javascript" src="../../Scripts/autosize.js"></script>
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal" id="create-bug-report">
+    <div class="form-horizontal" id="create-bug-report" ng-controller="createBugReportCtrl">
         <h4>BugReport</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -16,8 +17,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.subject, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.subject, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.subject, "", new { @class = "text-danger" })
+                <textarea cols="20" id="subject" ng-model="createBugReportData.subject" ng-change="validateSubject()" name="subject" rows="2" style="overflow: hidden; word-wrap: break-word; height: 59px;"></textarea>
+                <div class="width-100 text-danger">{{createBugReportMsg.subject}}</div>
             </div>
         </div>
         <div class="form-group">
@@ -36,21 +37,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.body,htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.body,new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.body,"",new { @class = "text-danger" })
+                <div class="width-100 text-danger">{{createBugReportMsg.desc}}</div>
+                <textarea cols="20" id="body" name="body" ng-model="createBugReportData.desc" ng-change="validateDesc()" rows="2" style="overflow: hidden; word-wrap: break-word; height: 59px;"></textarea>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" ng-disabled="createBugReportUI.disableBtn" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 <script>
     autosize(document.querySelectorAll('textarea'));
 </script>

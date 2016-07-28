@@ -6,38 +6,32 @@
 
 <div id="sign-in">
     <div class="col-lg-6">
-        <h1>@ViewBag.Title</h1>
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <div class="col-md-10 no-padding">
-                    <input type="submit" value="SIGN IN" class="btn col-md-12 btn-primary" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-10 no-padding">
-                    <input type="button" value="Register" class="btn col-md-12 btn-info" onclick="window.location.href='@Url.Action("Register", "Account" )';" />
-                </div>
-            </div>
-            <p>
-                @Html.ActionLink("Forgot your password?", "ForgotPassword")
-            </p>
-        }
-    </div>
-
-    <div class="col-lg-6">
         <h4>DuckyData</h4>
         <p class="lead">DuckyData is a free web application for searching and keeping track of media file metadata.</p>
+
+    <h2>@ViewBag.Title</h2>
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 no-padding">
+                <input type="submit" value="SIGN IN" class="btn col-md-12 btn-primary" />
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+        </p>
+    }
+</div>
 
         <p>
             DuckyData gives you a quick and easy way to search and merge media files with metadata, keep track of your upload history, favourite your media and so much more. Imagine a

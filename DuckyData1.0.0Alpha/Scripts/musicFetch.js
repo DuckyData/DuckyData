@@ -51,7 +51,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
                         createPageList(Math.ceil(data.total / 25));
                         $scope.albumPagination.current = $scope.albumFilter.params.index == 0 ? 1 : $scope.albumFilter.params.index % 25;
                     } else {
-                        toastr.error('Cannot find information about this album', 'Sorry');
+                        toastr.error('We cannot find anything public accessable infornation for this album', 'Sorry');
                         createPageList(0);
                         $scope.musicFetchData.showNoMachedResult = false;
                     }
@@ -166,8 +166,16 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
                 $scope.musicFetchData.possibleAlbunList = result.data.data;
                 $scope.audioPreviewCtrl.loadAnotherOfAlbumBusy = false;
             }
-
         })
+    }
 
+    $scope.addToMyAudioFavourite = function (audio) {
+        musicFetchFactory.addToMyFavourite({ MusicURL: audio.link, MusicTitle: audio.title_short, Artist: audio.artist.name, Album: $scope.musicFetchData.album.title, AlbumCover: $scope.musicFetchData.album.cover }).then(function (data) {
+            if (data.data.Status == 200) {
+                toastr.success(data.data.message);
+            } else {
+                toastr.error(data.data.message);
+            }
+        })
     }
 });

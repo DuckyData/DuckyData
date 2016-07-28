@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,7 +26,7 @@ namespace DuckyData1._0._0Alpha.Models
     }
 
     //
-    public class Video : MediaFile
+    public class Video :MediaFile
     {
         public DateTime releaseDate { get; set; }
         public string director { get; set; }
@@ -35,7 +35,7 @@ namespace DuckyData1._0._0Alpha.Models
         public byte[] poster { get; set; }
     }
 
-    public class Audio : MediaFile
+    public class Audio :MediaFile
     {
         public DateTime releaseDate { get; set; }
         public string artist { get; set; }
@@ -130,7 +130,7 @@ namespace DuckyData1._0._0Alpha.Models
         }
         [Key]
         public int Id { get; set; }
-        [Display(Name ="Data Submitted")]
+        [Display(Name = "Data Submitted")]
         public DateTime date { get; set; }
         [Required]
         [StringLength(100)]
@@ -143,10 +143,10 @@ namespace DuckyData1._0._0Alpha.Models
         [Display(Name = "category")]
         public string category { get; set; }
         [Required]
-        [Display(Name ="Submitted By")]
+        [Display(Name = "Submitted By")]
         public string submittedBy { get; set; }
         public ApplicationUser regUser { get; set; }
-        [Display(Name ="Assign To")]
+        [Display(Name = "Assign To")]
         public string assignTo { get; set; }
         [Display(Name = "Status")]
         public string status { get; set; }
@@ -169,5 +169,26 @@ namespace DuckyData1._0._0Alpha.Models
         public virtual BugReport report { get; set; }
         public string CreatedBy { get; set; }
     }
+    public class MusicFavourite
+    {
+        [Key]
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string MusicURL { get; set; }
+        public string MusicTitle { get; set; }
+        public string Artist { get; set; }
+        public string Album { get; set; }
+        public string AlbumCover { get; set; }
+    }
 
+    public class VideoFavourite
+    {
+        [Key]
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string VideoId { get; set; }
+        public string VideoTitle { get; set; }
+        public string VideoImg { get; set; }
+        public string VideoURL { get; set; }
+    }
 }

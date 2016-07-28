@@ -28,8 +28,6 @@ namespace DuckyData1._0._0Alpha.ViewModels
 
     }
 
-    
-
     public class MessageAttachment
     {
         public int Id { get; set; }

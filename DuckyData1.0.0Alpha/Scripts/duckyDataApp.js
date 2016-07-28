@@ -91,10 +91,15 @@ duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
 duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
     var uploaderAudio = new FileUploader();
     var uploaderVideo = new FileUploader();
+
+    var singAudioUploader = new FileUploader();
+    var singVideoUploader = new FileUploader();
+
     uploaderAudio.filters.push({
         name: 'audioFilter',
         fn: function (item, options) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+
             if ('|mp3|wav|x-wav|x-pn-wav|ogg|aiff|x-aiff|mpeg|x-mpeg|flac|x-aac|x-ms-wma|'.indexOf(type) !== -1) {
                 return true;
             } else {
@@ -106,7 +111,9 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
 
     return {
         uploaderAudio: uploaderAudio,
-        uploaderVideo: uploaderVideo
+        uploaderVideo: uploaderVideo,
+        singVideoUploader: singVideoUploader,
+        singAudioUploader: singAudioUploader
     }
 });
 
@@ -127,8 +134,24 @@ duckyData.factory('musicFetchFactory', function (APISwitch, $q, $http) {
         return deferred.promise;
     }
 
+    function addToMyFavourite(item){
+        var deferred = $q.defer();
+        var config = {
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        }
+
+        $http.post('AddFavourite', JSON.stringify(item),config).then(function (response) {
+            deferred.resolve(response);
+        }, function (error) {
+            deferred.resolve({ Status: 500 });
+        });
+        return deferred.promise;
+    }
+
     return {
-        jumpAlbumPage: jumuPage
+        jumpAlbumPage: jumuPage,
+        addToMyFavourite: addToMyFavourite
     };
 });
 

@@ -1,0 +1,49 @@
+﻿@model PagedList.IPagedList< DuckyData1._0._0Alpha.ViewModels.VideoFetch.VideoFavouriteDisplay>
+@using PagedList.Mvc;
+@Styles.Render("~/Content/VideoFetch/VideoFavouriteList.css")
+<div id="list-favourite-video">
+    <div id="list-favourite-video-header">
+        <form action="/VideoFavourites/searchVideo" method="post" class="ng-pristine ng-valid">
+            <div class="input-group pull-right">
+                <input type="text" class="form-control input-sm col-lg-6" id="searchString" name="searchString" placeholder="Search">
+                <span class="input-group-btn pull-left">
+                    <button type="submit" class="btn btn-info btn-sm"> Search </button>
+                </span>
+            </div>
+       </form>
+    </div>
+    <table class="table">
+        <tr>
+            <th>
+                Cover Art
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Youtube
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.VideoImg" alt="coverArt" height="100">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VideoTitle)
+                </td>
+                <td>
+                    <a href="@item.VideoURL">Watch</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Delete","Delete",new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@Html.PagedListPager(Model,page => Url.Action("Index",new { page,currentFilter = ViewBag.CurrentFilter}))
+

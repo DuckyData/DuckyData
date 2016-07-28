@@ -128,19 +128,28 @@
             uploader.upload();
         } else {
             //chec for failed queue
-            $scope.videoFileUploader.queue = [];
+            console.log('clear queue');
+            clearUploadQueue();
             if ($scope.videoFileUploader.failedQueue.lenght) {
-                angular.forEach($scope.videoFileUploader.failedQueue, function (file) {
-                    $scope.videoFileUploader.queue.push(file);
-                });
-                $timeout(function () {
-                    $scope.videoFileUploader.failedQueue = [];
-                    $scope.$apply($scope.videoFileUploader);
-                }, 500);
-            } else {
-                //$scope.$apply($scope.videoFileUploader.queue);
-            }
+                reloadFailedQueue();
+            } 
         }
     };
 
+    function clearUploadQueue() {
+        $scope.$apply(function () {
+            $scope.videoFileUploader.queue = [];
+        })
+    }
+
+    function reloadFailedQueue() {
+        $scope.$apply(function () {
+            angular.forEach($scope.videoFileUploader.failedQueue, function (file) {
+                $scope.videoFileUploader.queue.push(file);
+            });
+            $timeout(function () {
+                $scope.videoFileUploader.failedQueue = [];
+            }, 500);
+        })
+    }
 });
