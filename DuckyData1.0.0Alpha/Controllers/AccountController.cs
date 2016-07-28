@@ -224,17 +224,13 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         // GET: /Account/ListUsers
         [Authorize(Roles ="Admin")]
-        public ActionResult ListUsers(string searchString, int? page)
+        public ActionResult ListUsers(int? page)
         {
-            IEnumerable<userFlags> userList = accountFactory.getUserList(searchString);
-            foreach(var user in userList)
+            var userList = TempData["searchUserList"] as List<userFlags>;
+            if(userList == null)
             {
-                var tmp = accountFactory.findUserById(user.Id);
-                
+                userList = accountFactory.getUserList(null);
             }
-            
-
-            
 
             int pageSize = 20;
             int pageNumber = (page ?? 1);
@@ -242,6 +238,12 @@ namespace DuckyData1._0._0Alpha.Controllers
             return View(userList.ToPagedList(pageNumber,pageSize));
         }
 
+        public ActionResult searchUser(string searchString)
+        {
+            List<userFlags> searchUserList = accountFactory.getUserList(searchString);
+            TempData["searchUserList"] = searchUserList.ToList();
+            return RedirectToAction("ListUsers");
+        }
 
         [Authorize(Roles = "Admin")]
         public ActionResult PurgeUserFlags()

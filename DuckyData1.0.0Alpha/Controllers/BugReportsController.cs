@@ -26,7 +26,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         private BugRereportFactory bugRereportFactory = new BugRereportFactory();
         private FollowUpsFactory followUpsFactory = new FollowUpsFactory();
         // GET: BugReports
-        [Authorize(Roles = "Admin, admin")]
+        [Authorize(Roles = "Admin, TechSupport")]
         public ActionResult Index(int? page)
         {
             var bugList = TempData["bugList"] as List<BugReportList>;
@@ -48,7 +48,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         // GET: BugReports/Details/5
         // view buy report and followup associaed
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         public ActionResult Details(int? id)
         {
             if(id == null)
@@ -92,7 +92,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: BugReports/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         public ActionResult Edit(int? id)
         {
             if(id == null)
@@ -112,7 +112,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BugReport bugReport, string command)
         {
@@ -132,7 +132,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // GET: BugReports/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         public ActionResult Delete(int? id)
         {
             if(id == null)
@@ -148,7 +148,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         // POST: BugReports/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin, TechSupport")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -160,6 +160,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, TechSupport")]
         // GET: BugReports/FollowUps/5
         public ActionResult FollowUps(int? id) {
             if(id == null)
@@ -180,6 +181,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
     
         [HttpPost]
+        [Authorize(Roles = "Admin, TechSupport")]
         // POST: BugReports/FollowUps/5
         public ActionResult FollowUps(FollowUpAddForm newFollowUp)
         {

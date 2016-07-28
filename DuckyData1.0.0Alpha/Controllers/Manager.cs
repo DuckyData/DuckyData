@@ -11,6 +11,9 @@ using System.Web;
 using ACRCloud;
 using static System.Net.WebRequestMethods;
 using System.IO;
+using DuckyData1._0._0Alpha.Factory.Account;
+using DuckyData1._0._0Alpha.ViewModels.Account;
+using System.Web.Security;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -19,8 +22,17 @@ namespace DuckyData1._0._0Alpha.Controllers
         private ApplicationDbContext ds = new ApplicationDbContext();
 
         private AccountController a = new AccountController();
+        private ApplicationDbContext userDB = new ApplicationDbContext();
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
+        static private AccountFactory af = new AccountFactory();
+        public IEnumerable<ApplicationUser> AuthUsers()
+        {
+            var tchSupportRole = userDB.Roles.First(re => re.Name == "TechSupport");
+            var tchSupportUser = userDB.Users.Where(x => x.Roles.Select(y => y.UserId).Contains(tchSupportRole.Id)).ToList();
+
+            return tchSupportUser;
+        }
 
         public acr RunQuery(fileInput input)
         {
@@ -88,10 +100,6 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
 
             return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
-        }
-
-        public IEnumerable<Message> GetMessages() {
-            return ds.Messages.AsQueryable();
         }
 
         public IEnumerable<MessageBase> AllMsg()

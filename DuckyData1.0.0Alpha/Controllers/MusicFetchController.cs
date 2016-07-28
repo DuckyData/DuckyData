@@ -39,6 +39,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             if (ModelState.IsValid)
             {
                 newItem.bytes = new byte[newItem.input.ContentLength];
+                
                 newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
                 var result = m.RunQuery(newItem);
                 var album = result.album;
@@ -46,7 +47,6 @@ namespace DuckyData1._0._0Alpha.Controllers
                 return tmp;
             }
             return "";
-
         }
 
         [Authorize]

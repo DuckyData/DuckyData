@@ -145,3 +145,21 @@
     white-space:nowrap;
     overflow:hidden;
 }
+.padding-top-30 {
+    padding-top: 30px;
+}
+
+.padding-top-50 {
+    padding-top: 50px;
+}
+
+.margin-top-45 {
+    margin-top: 45px;
+}
+
+.margin-bottom-50 {
+margin-bottom: 50px;
+}
+.spacerBody hr{
+    border: 1px solid #eee;    
+}
