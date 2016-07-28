@@ -1,6 +1,6 @@
 ﻿@model DuckyData1._0._0Alpha.ViewModels.MessageAddForm
 
-
+@Scripts.Render("~/Scripts/messageControllerCollection.js")
 @{
     ViewBag.Title = "Create";
 }
@@ -10,9 +10,7 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
+    <div class="form-horizontal" ng-controller="messageCreateCtrl">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -26,16 +24,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Recipient, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Recipient, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Recipient, "", new { @class = "text-danger" })
+                <input class="form-control text-box single-line ui-autocomplete-input" placeholder="Email" ng-model="messageCreateData.recipient" ng-change="validCreateRecipient()" data-val="true" id="Recipient" name="Recipient" type="text" value="" autocomplete="off">
+                <div class="text-danger">{{messageCreateMsg.recipient}}</div>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                <input class="form-control text-box single-line" ng-model="messageCreateData.subject" ng-change="validCreateSubject()"  placeholder="Subject (100 characters maximum)" id="Subject" name="Subject" type="text" value="">
+                <div class="text-danger">{{messageCreateMsg.subject}}</div>
             </div>
         </div>
 
@@ -53,7 +51,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Send the message" class="btn btn-primary" />
+                <input type="submit" value="Send the message" ng-disabled="messageCreateUI.disableBtn" class="btn btn-primary" />
             </div>
         </div>
     </div>

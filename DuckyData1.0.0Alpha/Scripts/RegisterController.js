@@ -15,7 +15,7 @@
     }
 
     $scope.registerAccountUI = {
-        disableBtn:false
+        disableBtn:true
     }
 
     $scope.validTheEmailAddress = function () {
