@@ -1,4 +1,4 @@
-﻿duckyData.controller('homeCtrl', function ($scope, $http, $location, $window, FileUploader, toastr) {
+﻿duckyData.controller('homeCtrl', function ($scope, $http, $window, FileUploader, toastr) {
     $scope.singAudioUploader = new FileUploader();
 
     $scope.homePageUICtrl = {

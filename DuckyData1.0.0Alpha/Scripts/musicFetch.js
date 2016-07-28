@@ -1,6 +1,22 @@
 ﻿// view controller
-duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location, $interval, $timeout, toastr, musicFetchFactory) {
-    $scope.musicFetchData = {
+duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $interval, $timeout, toastr, musicFetchFactory) {
+   
+   // helper function to get param from URL
+    function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+   $scope.musicFetchData = {
         albumTrackList: null,
         album: null,
         possibleAlbunList:null
@@ -29,7 +45,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
         params: {
             output: "jsonp",
             callback: 'JSON_CALLBACK',
-            q: $location.search().album,
+            q: getUrlParameter('album'),
             index: 0,
         }
     }
@@ -40,6 +56,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
             $http.jsonp("https://api.deezer.com/search/album", $scope.albumFilter).success(function (data) {
                 if (data != null) {
                     if (data.total == 1) {
+                        $scope.musicFetchData.possibleAlbunList = data.data;
                         $scope.musicFetchData.album = data.data[0];
                         $scope.musicFetchUICtrl.showTrackList = true;
                         $scope.musicFetchUICtrl.showPreviewWindow = true;
@@ -47,7 +64,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
                         createPageList(0);
                     } else if (data.total > 1) {
                         $scope.musicFetchUICtrl.showPossibleAlbum = true;
-                        $scope.musicFetchData.possibleAlbunList = data.data
+                        $scope.musicFetchData.possibleAlbunList = data.data;
                         createPageList(Math.ceil(data.total / 25));
                         $scope.albumPagination.current = $scope.albumFilter.params.index == 0 ? 1 : $scope.albumFilter.params.index % 25;
                     } else {
@@ -156,7 +173,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $location,
             params: {
                 output: "jsonp",
                 callback: 'JSON_CALLBACK',
-                q: $location.search().album,
+                q: getUrlParameter('album'),
                 index: (pageNum-1)*25,
             }
         }

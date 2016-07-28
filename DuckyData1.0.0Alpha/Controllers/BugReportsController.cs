@@ -75,7 +75,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BugReportAdd bugReport)
+        public async Task<ActionResult> Create(BugReportAdd bugReport)
         {
             if(ModelState.IsValid)
             {

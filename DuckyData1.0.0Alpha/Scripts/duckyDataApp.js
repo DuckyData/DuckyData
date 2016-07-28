@@ -1,4 +1,4 @@
-﻿var duckyData = angular.module('duckyData', ['ngRoute', 'toastr','angularFileUpload','ngCookies']);
+﻿var duckyData = angular.module('duckyData', ['toastr','angularFileUpload','ngCookies']);
 
 duckyData.config(function ($httpProvider, $locationProvider, toastrConfig) {
     $locationProvider.html5Mode({ enabled: true, requireBase: false });
