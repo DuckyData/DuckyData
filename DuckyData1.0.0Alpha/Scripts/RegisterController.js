@@ -1,4 +1,4 @@
-﻿duckyData.controller('registerAccountCtrl', function ($scope, $timeout, $location, $window, FileUploader, toastr) {
+﻿duckyData.controller('registerAccountCtrl', function ($scope, $timeout, $window, toastr) {
 
     $scope.registerAccountData = {
         email: null,

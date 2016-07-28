@@ -130,12 +130,17 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             var fetchedObject = (ds.Messages.SingleOrDefault(i => i.Id == id));
             var newstate = fetchedObject;
-            if(fetchedObject.viewed == false && fetchedObject.Recipient == uNm)
-            {
-                newstate.viewed = true;
-                ds.Entry(fetchedObject).CurrentValues.SetValues(newstate);
-                ds.SaveChanges();
+            if(fetchedObject != null) {
+                if(fetchedObject.viewed == false && fetchedObject.Recipient == uNm)
+                {
+                    newstate.viewed = true;
+                    ds.Entry(fetchedObject).CurrentValues.SetValues(newstate);
+                    ds.SaveChanges();
+                }
+            } else {
+                return null;
             }
+            
             return (fetchedObject == null) ? null
                 : Mapper.Map<MessageBase>(fetchedObject);
         }

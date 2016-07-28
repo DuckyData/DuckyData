@@ -49,65 +49,6 @@
             <dd>
                 @Html.Raw(Model.Body)
             </dd>
-
-            
-
-            
-            <dt>
-                @Html.DisplayNameFor(model => model.AttachUrl)
-            </dt>
-
-                        
-
-                            
-                                
-                                @{
-                                    if (Model.ContentType != null)
-                                    {
-                                        if (Model.ContentType.Contains("audio"))
-                                        {
-                                        <dd>
-                                            <audio controls>
-                                                <source src="@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
-                                                Audio playback not supported.
-                                            </audio> <br />
-                                            <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download audio</a>
-                                        </dd>
-                                        }
-                                        else if (Model.ContentType.Contains("video"))
-                                        {
-                                            <dd>
-                                                <video width="300" height="280" controls>
-                                                    <source src="@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )" type="@Model.ContentType">
-                                                    Video playback not supported.
-                                                </video> <br />
-                                                <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download> Download video</a>
-                                            </dd>
-                                        }
-                                        else if (Model.ContentType.Contains("image"))
-                                        {
-                                            <dd>
-                                                <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>
-                                                    <img src='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' alt="@Model.ContentName" title="@Model.ContentType" style="width: 400px; height:400px;" />
-                                                </a>
-                                            </dd>
-                                        }
-                                        else
-                                        {
-                                            <dd>
-                                                <a href='@string.Format("/img/MsgAttach/{0}{1}",Model.Id , Model.ContentName )' download>File - @Model.ContentType</a>
-                                            </dd>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <dd>No Attachment.</dd>
-                                    }
-                                }
-
-
-
-
         </dl>
     </div>
     <p>
