@@ -34,7 +34,9 @@ namespace DuckyData1._0._0Alpha.Controllers
         [Authorize]
         public ActionResult Inbox()
         {
-            return View(m.Inbox());
+            var messageList = m.Inbox();
+
+            return View(Mapper.Map<IEnumerable<MessageBase>>(messageList));
         }
 
         // GET: Message

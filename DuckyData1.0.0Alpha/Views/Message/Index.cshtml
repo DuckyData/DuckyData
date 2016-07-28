@@ -3,11 +3,7 @@
 @{
     ViewBag.Title = "Users";
 }
-
-
-
 <h2>Users</h2>
-
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -25,9 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Subject)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Body)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.viewed)
             </th>
@@ -57,11 +51,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
             </td>
+
             <td>
-                @Html.Raw(item.Body)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.viewed)
+                @if(item.viewed) {
+                    <span>Yes</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ContentType)
@@ -73,7 +71,6 @@
                 @Html.DisplayFor(modelItem => item.AttachUrl)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id=item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item.Id })
             </td>

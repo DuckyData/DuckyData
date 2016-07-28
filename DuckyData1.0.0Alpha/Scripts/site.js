@@ -1,5 +1,4 @@
 ﻿function BindAutocomplete(fieldID, webServiceUrl) {
-    alert($("#" + fieldID).val());
     $( "#" + fieldID).autocomplete({
         source: function( request, response ) {
             $.ajax( {
