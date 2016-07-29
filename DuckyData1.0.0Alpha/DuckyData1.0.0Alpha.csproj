@@ -1439,6 +1439,7 @@
     <Content Include="Scripts\musicFetchCreate.js" />
     <Content Include="Scripts\radiocheck.js" />
     <Content Include="Scripts\RegisterController.js" />
+    <Content Include="Scripts\resetPasswordController.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />

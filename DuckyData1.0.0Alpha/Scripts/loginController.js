@@ -33,7 +33,7 @@
     }
 
     $scope.validThePassword = function () {
-        console.log('check');
+
         var re = /^.*(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$/;
         if (re.test($scope.loginAccountData.password)) {
             $scope.loginAccountErrorMsg.passwordMsg = null
@@ -55,19 +55,19 @@
             }
 
         }
-        registerAccountDisableBtn();
+        loginAccountDisableBtn();
     }
 
     function loginAccountDisableBtn() {
-
-        if (!$scope.loginAccountData.email || !$scope.loginAccountData.password ) {
-            $scope.loginAccountUI.disableBtn = true;
+        if (!$scope.loginAccountErrorMsg.passwordMsg && !$scope.loginAccountErrorMsg.passwordMsgTwo && !$scope.loginAccountErrorMsg.passwordMsgThree && !$scope.loginAccountErrorMsg.emailMsg && !$scope.loginAccountErrorMsg.cPasswordMsg) {
+            $scope.loginAccountUI.disableBtn = false;
         } else {
-            if (!$scope.loginAccountErrorMsg.passwordMsg && !$scope.loginAccountErrorMsg.passwordMsgTwo && !$scope.loginAccountErrorMsg.passwordMsgThree && !$scope.loginAccountErrorMsg.emailMsg && !$scope.loginAccountErrorMsg.cPasswordMsg) {
-                $scope.loginAccountUI.disableBtn = false;
-            } else {
-                $scope.loginAccountUI.disableBtn = true;
-            }
+            $scope.loginAccountUI.disableBtn = true;
         }
     }
+
+
+    $timeout(function(){
+        $("").attr("autocomplete", "off");
+    },1000)
 })

@@ -311,7 +311,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                     accountFactory.createRegiseInfo(model, code);
                     return RedirectToAction("EmailSent", "Account");
                 }
-                AddErrors(result);
+                AddErrorsForRegister(result);
             }
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -635,6 +635,18 @@ namespace DuckyData1._0._0Alpha.Controllers
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
+            }
+        }
+
+        private void AddErrorsForRegister(IdentityResult result)
+        {
+            foreach(var error in result.Errors)
+            {
+                if(!error.StartsWith("Name"))
+                {
+                    ModelState.AddModelError("",error);
+                }
+                
             }
         }
 
