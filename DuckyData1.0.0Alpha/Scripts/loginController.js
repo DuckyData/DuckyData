@@ -55,7 +55,7 @@
             }
 
         }
-        registerAccountDisableBtn();
+        loginAccountDisableBtn();
     }
 
     function loginAccountDisableBtn() {

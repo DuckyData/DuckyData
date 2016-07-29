@@ -49,7 +49,7 @@
         var fd = new FormData();
         fd.append('input', $scope.singAudioUploader.queue[0]._file);
         toastr.success('Uploading file to the system, please wait')
-        $http.post('http://localhost:8102/MusicFetch/_MediaInput/'+optionId, fd, config).then(function (response) {
+        $http.post('http://myvmlab.senecacollege.ca:5340/MusicFetch/_MediaInput/'+optionId, fd, config).then(function (response) {
             $scope.homePageUICtrl.disableIfentifyButton = false;
             $window.location.href = response.data
         }, function (error) {
