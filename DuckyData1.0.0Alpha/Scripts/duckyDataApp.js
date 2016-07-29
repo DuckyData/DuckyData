@@ -98,9 +98,18 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
     uploaderAudio.filters.push({
         name: 'audioFilter',
         fn: function (item, options) {
-            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            var browsers = { chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i };
+            var mimeTypeSctring = '|mpeg|wav|x-wav|x-pn-wav|ogg|flac|x-ms-wma|mp4|avi|x-matroska|x-troff-msvideo|msvideo|x-msvideo|x-flv|x-ms-wmv|';
 
-            if ('|mp3|wav|x-wav|x-pn-wav|ogg|aiff|x-aiff|mpeg|x-mpeg|flac|x-aac|x-ms-wma|'.indexOf(type) !== -1) {
+            for (var key in browsers) {
+                if (browsers[key].test(userAgent)) {
+                    if (key == "chrome") {
+                        mimeTypeSctring = '|mp3|wav|x-wav|x-pn-wav|ogg|flac|x-ms-wma|mp4|avi|x-matroska|x-troff-msvideo|msvideo|x-msvideo|x-flv|x-ms-wmv|';
+                    }
+                }
+            };
+
+            if (mimeTypeSctring.indexOf(type) !== -1) {
                 return true;
             } else {
                 toastr.error('We only support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC, AMR and WMA','Unrecongnize File Type');
