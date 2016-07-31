@@ -41,29 +41,55 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
 
         [HttpPost]
-        public string _MediaInput(int? id, fileInput newItem)
+        public MediaResponse _MediaInput(int? id, fileInput newItem)
         {
             if (ModelState.IsValid)
             {
+                MediaResponse response = new MediaResponse();
                 newItem.bytes = new byte[newItem.input.ContentLength];
+                
+
+
+
+
+
+
                 newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
                 var result = m.RunQuery(newItem);
-                string qry, tmp = "";
 
-
-                if (newItem.input.ContentType.Contains("audio"))
+                /*
+                Response.Buffer = false;
+                Response.Clear();
+                Response.ContentType = newItem.input.ContentType;
+                var ext = Path.GetExtension(newItem.input.FileName);
+                Response.AddHeader("content-disposition", "attachment; filename=" + result.title + ext);
+                Response.AddHeader("content-length", newItem.input.ContentLength.ToString());
+                Response.TransmitFile(result.path);
+                Response.End();
+                Response.Flush();
+                */
+                string qry;
+                if(result.album != null && result.artists[0] != null && result.title != null )
                 {
-                    qry = result.album;
-                    tmp = string.Format("MusicFetch/Index?album={0}", qry);
+                    response.statusCode = true;
                 }
-                else if (newItem.input.ContentType.Contains("video"))
+                response.fileURL = result.path;
+                if (id.Value == 2)
                 {
-                    qry = result.title;
-                    tmp = string.Format("VideoFetch/Index?video={0}", qry);
+                    if (newItem.input.ContentType.Contains("audio"))
+                    {
+                        qry = result.album;
+                        response.queryURL = string.Format("MusicFetch/Index?album={0}", qry);
+                    }
+                    else if (newItem.input.ContentType.Contains("video"))
+                    {
+                        qry = result.title;
+                        response.queryURL = string.Format("VideoFetch/Index?video={0}", qry);
+                    }
                 }
-                return tmp;
+                return response;
             }
-            return "";
+            return new MediaResponse();
 
         }
 

@@ -10,6 +10,20 @@ using System.Web;
 
 namespace DuckyData1._0._0Alpha.Models
 {
+
+    public class MediaResponse
+    {
+        public MediaResponse()
+        {
+            queryURL = "";
+            fileURL = "";
+        }
+        public string queryURL { get; set; }
+        public string fileURL { get; set; }
+        public bool statusCode { get; set; }
+        public bool mimeStatusCode { get; set; }
+    }
+
     public class fileInput
     {
         public HttpPostedFileBase input { get; set; }
@@ -18,18 +32,19 @@ namespace DuckyData1._0._0Alpha.Models
 
     public class acr
     {
-        public string result { get; set; }
+        public string path { get; set; }
         public string album { get; set; }
-        public string artist { get; set; }
+        public string[] artists { get; set; }
         public string title { get; set; }
         public string duration { get; set; }
-        public string genre { get; set; }
+        public string[] genres { get; set; }
         public string producer { get; set; }
         public string director { get; set; }
         public string releaseDate { get; set; }
         public byte[] albumArt { get; set; }
         public string artMime { get; set; }
-
+        public uint track { get; set; }
+        public byte[] fileBytes { get; set; }
 
     }
 
@@ -234,4 +249,48 @@ namespace DuckyData1._0._0Alpha.Models
             }
         }
     }
+
+
+    public class SimpleFile
+    {
+        public SimpleFile(string Name, Stream Stream)
+        {
+            this.Name = Name;
+            this.Stream = Stream;
+        }
+        public string Name { get; set; }
+        public Stream Stream { get; set; }
+    }
+
+    public class SimpleFileAbstraction : TagLib.File.IFileAbstraction
+    {
+        private SimpleFile file;
+
+        public SimpleFileAbstraction(SimpleFile file)
+        {
+            this.file = file;
+        }
+
+        public string Name
+        {
+            get { return file.Name; }
+        }
+
+        public System.IO.Stream ReadStream
+        {
+            get { return file.Stream; }
+        }
+
+        public System.IO.Stream WriteStream
+        {
+            get { return file.Stream; }
+        }
+
+        public void CloseStream(System.IO.Stream stream)
+        {
+            stream.Position = 0;
+        }
+
+    }
+
 }
