@@ -181,7 +181,8 @@ namespace DuckyData1._0._0Alpha.Controllers
                     response.statusCode = true;
                 }
                 response.fileURL = result.path;
-                response.fileType = newItem.input.ContentType;
+                response.fileName = result.title + ext;
+                
                 if (id.Value == 2)
                 {
                     if (newItem.input.ContentType.Contains("audio"))
