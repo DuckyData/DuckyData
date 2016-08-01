@@ -12,6 +12,7 @@ using DuckyData1._0._0Alpha.ViewModels.MusicFetch;
 using DuckyData1._0._0Alpha.Factory.FavouriteFactory;
 using System.Drawing;
 using System.IO;
+using System.Configuration;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -33,13 +34,19 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
         
        
+        public FileResult Download(string file, string fileName)
+        {
+            //var file = Server.HtmlEncode(url);
+            return File(file, "application/octet-stream", "test.mp3");
+        }
+
 
         public ActionResult _MediaInput()
         {
             var addForm = new fileInput();
             return PartialView(addForm);
         }
-
+        
         [HttpPost]
         public MediaResponse _MediaInput(int? id, fileInput newItem)
         {
@@ -114,12 +121,48 @@ namespace DuckyData1._0._0Alpha.Controllers
                 }
                 //wma mime check end
 
+                //mp4 mime check
+                if (ext.ToLower() == ".mp4")
+                {
 
+                    var mp4 = new byte[] { 0, 0, 0, 24, 102, 116, 121, 112, 109, 112 };
+                    if (check[0] != mp4[0] || check[1] != mp4[1] || check[2] != mp4[2] || check[3] != mp4[3]
+                        || check[4] != mp4[4] || check[5] != mp4[5] || check[6] != mp4[6] || check[7] != mp4[7]
+                        || check[8] != mp4[8] || check[9] != mp4[9])
+                    {
+                        return new MediaResponse()
+                        {
+                            mimeStatusCode = false,
+                            statusCode = false
+                        };
+                    }
+                }
+                //mp4 mime check end
 
+                //m4a mime check
+                if (ext.ToLower() == ".m4a")
+                {
+
+                    var m4a = new byte[] { 0, 0, 0, 32, 102, 116, 121, 112, 77, 52, 65 };
+                    if (check[0] != m4a[0] || check[1] != m4a[1] || check[2] != m4a[2] || check[3] != m4a[3]
+                        || check[4] != m4a[4] || check[5] != m4a[5] || check[6] != m4a[6] || check[7] != m4a[7]
+                        || check[8] != m4a[8] || check[9] != m4a[9] || check[10] != m4a[10])
+                    {
+                        return new MediaResponse()
+                        {
+                            mimeStatusCode = false,
+                            statusCode = false
+                        };
+                    }
+                }
+                //m4a mime check end
+                response.mimeStatusCode = true;
 
 
 
                 var result = m.RunQuery(newItem);
+                
+
 
                 /*
                 Response.Buffer = false;
@@ -138,6 +181,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                     response.statusCode = true;
                 }
                 response.fileURL = result.path;
+                response.fileType = newItem.input.ContentType;
                 if (id.Value == 2)
                 {
                     if (newItem.input.ContentType.Contains("audio"))

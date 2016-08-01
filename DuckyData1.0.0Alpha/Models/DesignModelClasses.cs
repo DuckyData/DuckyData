@@ -20,6 +20,8 @@ namespace DuckyData1._0._0Alpha.Models
         }
         public string queryURL { get; set; }
         public string fileURL { get; set; }
+        //public string fileName { get; set; }
+        public string fileType { get; set; }
         public bool statusCode { get; set; }
         public bool mimeStatusCode { get; set; }
     }
