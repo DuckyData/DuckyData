@@ -84,43 +84,45 @@ namespace DuckyData1._0._0Alpha.Controllers
 
             var ext = Path.GetExtension(input.input.FileName);
             Program p = new Program();
-
+           
             var result =  p.go(input);
+            if(result.album != null && result.artists[0] != null) {
+                var art = LastFmAlbumArt.AlbumArt(result.album, result.artists[0]);
 
-            var art = LastFmAlbumArt.AlbumArt(result.album, result.artists[0]);
-            var ms = new MemoryStream();
-            if (art != null)
-            {
-                art.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+                var ms = new MemoryStream();
+                if (art != null)
+                {
+                    art.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
 
-                result.albumArt = ms.ToArray();
-                result.artMime = GetMimeType(art);
+                    result.albumArt = ms.ToArray();
+                    result.artMime = GetMimeType(art);
+                }
             }
             var dir = "~/media/";
+            result.path = Path.Combine(HttpContext.Current.Server.MapPath(dir + result.title + ext));
+
+            input.input.SaveAs(result.path);
             
-            if (input.input.ContentType.Contains("video"))
-            {
-
-            }
-            else if (input.input.ContentType.Contains("audio"))
-            {
                 
-                result.path = Path.Combine(HttpContext.Current.Server.MapPath(dir + result.title + ext));
+                TagLib.File f = TagLib.File.Create(result.path);
 
-                input.input.SaveAs(result.path);
+            var wavTag = (TagLib.Riff.ListTag)f.GetTag(TagLib.TagTypes.RiffInfo, true);
+            TagLib.Mpeg4.AppleTag appleTag = (TagLib.Mpeg4.AppleTag)f.GetTag(TagLib.TagTypes.Apple, true);
+             
 
-                TagLib.File f = TagLib.File.Create(result.path); 
 
+            //f.Tag.
+            TagLib.Id3v2.Tag tv2 = (TagLib.Id3v2.Tag)f.GetTag(TagTypes.Id3v2, true); // You can add a true parameter to the GetTag function if the file doesn't already have a tag.
 
-                //f.Tag.
-                TagLib.Id3v2.Tag t = (TagLib.Id3v2.Tag)f.GetTag(TagTypes.Id3v2); // You can add a true parameter to the GetTag function if the file doesn't already have a tag.
-                if (t == null)
+                TagLib.Tag tv1 = f.GetTag(TagTypes.Id3v1);
+
+                
+                if (tv2 == null)
                 {
-                    t = new TagLib.Id3v2.Tag();
+                    tv2 = new TagLib.Id3v2.Tag();
                 }
 
 
-                t.Album = result.album;
                 int index = result.album.LastIndexOf("(");
                 if (index > 0)
                 {
@@ -131,20 +133,57 @@ namespace DuckyData1._0._0Alpha.Controllers
                 {
                     result.album = result.album.Substring(0, index);
                 }
-                t.Performers = result.artists;
-                //t.Track = result.track;
-                t.Genres = result.genres;
-                t.Title = result.title;
-                t.Copyright = result.producer;
-                if (result.albumArt != null)
+
+            tv2.Album = result.album;    
+            tv2.Performers = result.artists;
+            tv2.Genres = result.genres;
+            tv2.Title = result.title;
+            tv2.Copyright = result.producer;
+            if (tv1 != null)
+            {
+                tv1.Album = result.album;
+                tv1.Performers = result.artists;
+                tv1.Genres = result.genres;
+                tv1.Title = result.title;
+                tv1.Copyright = result.producer;
+            }
+            if (appleTag != null)
+            {
+                appleTag.Album = result.album;
+                appleTag.Performers = result.artists;
+                appleTag.Genres = result.genres;
+                appleTag.Title = result.title;
+                appleTag.Copyright = result.producer;
+            }
+            if (wavTag != null)
+            {
+                wavTag.Album = result.album;
+                wavTag.Performers = result.artists;
+                wavTag.Genres = result.genres;
+                wavTag.Title = result.title;
+                wavTag.Copyright = result.producer;
+            }
+
+            if (result.albumArt != null)
                 {
                     Picture pic = new Picture(result.albumArt);
-                    t.Pictures = new Picture[1] { pic };
-                }
+                    tv2.Pictures = new Picture[] { pic };
+                    if (appleTag != null)
+                    {
+                        appleTag.Pictures = new Picture[] { pic };
+                    }
+                    if (tv1 != null)
+                    {
+                        tv1.Pictures = new Picture[] { pic };
+                    }
+                    if (wavTag != null)
+                    {
+                        wavTag.Pictures = new Picture[] { pic };
+                    }
+            }
 
                 f.Save();
-                string i = "";
-            }
+            
 
                     return result;
         }

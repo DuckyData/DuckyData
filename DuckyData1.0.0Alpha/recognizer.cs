@@ -598,7 +598,7 @@ namespace ACRCloud
                 unknown.album = "";
                 return unknown;
             }
-
+/*
             if (input.input.ContentType.Contains("video"))
             {
 
@@ -609,7 +609,7 @@ namespace ACRCloud
                 unknown.title = title;
                 return unknown;
             }
-
+*/
 
 
 
@@ -620,8 +620,6 @@ namespace ACRCloud
             var mtitle = (string)obj[0]["title"];
             var duration = (string)obj[0]["duration_ms"];
             var genrez = obj[0]["genres"];
-            unknown.track = (uint)obj[0]["result_from"];
-            //string genres = "";
             if (genrez != null)
             {
                 if (genrez.Count() == 1)

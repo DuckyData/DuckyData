@@ -47,14 +47,78 @@ namespace DuckyData1._0._0Alpha.Controllers
             {
                 MediaResponse response = new MediaResponse();
                 newItem.bytes = new byte[newItem.input.ContentLength];
-                
-
-
-
-
-
-
                 newItem.input.InputStream.Read(newItem.bytes, 0, newItem.input.ContentLength);
+
+                var ext = Path.GetExtension(newItem.input.FileName);
+                var check = new byte[] {
+                    newItem.bytes[0],
+                    newItem.bytes[1],
+                    newItem.bytes[2],
+                    newItem.bytes[3],
+                    newItem.bytes[4],
+                    newItem.bytes[5],
+                    newItem.bytes[6],
+                    newItem.bytes[7],
+                    newItem.bytes[8],
+                    newItem.bytes[9],
+                    };
+                //mp3 mime check
+                if (ext.ToLower() == ".mp3")
+                {
+                    
+                    var mp3 = new byte[] { 73, 68, 51 };
+                    var mp3a = new byte[] { 255, 251 };
+                    if ((check[0] != mp3[0] || check[1] != mp3[1] || check[2] != mp3[2]) &&
+                        (check[0] != mp3a[0] || check[1] != mp3a[1]))
+                    {
+                        return new MediaResponse()
+                        {
+                            mimeStatusCode = false,
+                            statusCode = false
+                        };
+                    }
+                }
+                //mp3 mime check end
+
+                //flac mime check
+                if (ext.ToLower() == ".flac")
+                {
+                    
+                    var flac = new byte[] { 102, 76, 97, 67 };
+                    if (check[0] != flac[0] || check[1] != flac[1] || check[2] != flac[2] || check[3] != flac[3])
+                    {
+                        return new MediaResponse()
+                        {
+                            mimeStatusCode = false,
+                            statusCode = false
+                        };
+                    }
+                }
+                //flac mime check end
+
+                //wma mime check
+                if (ext.ToLower() == ".wma")
+                {
+
+                    var wma = new byte[] { 142, 102, 207, 17, 166, 217, 0, 170, 0, };
+                    if (check[0] != wma[0] || check[1] != wma[1] || check[2] != wma[2] || check[3] != wma[3]
+                        || check[4] != wma[4] || check[5] != wma[5] || check[6] != wma[6] || check[7] != wma[7]
+                        || check[8] != wma[8])
+                    {
+                        return new MediaResponse()
+                        {
+                            mimeStatusCode = false,
+                            statusCode = false
+                        };
+                    }
+                }
+                //wma mime check end
+
+
+
+
+
+
                 var result = m.RunQuery(newItem);
 
                 /*
