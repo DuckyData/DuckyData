@@ -1076,6 +1076,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\flat-ui.js" />
     <Content Include="Scripts\flat-ui.min.js" />
+    <Content Include="Scripts\forgotPasswordController.js" />
     <Content Include="Scripts\homeController.js" />
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\ckeditor\ckeditor_source.js" />
@@ -1439,7 +1440,7 @@
     <Content Include="Scripts\musicFetchCreate.js" />
     <Content Include="Scripts\radiocheck.js" />
     <Content Include="Scripts\RegisterController.js" />
-    <Content Include="Scripts\resetPasswordController.js" />
+    <Content Include="Scripts\changePasswordController.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
