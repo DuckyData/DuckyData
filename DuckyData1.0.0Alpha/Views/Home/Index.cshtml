@@ -21,12 +21,12 @@
                 <br><br>
                 <div class="width-100">
                     <div class="file-name-to-indetify pull-left">{{singAudioUploader.queue[0]._file.name}}</div>
-                    <span class="pull-right remove-identify-file" ng-click="singAudioUploader.queue.splice(0,1);$event.stopPropagation()" ng-if="singAudioUploader.queue.length>0">&#10005</span>
+                    <span class="pull-right remove-identify-file" ng-click="singAudioUploader.queue=[];$event.stopPropagation()" ng-if="singAudioUploader.queue.length>0">&#10005</span>
                 </div>
             </div>
 
             <div class="width-100 hidden-input-tag">
-                <input type="file" id="audio-indentift-select-tag" nv-file-select uploader="singAudioUploader" class="invisible">
+                <input type="file" id="audio-indentift-select-tag" nv-file-select uploader="singAudioUploader" multiple class="invisible">
             </div>
         </div>
         <div class="width-100 file-indentify-btn-group">

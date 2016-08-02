@@ -20,6 +20,7 @@ using PagedList;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DuckyData1._0._0Alpha.Service.EmailService;
 using Microsoft.Owin.Security.Infrastructure;
+using System.Web.Security;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -202,9 +203,10 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         // GET; /Account/Edit/bkajdbfkjhsdfkhsdhfks
         [HttpGet]
-        public ActionResult Edit(string id)
+        public ActionResult Edit()
         {
-            ApplicationUser user = accountFactory.findUserById(id);
+            string uID = User.Identity.GetUserId();
+            ApplicationUser user = accountFactory.findUserById(uID);
             return View(Mapper.Map<adminEditUser>(user));
         }
 

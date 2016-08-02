@@ -46,7 +46,7 @@
                 }
                 
             } else {
-                if (phone == undefined) {
+                if (phone == "" || phone == undefined) {
                     setPhoneMsg("");
                 } else {
                     setPhoneMsg("Please enter 10 digits phone number");
@@ -76,7 +76,6 @@
         })
         disableSaveBtn();
     }
-
 
     function disableSaveBtn() {
         if (!$scope.editUserProfileMsg.phone && !$scope.editUserProfileMsg.lname && !$scope.editUserProfileMsg.fname) {

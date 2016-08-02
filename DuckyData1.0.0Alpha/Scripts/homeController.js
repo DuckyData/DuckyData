@@ -77,7 +77,8 @@
                         var url = 'http://localhost:8102/MusicFetch/Download?file=' + response.data.fileURL + '&fileName=' + response.data.fileName;
                         window.location.assign(url);
                         if (optionId == 2) {
-                            window.location.href = 'http://localhost:8102/' + response.data.queryURL
+                            var win = window.open('http://localhost:8102/' + response.data.queryURL, "_blank");
+                            win.focus();
                         }
                     } else if (response.data.statusCode == 400) {
                         toastr.error(response.data.msg);
@@ -87,6 +88,7 @@
                 } else {
                     toastr.error('Cannot find metadata for this file', 'Sorry');
                 }
+                $scope.singAudioUploader.queue = [];
                 $scope.homePageUICtrl.disableIfentifyButton = false;
             }, function (error) {
                 $scope.homePageUICtrl.disableIfentifyButton = false;
