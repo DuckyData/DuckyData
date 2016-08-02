@@ -54,5 +54,10 @@ namespace DuckyData1._0._0Alpha.Controllers
             return PartialView();
         }
 
+
+        public FileResult Download(fileInput file)
+        {
+            return new FileContentResult(file.bytes, file.input.ContentType);
+        }
     }
 }

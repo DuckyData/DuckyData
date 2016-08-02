@@ -2,11 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace DuckyData1._0._0Alpha.Models
 {
+
+    public class MediaResponse
+    {
+        public MediaResponse()
+        {
+            queryURL = "";
+            fileURL = "";
+        }
+        public string queryURL { get; set; }
+        public string fileURL { get; set; }
+        public string fileName { get; set; }
+        //public string fileType { get; set; }
+        public bool statusCode { get; set; }
+        public bool mimeStatusCode { get; set; }
+    }
+
     public class fileInput
     {
         public HttpPostedFileBase input { get; set; }
@@ -15,18 +34,19 @@ namespace DuckyData1._0._0Alpha.Models
 
     public class acr
     {
-        public string result { get; set; }
+        public string path { get; set; }
         public string album { get; set; }
-        public string artist { get; set; }
+        public string[] artists { get; set; }
         public string title { get; set; }
         public string duration { get; set; }
-        public string genre { get; set; }
+        public string[] genres { get; set; }
         public string producer { get; set; }
         public string director { get; set; }
         public string releaseDate { get; set; }
         public byte[] albumArt { get; set; }
         public string artMime { get; set; }
-
+        public uint track { get; set; }
+        public byte[] fileBytes { get; set; }
 
     }
 
@@ -74,7 +94,7 @@ namespace DuckyData1._0._0Alpha.Models
         public DateTime SentDate { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(500)]
         public string Recipient { get; set; }
 
         [Required]
@@ -98,6 +118,7 @@ namespace DuckyData1._0._0Alpha.Models
         public string ContentType { get; set; }
 
         public string ContentName { get; set; }
+
     }
 
     public class History
@@ -117,12 +138,9 @@ namespace DuckyData1._0._0Alpha.Models
         [StringLength(100)]
         public string subject { get; set; }
         [Required]
-        [StringLength(1000)]
         public string body { get; set; }
         [Required]
-        [StringLength(100)]
         public string category { get; set; }
-        [StringLength(1000)]
         public string notes { get; set; }
 
         public ApplicationUser regUser { get; set; }
@@ -144,15 +162,12 @@ namespace DuckyData1._0._0Alpha.Models
         [Display(Name = "Subject")]
         public string subject { get; set; }
         [Required]
-        [StringLength(1000)]
         [Display(Name = "Description")]
         public string body { get; set; }
         [Required]
-        [StringLength(100)]
         [Display(Name = "category")]
         public string category { get; set; }
         [Required]
-        [StringLength(100)]
         [Display(Name = "Submitted By")]
         public string submittedBy { get; set; }
         public ApplicationUser regUser { get; set; }
@@ -201,4 +216,83 @@ namespace DuckyData1._0._0Alpha.Models
         public string VideoImg { get; set; }
         public string VideoURL { get; set; }
     }
+
+    public class LastFmAlbumArt
+    {
+        public static string AbsUrlOfArt(string album, string artist)
+        {
+            Lastfm.Services.Session session = new Lastfm.Services.Session("c4c683261f4ee4b4b757b60c3b473d2d", "8cedb96695f0824b3855cb9c600a20bd");
+            Lastfm.Services.Artist lArtist = new Lastfm.Services.Artist(artist, session);
+            Lastfm.Services.Album lAlbum = new Lastfm.Services.Album(lArtist, album, session);
+
+            return lAlbum.GetImageURL();
+        }
+
+        public static Image AlbumArt(string album, string artist)
+        {
+            Stream stream = null;
+            try
+            {
+                WebRequest req = WebRequest.Create(AbsUrlOfArt(album, artist));
+                WebResponse response = req.GetResponse();
+                stream = response.GetResponseStream();
+                Image img = Image.FromStream(stream);
+
+                return img;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Dispose();
+            }
+        }
+    }
+
+
+    public class SimpleFile
+    {
+        public SimpleFile(string Name, Stream Stream)
+        {
+            this.Name = Name;
+            this.Stream = Stream;
+        }
+        public string Name { get; set; }
+        public Stream Stream { get; set; }
+    }
+
+    public class SimpleFileAbstraction : TagLib.File.IFileAbstraction
+    {
+        private SimpleFile file;
+
+        public SimpleFileAbstraction(SimpleFile file)
+        {
+            this.file = file;
+        }
+
+        public string Name
+        {
+            get { return file.Name; }
+        }
+
+        public System.IO.Stream ReadStream
+        {
+            get { return file.Stream; }
+        }
+
+        public System.IO.Stream WriteStream
+        {
+            get { return file.Stream; }
+        }
+
+        public void CloseStream(System.IO.Stream stream)
+        {
+            stream.Position = 0;
+        }
+
+    }
+
 }

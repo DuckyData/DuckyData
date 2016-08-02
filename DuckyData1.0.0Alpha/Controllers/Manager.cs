@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 using ACRCloud;
 using static System.Net.WebRequestMethods;
 using System.IO;
@@ -16,6 +17,9 @@ using DuckyData1._0._0Alpha.ViewModels.Account;
 using System.Web.Security;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Text;
+using TagLib;
+using TagLib.Id3v2;
 
 namespace DuckyData1._0._0Alpha.Controllers
 {
@@ -24,7 +28,6 @@ namespace DuckyData1._0._0Alpha.Controllers
         private ApplicationDbContext ds = new ApplicationDbContext();
 
         private AccountController a = new AccountController();
-        private ApplicationDbContext userDB = new ApplicationDbContext();
         static private string uID = HttpContext.Current.User.Identity.GetUserId();
         static private string uNm = HttpContext.Current.User.Identity.Name;
         static private AccountFactory af = new AccountFactory();
@@ -78,31 +81,121 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public acr RunQuery(fileInput input)
         {
+
+            var ext = Path.GetExtension(input.input.FileName);
             Program p = new Program();
+           
             var result =  p.go(input);
-            //var art = LastFmAlbumArt.AlbumArt(result.album, result.artist);
-            //var ms = new MemoryStream();
-            //if (art != null)
-            //{
-            //    art.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            if(result.album != null && result.artists[0] != null) {
+                var art = LastFmAlbumArt.AlbumArt(result.album, result.artists[0]);
 
-            //    result.albumArt = ms.ToArray();
-            //    result.artMime = GetMimeType(art);
-            //}
-            //TagLib.File file = TagLib.File.Create("mysong.mp3");
-            //tag.Album = 
+                var ms = new MemoryStream();
+                if (art != null)
+                {
+                    art.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
 
-            return result;
+                    result.albumArt = ms.ToArray();
+                    result.artMime = GetMimeType(art);
+                }
+            }
+            var dir = "~/media/";
+            result.path = Path.Combine(HttpContext.Current.Server.MapPath(dir + result.title + ext));
+
+            input.input.SaveAs(result.path);
+            
+                
+                TagLib.File f = TagLib.File.Create(result.path);
+
+            var wavTag = (TagLib.Riff.ListTag)f.GetTag(TagLib.TagTypes.RiffInfo, true);
+            TagLib.Mpeg4.AppleTag appleTag = (TagLib.Mpeg4.AppleTag)f.GetTag(TagLib.TagTypes.Apple, true);
+             
+
+
+            //f.Tag.
+            TagLib.Id3v2.Tag tv2 = (TagLib.Id3v2.Tag)f.GetTag(TagTypes.Id3v2, true); // You can add a true parameter to the GetTag function if the file doesn't already have a tag.
+
+                TagLib.Tag tv1 = f.GetTag(TagTypes.Id3v1);
+
+                
+                if (tv2 == null)
+                {
+                    tv2 = new TagLib.Id3v2.Tag();
+                }
+
+
+                int index = result.album.LastIndexOf("(");
+                if (index > 0)
+                {
+                    result.album = result.album.Substring(0, index);
+                }
+                index = result.album.LastIndexOf("[");
+                if (index > 0)
+                {
+                    result.album = result.album.Substring(0, index);
+                }
+
+            tv2.Album = result.album;    
+            tv2.Performers = result.artists;
+            tv2.Genres = result.genres;
+            tv2.Title = result.title;
+            tv2.Copyright = result.producer;
+            if (tv1 != null)
+            {
+                tv1.Album = result.album;
+                tv1.Performers = result.artists;
+                tv1.Genres = result.genres;
+                tv1.Title = result.title;
+                tv1.Copyright = result.producer;
+            }
+            if (appleTag != null)
+            {
+                appleTag.Album = result.album;
+                appleTag.Performers = result.artists;
+                appleTag.Genres = result.genres;
+                appleTag.Title = result.title;
+                appleTag.Copyright = result.producer;
+            }
+            if (wavTag != null)
+            {
+                wavTag.Album = result.album;
+                wavTag.Performers = result.artists;
+                wavTag.Genres = result.genres;
+                wavTag.Title = result.title;
+                wavTag.Copyright = result.producer;
+            }
+
+            if (result.albumArt != null)
+                {
+                    Picture pic = new Picture(result.albumArt);
+                    tv2.Pictures = new Picture[] { pic };
+                    if (appleTag != null)
+                    {
+                        appleTag.Pictures = new Picture[] { pic };
+                    }
+                    if (tv1 != null)
+                    {
+                        tv1.Pictures = new Picture[] { pic };
+                    }
+                    if (wavTag != null)
+                    {
+                        wavTag.Pictures = new Picture[] { pic };
+                    }
+            }
+
+                f.Save();
+            
+
+                    return result;
         }
 
-        public string Between(string strSource,string strStart,string strEnd)
+        public string Between(string strSource, string strStart, string strEnd)
         {
             int Start, End;
-            if(strSource.Contains(strStart) && strSource.Contains(strEnd))
+            if (strSource.Contains(strStart) && strSource.Contains(strEnd))
             {
-                Start = strSource.IndexOf(strStart,0) + strStart.Length;
-                End = strSource.IndexOf(strEnd,Start);
-                return strSource.Substring(Start,End - Start);
+                Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+                End = strSource.IndexOf(strEnd, Start);
+                return strSource.Substring(Start, End - Start);
             }
             else
             {
@@ -115,8 +208,8 @@ namespace DuckyData1._0._0Alpha.Controllers
         public MessageBase SendMessage(MessageAdd newItem)
         {
             //var user = ds.Users.SingleOrDefault(i => i.Id == uID);
-            // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
-            // if(usr.gagged) { return null; }
+           // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
+           // if(usr.gagged) { return null; }
             newItem.UserId = uID;
             newItem.UserName = uNm;
             newItem.viewed = false;
@@ -130,10 +223,11 @@ namespace DuckyData1._0._0Alpha.Controllers
             msg.Body = newItem.Body;
             var addedItem = ds.Messages.Add(msg);
             //var addedItem = ds.Messages.Add(Mapper.Map<Message>(newItem));
-            if(newItem.Attachments != null)
+           if (newItem.Attachments != null)
             {
                 byte[] logoBytes = new byte[newItem.Attachments.ContentLength];
                 newItem.Attachments.InputStream.Read(logoBytes, 0, newItem.Attachments.ContentLength);
+                
 
                 //addedItem.Attachment = logoBytes;
                 addedItem.ContentType = newItem.Attachments.ContentType;
@@ -143,15 +237,15 @@ namespace DuckyData1._0._0Alpha.Controllers
                 addedItem.ContentName = newItem.Attachments.FileName;
                 ds.SaveChanges();
                 string path = HttpContext.Current.Server.MapPath("~/images/MsgAttach/" + addedItem.Id + newItem.Attachments.FileName);
-                System.IO.File.WriteAllBytes(path,logoBytes);
+                System.IO.File.WriteAllBytes(path, logoBytes);
             }
             else
             {
 
                 ds.SaveChanges();
             }
-
-            return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
+            
+                return (addedItem == null) ? null : Mapper.Map<MessageBase>(addedItem);
         }
 
         public IEnumerable<MessageBase> AllMsg()
@@ -182,30 +276,25 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             var fetchedObject = (ds.Messages.SingleOrDefault(i => i.Id == id));
             var newstate = fetchedObject;
-            if(fetchedObject != null) {
-                if(fetchedObject.viewed == false && fetchedObject.Recipient == uNm)
-                {
-                    newstate.viewed = true;
-                    ds.Entry(fetchedObject).CurrentValues.SetValues(newstate);
-                    ds.SaveChanges();
-                }
-            } else {
-                return null;
+            if (fetchedObject.viewed == false && fetchedObject.Recipient == uNm)
+            {
+                newstate.viewed = true;
+                ds.Entry(fetchedObject).CurrentValues.SetValues(newstate);
+                ds.SaveChanges();
             }
-            
             return (fetchedObject == null) ? null
-                : Mapper.Map<MessageBase>(fetchedObject);
+                : Mapper.Map < MessageBase > (fetchedObject);
         }
 
-
+        
 
         public IEnumerable<MessageBase> Outbox()
         {
-            var messages = ds.Messages.Where(x => x.UserId == uID).OrderBy(d => d.SentDate);
+            var messages = ds.Messages.Where(x => x.UserId == uID ).OrderBy(d => d.SentDate);
 
 
             return (messages == null) ? null : Mapper.Map<IEnumerable<MessageBase>>(messages);
-        }
+        } 
 
         public IEnumerable<Message> Inbox()
         {
@@ -258,7 +347,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public void MarkAsUnread(int id)
         {
             var omsg = ds.Messages.SingleOrDefault(i => i.Id == id);
-            if(uNm == omsg.Recipient)
+            if (uNm == omsg.Recipient)
             {
                 var rmsg = omsg;
                 rmsg.viewed = false;
@@ -270,7 +359,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public bool DeleteMessage(int id)
         {
             var toDel = ds.Messages.SingleOrDefault(i => i.Id == id);
-            if(toDel == null || (uNm != toDel.UserName && !HttpContext.Current.User.IsInRole("admin")))
+            if (toDel == null || (uNm != toDel.UserName && !HttpContext.Current.User.IsInRole("admin")))
             {
                 return false;
             }
@@ -282,5 +371,88 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
         }
         // MESSAGE MANAGEMENT - END
+
+
+
+        public void SampleTaglib(Stream song, string songFileName)
+        {
+            //Get the tags
+            TagLib.Tag tags = FileTagReader(song, songFileName);
+
+            //We can read and display info from it
+            //TextBlock1.Text = tags.Title;
+            //TextBlock2.Text = tags.Album;
+
+            //Sample 2
+            tags.Comment = "Read and edited using SampleTaglib app by Zumicts";
+
+            //Reading picture
+            MemoryStream ms = new MemoryStream(tags.Pictures[0].Data.Data);
+            //System.Windows.Media.Imaging.BitmapImage bi = new BitmapImage();
+            //.SetSource(ms);
+
+            //Writing picture
+            //albmStream would be a stream containing picture data
+            //create the picture for the album cover
+            //TagLib.Picture picture = new TagLib.Picture(new TagLib.ByteVector(albmStream.ToArray()));
+
+            //create Id3v2 Picture Frame
+            //TagLib.Id3v2.AttachedPictureFrame albumCoverPictFrame = new TagLib.Id3v2.AttachedPictureFrame(Ipicture);
+            //set the type of picture (front cover)
+            //albumCoverPictFrame.Type = TagLib.PictureType.FrontCover;
+
+            //Id3v2 allows more than one type of image, just one needed
+            //TagLib.IPicture[] pictFrames = { albumCoverPictFrame };
+
+            //tags.Pictures = pictFrames;
+        }
+
+        public static TagLib.Tag FileTagReader(Stream stream, string fileName)
+        {
+            //Create a simple file and simple file abstraction
+            var simpleFile = new SimpleFile(fileName, stream);
+            var simpleFileAbstraction = new SimpleFileAbstraction(simpleFile);
+            /////////////////////
+
+            //Create a taglib file from the simple file abstraction
+            var mp3File = TagLib.File.Create(simpleFileAbstraction);
+
+            //Get all the tags
+            TagLib.Tag tags = mp3File.Tag;
+
+            //Save and close
+            mp3File.Save();
+            mp3File.Dispose();
+
+            //Return the tags
+            return tags;
+        }
+
+        public static Stream FileTagEditor(Stream stream, string fileName, TagLib.Tag newTag)
+        {
+            //Create a simple file and simple file abstraction
+            var simpleFile = new SimpleFile(fileName, stream);
+            var simpleFileAbstraction = new SimpleFileAbstraction(simpleFile);
+            /////////////////////
+
+            //Create a taglib file from the simple file abstraction
+            var mp3File = TagLib.File.Create(simpleFileAbstraction);
+
+            //Copy the all the tags to the file (overwrite if exist)
+            newTag.CopyTo(mp3File.Tag, true);
+            //Pictures tag had to be done seperately
+            //During testing sometimes it didn't copy
+            mp3File.Tag.Pictures = newTag.Pictures;
+
+            //save it and close it
+            mp3File.Save();
+            mp3File.Dispose();
+
+            //Return the stream back (now edited with the new tags)
+            return stream;
+        }
+
+
+
     }
 }

@@ -598,7 +598,7 @@ namespace ACRCloud
                 unknown.album = "";
                 return unknown;
             }
-
+/*
             if (input.input.ContentType.Contains("video"))
             {
 
@@ -609,7 +609,7 @@ namespace ACRCloud
                 unknown.title = title;
                 return unknown;
             }
-
+*/
 
 
 
@@ -620,37 +620,48 @@ namespace ACRCloud
             var mtitle = (string)obj[0]["title"];
             var duration = (string)obj[0]["duration_ms"];
             var genrez = obj[0]["genres"];
-            string genres = "";
             if (genrez != null)
             {
-                if (genrez.Count() == 1) { genres = (string)genrez[0]["name"]; }
+                if (genrez.Count() == 1)
+                {
+                    unknown.genres = new string[2];
+                    unknown.genres[0] = (string)genrez[0]["name"];
+                }
                 else
                 {
+                    unknown.genres = new string[100];
+                    int it = 0;
                     foreach (var genre in genrez)
                     {
-                        genres += ((string)genre["name"] + ", ");
+                        unknown.genres[it] = (string)genre["name"];
+                        it++;
                     }
                 }
-                genres = genres.TrimEnd(',');
             }
             var artistz = obj[0]["artists"];
-            string artists = "";
-            if (artistz.Count() == 1) { artists = (string)artistz[0]["name"]; }
-            else
+            if (artistz != null)
             {
-                foreach (var artist in artistz)
+                if (artistz.Count() == 1)
                 {
-                    artists += ((string)artist["name"] + ", ");
+                    unknown.artists = new string[2];
+                    unknown.artists[0] = (string)artistz[0]["name"];
+                }
+                else
+                {
+                    unknown.artists = new string[100];
+                    int it = 0;
+                    foreach (var artist in artistz)
+                    {
+                        unknown.artists[it] = (string)artist["name"];
+                        it++;
+                    }
                 }
             }
-            artists = artists.TrimEnd(',');
-            
             unknown.album = album;
             unknown.releaseDate = releaseDate;
-            unknown.artist = artists;
             unknown.duration = duration;
             unknown.producer = label;
-            unknown.genre = genres;
+            //unknown.genre = genres;
             unknown.title = mtitle;
             return unknown;
             //ACRCloudExtrTool acrTool = new ACRCloudExtrTool();
