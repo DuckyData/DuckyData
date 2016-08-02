@@ -13,7 +13,9 @@ namespace DuckyData1._0._0Alpha.ViewModels.FollowUps
         [Required(ErrorMessage = "Title is required")]
         [StringLength(100)]
         public string Title { get; set; }
+        [AllowHtml]
         [Required(ErrorMessage = "Description is required")]
+        [StringLength(1000)]
         public string Description { get; set; }
         public BugReport report { get; set; }
     }

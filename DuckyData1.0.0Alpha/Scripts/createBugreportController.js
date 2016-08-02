@@ -30,6 +30,13 @@
         if (!$scope.createBugReportData.desc) {
             $scope.createBugReportMsg.desc = 'Description is required';
         }
+        else {
+            if ($scope.createBugReportData.desc.length > 1000) {
+                $scope.createBugReportMsg.desc = 'The field Description must be a string with a maximum length of 1000.';
+            } else {
+                $scope.createBugReportMsg.desc = null;
+            }
+        }
         disableBtn();
     }
 

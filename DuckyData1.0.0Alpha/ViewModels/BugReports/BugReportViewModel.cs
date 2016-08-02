@@ -13,16 +13,19 @@ namespace DuckyData1._0._0Alpha.ViewModels
         // view model for basic bug report
         public DateTime date { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(70)]
         [Display(Name = "Subject")]
         public string subject { get; set; }
         [Required]
         [AllowHtml]
+        [StringLength(1000)]
         [Display(Name = "Description")]
         public string body { get; set; }
         [Required]
+        [StringLength(100)]
         [Display(Name = "Category")]
         public string category { get; set; }
+        [StringLength(100)]
         [Display(Name = "Submitted By")]
         public string submittedBy { get; set; }
         [Display(Name = "Content Type")]
@@ -47,6 +50,7 @@ namespace DuckyData1._0._0Alpha.ViewModels
     public class BugReportList :BugReportBase {
         public int Id { set; get; }
         [Display(Name = "Tech Support")]
+        [StringLength(100)]
         public string assignTo { set; get; }
     }
 
@@ -62,16 +66,19 @@ namespace DuckyData1._0._0Alpha.ViewModels
         [Display(Name = "Data Submitted")]
         public DateTime date { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(70)]
         [Display(Name = "Subject")]
         public string subject { get; set; }
         [Required]
+        [StringLength(1000)]
         [Display(Name = "Description")]
         public string body { get; set; }
         [Required]
+        [StringLength(100)]
         [Display(Name = "category")]
         public string category { get; set; }
         [Required]
+        [StringLength(100)]
         [Display(Name = "Submitted By")]
         public string submittedBy { get; set; }
         public ApplicationUser regUser { get; set; }

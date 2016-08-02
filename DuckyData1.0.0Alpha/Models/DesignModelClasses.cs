@@ -74,7 +74,7 @@ namespace DuckyData1._0._0Alpha.Models
         public DateTime SentDate { get; set; }
 
         [Required]
-        [StringLength(500)]
+        [StringLength(100)]
         public string Recipient { get; set; }
 
         [Required]
@@ -98,7 +98,6 @@ namespace DuckyData1._0._0Alpha.Models
         public string ContentType { get; set; }
 
         public string ContentName { get; set; }
-
     }
 
     public class History
@@ -118,9 +117,12 @@ namespace DuckyData1._0._0Alpha.Models
         [StringLength(100)]
         public string subject { get; set; }
         [Required]
+        [StringLength(1000)]
         public string body { get; set; }
         [Required]
+        [StringLength(100)]
         public string category { get; set; }
+        [StringLength(1000)]
         public string notes { get; set; }
 
         public ApplicationUser regUser { get; set; }
@@ -142,12 +144,15 @@ namespace DuckyData1._0._0Alpha.Models
         [Display(Name = "Subject")]
         public string subject { get; set; }
         [Required]
+        [StringLength(1000)]
         [Display(Name = "Description")]
         public string body { get; set; }
         [Required]
+        [StringLength(100)]
         [Display(Name = "category")]
         public string category { get; set; }
         [Required]
+        [StringLength(100)]
         [Display(Name = "Submitted By")]
         public string submittedBy { get; set; }
         public ApplicationUser regUser { get; set; }

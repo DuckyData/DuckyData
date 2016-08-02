@@ -7,6 +7,7 @@ namespace DuckyData1._0._0Alpha.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
     }
 
@@ -43,6 +44,7 @@ namespace DuckyData1._0._0Alpha.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
     }
 
@@ -51,11 +53,13 @@ namespace DuckyData1._0._0Alpha.Models
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
+        [MaxLength(50)]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [MaxLength(10)]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -67,10 +71,11 @@ namespace DuckyData1._0._0Alpha.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [MaxLength(50)]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(10, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -78,6 +83,7 @@ namespace DuckyData1._0._0Alpha.Models
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Required]
         public string ConfirmPassword { get; set; }
     }
 
@@ -94,6 +100,7 @@ namespace DuckyData1._0._0Alpha.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
@@ -107,6 +114,7 @@ namespace DuckyData1._0._0Alpha.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        //[RegularExpression(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" + @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$")]
         public string Email { get; set; }
     }
 }
