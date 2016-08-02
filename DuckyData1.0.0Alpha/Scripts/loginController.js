@@ -33,7 +33,7 @@
     }
 
     $scope.validThePassword = function () {
-        console.log('check');
+
         var re = /^.*(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$/;
         if (re.test($scope.loginAccountData.password)) {
             $scope.loginAccountErrorMsg.passwordMsg = null
@@ -59,8 +59,7 @@
     }
 
     function loginAccountDisableBtn() {
-
-        if (!$scope.loginAccountData.email || !$scope.loginAccountData.password ) {
+        if (!$scope.loginAccountData.email || !$scope.loginAccountData.password) {
             $scope.loginAccountUI.disableBtn = true;
         } else {
             if (!$scope.loginAccountErrorMsg.passwordMsg && !$scope.loginAccountErrorMsg.passwordMsgTwo && !$scope.loginAccountErrorMsg.passwordMsgThree && !$scope.loginAccountErrorMsg.emailMsg && !$scope.loginAccountErrorMsg.cPasswordMsg) {
@@ -70,4 +69,5 @@
             }
         }
     }
+    loginAccountDisableBtn()
 })

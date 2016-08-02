@@ -17,7 +17,7 @@
                 <input class="form-control" data-val="true"  ng-model="loginAccountData.email" ng-change="validTheLogInEmailAddress()" id="Email" name="Email" placeholder="Email" type="text" value="" aria-required="true" aria-describedby="Email-error" aria-invalid="true">
             </div>
             <div class="form-group">
-                <input class="form-control" ng-model="loginAccountData.password" ng-change="validThePassword()" id="Password" name="Password" placeholder="Password" type="password" aria-required="true" aria-describedby="Password-error" aria-invalid="false">
+                <input class="form-control" ng-model="loginAccountData.password" ng-change="validThePassword()" autocomplete="new-password" id="Password" name="Password" placeholder="Password" type="password" aria-required="true" aria-describedby="Password-error" aria-invalid="false">
                 <div class="text-danger">{{loginAccountErrorMsg.passwordMsg}}</div>
                 <div class="text-danger">{{loginAccountErrorMsg.passwordMsgTwo}}</div>
                 <div class="text-danger">{{loginAccountErrorMsg.passwordMsgThree}}</div>

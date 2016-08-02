@@ -44,17 +44,12 @@
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact","Contact","Home")</li>
                             <li>@Html.ActionLink("Messages", "Inbox", "Message")</li>
-                            <li>@Html.ActionLink("Report a bug", "Create", "BugReports")</li>
-                            <li>@Html.ActionLink("Favourte Audio","Index","MusicFavourites")</li>
-                            <li>@Html.ActionLink("Favourte Video","Index","VideoFavourites")</li>
                         </ul>
                     </li>
                     
-                    @{
-                        if (HttpContext.Current.User.IsInRole("Admin")) { Html.RenderAction("_AdminTools", "Home"); }
-                        else if (HttpContext.Current.User.IsInRole("TechSupport"))
-                        {
-                            <li>@Html.ActionLink("Bug Reports", "Index", "BugReports")</li> }
+                    @{ 
+                        if (HttpContext.Current.User.IsInRole("Admin")){ Html.RenderAction("_AdminTools", "Home"); }
+                        else if (HttpContext.Current.User.IsInRole("TechSupport")) { Html.RenderAction("_TsTools", "Home"); }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
