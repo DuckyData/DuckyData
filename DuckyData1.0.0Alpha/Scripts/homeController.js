@@ -41,7 +41,7 @@
             if (mimeTypeSctring.indexOf(type) !== -1) {
                 return true;
             } else {
-                toastr.error('We only support WAVE, FLAC, OGG, MP3, AAC, AMR, WMA, MP4, MKV, FLV, AVI', 'Unrecongnize File Type');
+                toastr.error('We only support WAVE, FLAC, OGG, MP3, AAC, AMR, WMA, MP4, MKV, FLV, AVI', 'Unrecongnized File Type');
                 return false;
             }
         }
@@ -57,20 +57,41 @@
     }
 
     $scope.identifyAudio = function (optionId) {
-        $scope.homePageUICtrl.disableIfentifyButton = true;
-        var config = {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
+
+        if ($scope.singAudioUploader.queue.lenght = 0) {
+            toastr.error('Please select a media file');
+        } else {
+            $scope.homePageUICtrl.disableIfentifyButton = true;
+            var config = {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }
+            var fd = new FormData();
+            fd.append('input', $scope.singAudioUploader.queue[0]._file);
+            toastr.success('Uploading file to the system, please wait')
+            $http.post('http://localhost:8102/MusicFetch/_MediaInput/' + optionId, fd, config).then(function (response) {
+                if (response.status == 200) {
+                    if (response.data.statusCode == 200){
+                        $scope.homePageUICtrl.disableIfentifyButton = false;
+                        console.log(response);
+                        var url = 'http://localhost:8102/MusicFetch/Download?file=' + response.data.fileURL + '&fileName=' + response.data.fileName;
+                        window.location.assign(url);
+                        if (optionId == 2) {
+                            window.location.href = 'http://localhost:8102/' + response.data.queryURL
+                        }
+                    } else if (response.data.statusCode == 400) {
+                        toastr.error(response.data.msg);
+                    } else if (response.data.statusCode == 500) {
+                        toastr.error('Cannot find metadata for this file', 'Sorry');
+                    }
+                } else {
+                    toastr.error('Cannot find metadata for this file', 'Sorry');
+                }
+                $scope.homePageUICtrl.disableIfentifyButton = false;
+            }, function (error) {
+                $scope.homePageUICtrl.disableIfentifyButton = false;
+                toastr.error('Sorry, cannot fild the metadata');
+            });
         }
-        var fd = new FormData();
-        fd.append('input', $scope.singAudioUploader.queue[0]._file);
-        toastr.success('Uploading file to the system, please wait')
-        $http.post('http://myvmlab.senecacollege.ca:5340/MusicFetch/_MediaInput/'+optionId, fd, config).then(function (response) {
-            $scope.homePageUICtrl.disableIfentifyButton = false;
-            $window.location.href = response.data
-        }, function (error) {
-            $scope.homePageUICtrl.disableIfentifyButton = false;
-            toastr.error('Sorry, cannot fild the metadata');
-        });
     }
 });

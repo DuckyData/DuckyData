@@ -37,7 +37,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         public FileResult Download(string file, string fileName)
         {
             //var file = Server.HtmlEncode(url);
-            return File(file, "application/octet-stream", "test.mp3");
+            return File(file, "application/octet-stream",fileName);
         }
 
 
@@ -48,7 +48,7 @@ namespace DuckyData1._0._0Alpha.Controllers
         }
         
         [HttpPost]
-        public MediaResponse _MediaInput(int? id, fileInput newItem)
+        public JsonResult _MediaInput(int? id, fileInput newItem)
         {
             if (ModelState.IsValid)
             {
@@ -78,11 +78,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                     if ((check[0] != mp3[0] || check[1] != mp3[1] || check[2] != mp3[2]) &&
                         (check[0] != mp3a[0] || check[1] != mp3a[1]))
                     {
-                        return new MediaResponse()
-                        {
-                            mimeStatusCode = false,
-                            statusCode = false
-                        };
+                        return Json(new { mimeStatusCode = false, statusCode = 400, msg="MP3 file not correctly formatted"});
                     }
                 }
                 //mp3 mime check end
@@ -94,11 +90,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                     var flac = new byte[] { 102, 76, 97, 67 };
                     if (check[0] != flac[0] || check[1] != flac[1] || check[2] != flac[2] || check[3] != flac[3])
                     {
-                        return new MediaResponse()
-                        {
-                            mimeStatusCode = false,
-                            statusCode = false
-                        };
+                        return Json(new { mimeStatusCode = false,statusCode = 400,msg = "FLAC file not correctly formatted" });
                     }
                 }
                 //flac mime check end
@@ -112,11 +104,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                         || check[4] != wma[4] || check[5] != wma[5] || check[6] != wma[6] || check[7] != wma[7]
                         || check[8] != wma[8])
                     {
-                        return new MediaResponse()
-                        {
-                            mimeStatusCode = false,
-                            statusCode = false
-                        };
+                        return Json(new { mimeStatusCode = false,statusCode = 400,msg = "WMA file not correctly formatted" });
                     }
                 }
                 //wma mime check end
@@ -130,11 +118,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                         || check[4] != mp4[4] || check[5] != mp4[5] || check[6] != mp4[6] || check[7] != mp4[7]
                         || check[8] != mp4[8] || check[9] != mp4[9])
                     {
-                        return new MediaResponse()
-                        {
-                            mimeStatusCode = false,
-                            statusCode = false
-                        };
+                        return Json(new { mimeStatusCode = false,statusCode = 400,msg = "MP4 file not correctly formatted" });
                     }
                 }
                 //mp4 mime check end
@@ -148,33 +132,12 @@ namespace DuckyData1._0._0Alpha.Controllers
                         || check[4] != m4a[4] || check[5] != m4a[5] || check[6] != m4a[6] || check[7] != m4a[7]
                         || check[8] != m4a[8] || check[9] != m4a[9] || check[10] != m4a[10])
                     {
-                        return new MediaResponse()
-                        {
-                            mimeStatusCode = false,
-                            statusCode = false
-                        };
+                        return Json(new { mimeStatusCode = false,statusCode = 400,msg = "M4A file not correctly formatted" });
                     }
                 }
                 //m4a mime check end
                 response.mimeStatusCode = true;
-
-
-
                 var result = m.RunQuery(newItem);
-                
-
-
-                /*
-                Response.Buffer = false;
-                Response.Clear();
-                Response.ContentType = newItem.input.ContentType;
-                var ext = Path.GetExtension(newItem.input.FileName);
-                Response.AddHeader("content-disposition", "attachment; filename=" + result.title + ext);
-                Response.AddHeader("content-length", newItem.input.ContentLength.ToString());
-                Response.TransmitFile(result.path);
-                Response.End();
-                Response.Flush();
-                */
                 string qry;
                 if(result.album != null && result.artists[0] != null && result.title != null )
                 {
@@ -183,22 +146,21 @@ namespace DuckyData1._0._0Alpha.Controllers
                 response.fileURL = result.path;
                 response.fileName = result.title + ext;
                 
-                if (id.Value == 2)
+                
+                if (newItem.input.ContentType.Contains("audio"))
                 {
-                    if (newItem.input.ContentType.Contains("audio"))
-                    {
-                        qry = result.album;
-                        response.queryURL = string.Format("MusicFetch/Index?album={0}", qry);
-                    }
-                    else if (newItem.input.ContentType.Contains("video"))
-                    {
-                        qry = result.title;
-                        response.queryURL = string.Format("VideoFetch/Index?video={0}", qry);
-                    }
+                    qry = result.album;
+                    response.queryURL = string.Format("MusicFetch/Index?album={0}", qry);
+                    return Json(new { mimeStatusCode = true,statusCode = 200,qry = result.album,queryURL = string.Format("MusicFetch/Index?album={0}",qry) ,fileURL = result.path ,fileName = result.title + ext});
                 }
-                return response;
+                else if (newItem.input.ContentType.Contains("video"))
+                {
+                    qry = result.title;
+                    response.queryURL = string.Format("VideoFetch/Index?video={0}", qry);
+                    return Json(new { mimeStatusCode = true,statusCode = 200,qry = result.album,queryURL = string.Format("VideoFetch/Index?video={0}",qry),fileURL = result.path,fileName = result.title + ext });
+                }
             }
-            return new MediaResponse();
+            return Json(new { statusCode=400,msg="Data not valid" });
 
         }
 
