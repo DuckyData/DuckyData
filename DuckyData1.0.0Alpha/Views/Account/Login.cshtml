@@ -13,6 +13,7 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true,"",new { @class = "text-danger" })
             <div class="form-group">
+                @Html.ValidationMessage("flags", new { @class = "text-danger"})
                 <div  class="text-danger">{{loginAccountErrorMsg.emailMsg}}</div>
                 <input class="form-control" data-val="true"  ng-model="loginAccountData.email" ng-change="validTheLogInEmailAddress()" id="Email" name="Email" placeholder="Email" type="text" value="" aria-required="true" aria-describedby="Email-error" aria-invalid="true">
             </div>

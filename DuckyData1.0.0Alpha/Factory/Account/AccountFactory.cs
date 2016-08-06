@@ -140,10 +140,18 @@ namespace DuckyData1._0._0Alpha.Factory.Account
             return true;
         }
 
-        public void adminUpdateUserInfo(ApplicationUser dest, adminEditUser src)
+        public void adminUpdateUserInfo(ApplicationUser dest, adminEditUser src, int activate)
         {
+            if (activate == 2)
+            {
+                dest.LockoutEndDateUtc = new DateTime(9999, 12, 30);
+            }
+            else if (activate == 1)
+            {
+                dest.LockoutEndDateUtc = null;
+            }
 
-            dest.firstName = src.FirstName;
+                dest.firstName = src.FirstName;
             dest.lastName = src.LastName;
             dest.PhoneNumber = src.PhoneNumber;
             dest.flagged = src.flagged;

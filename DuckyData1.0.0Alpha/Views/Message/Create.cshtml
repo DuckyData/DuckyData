@@ -32,8 +32,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control text-box single-line" ng-model="messageCreateData.subject" ng-change="validCreateSubject()"  placeholder="Subject (100 characters maximum)" id="Subject" name="Subject" type="text" value="">
-                <div class="text-danger">{{messageCreateMsg.subject}}</div>
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -44,14 +44,9 @@
                 @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <script>
-            CKEDITOR.replace('Body');
-        </script>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Send the message" ng-disabled="messageCreateUI.disableBtn" class="btn btn-primary" />
+                <input type="submit" value="Send the message"  class="btn btn-primary" />
             </div>
         </div>
     </div>

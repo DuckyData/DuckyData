@@ -84,9 +84,9 @@ namespace DuckyData1._0._0Alpha.Controllers
 
             var ext = Path.GetExtension(input.input.FileName);
             Program p = new Program();
-           
+            //return new acr() { album = "The Wall" };
             var result =  p.go(input);
-            if(result.album != null && result.artists[0] != null) {
+            if (result.album != null && result.artists[0] != null) {
                 var art = LastFmAlbumArt.AlbumArt(result.album, result.artists[0]);
 
                 var ms = new MemoryStream();
@@ -99,12 +99,13 @@ namespace DuckyData1._0._0Alpha.Controllers
                 }
             }
             var dir = "~/media/";
+            //result.path = "C:\\inetpub\\wwwroot\\media\\" + result.title + ext;
             result.path = Path.Combine(HttpContext.Current.Server.MapPath(dir + result.title + ext));
-
+            //return new acr();
             input.input.SaveAs(result.path);
             
-                
-                TagLib.File f = TagLib.File.Create(result.path);
+
+            TagLib.File f = TagLib.File.Create(result.path);
 
             var wavTag = (TagLib.Riff.ListTag)f.GetTag(TagLib.TagTypes.RiffInfo, true);
             TagLib.Mpeg4.AppleTag appleTag = (TagLib.Mpeg4.AppleTag)f.GetTag(TagLib.TagTypes.Apple, true);

@@ -88,7 +88,7 @@ duckyData.service('GAPIFactory', function (toastr,$q,$cookies) {
     }
 });
 
-duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
+duckyData.service('duckyDataFileUploader', function (FileUploader, toastr, $window) {
     var uploaderAudio = new FileUploader();
     var uploaderVideo = new FileUploader();
 
@@ -98,6 +98,8 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
     uploaderAudio.filters.push({
         name: 'audioFilter',
         fn: function (item, options) {
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            var userAgent = $window.navigator.userAgent;
             var browsers = { chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i };
             var mimeTypeSctring = '|mpeg|wav|x-wav|x-pn-wav|ogg|flac|x-ms-wma|mp4|avi|x-matroska|x-troff-msvideo|msvideo|x-msvideo|x-flv|x-ms-wmv|';
 
@@ -113,6 +115,45 @@ duckyData.service('duckyDataFileUploader', function (FileUploader,toastr) {
                 return true;
             } else {
                 toastr.error('We only support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC, AMR and WMA','Unrecongnize File Type');
+                return false;
+            }
+        }
+    });
+
+    uploaderAudio.filters.push({
+        name: 'audioSizeFilter',
+        fn: function (item, options) {
+            if (item.size < 104857600) {
+                return true;
+            } else {
+                toastr.error("Sorry, the file size is too big, 100MB Maximun", "Large file");
+                return false;
+            }
+        }
+    });
+
+
+    uploaderVideo.filters.push({
+        name: 'videoFilter',
+        fn: function (item, options) {
+            var type = item.type.slice(0, 5);
+            console.log(type);
+            if (type == 'video') {
+                return true;
+            } else {
+                toastr.error('We only support video files', 'Unrecongnize File Type');
+                return false;
+            }
+        }
+    });
+
+    uploaderVideo.filters.push({
+        name: 'videoSizeFilter',
+        fn: function (item, options) {
+            if (item.size < 104857600) {
+                return true;
+            } else {
+                toastr.error("Sorry, the file size is too big, 100MB Maximun", "Large file");
                 return false;
             }
         }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DuckyData1._0._0Alpha.ViewModels.MessageBase>
 
 @{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "Messages";
 }
 <h2>Users</h2>
     <p>
@@ -29,7 +29,8 @@
             <th></th>
         </tr>
     
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.SentDate)
@@ -45,12 +46,15 @@
             </td>
 
             <td>
-                @if(item.viewed) {
-                    <span>Yes</span>
-                }
-                else
-                {
-                    <span>No</span>
+                @{ 
+                    if (item.viewed == true)
+                    {
+                    <img src='~/img/icons/png/read.png' alt='Read' title='Read' style='width: 30px; height: 30px;' />
+                    }
+                    else
+                    {
+                <img src='~/img/icons/png/unread.png' alt="unread" title="unread" style="width: 30px; height: 30px;" />
+                        }
                 }
             </td>
             

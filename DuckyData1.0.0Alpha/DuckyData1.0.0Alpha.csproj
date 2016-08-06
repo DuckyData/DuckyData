@@ -280,6 +280,7 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Manager.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\MusicFavouritesController.cs" />
     <Compile Include="Controllers\MusicFetchController.cs" />
     <Compile Include="Controllers\VideoFavouritesController.cs" />
@@ -291,7 +292,6 @@
     <Compile Include="Factory\FollowUps\FollowUpsFactory.cs" />
     <Compile Include="Factory\WebAPI\Gracenote\GNAjax.cs" />
     <Compile Include="Factory\WebAPI\Gracenote\GNQueryBuilder.cs" />
-    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -373,6 +373,7 @@
     <Content Include="libacrcloud_extr_tool.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="media\logo2.PNG" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -702,6 +703,7 @@
     <Content Include="Scripts\ckeditor\lang\_languages.js" />
     <Content Include="Scripts\ckeditor\lang\_translationstatus.txt" />
     <Content Include="Scripts\ckeditor\LICENSE.html" />
+    <Content Include="Scripts\createFollowUpController.js" />
     <Content Include="Scripts\messageControllerCollection.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />

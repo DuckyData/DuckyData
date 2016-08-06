@@ -28,12 +28,12 @@
 
             var browsers = { chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i };
             
-            var mimeTypeSctring ='|mpeg|wav|x-wav|x-pn-wav|ogg|flac|x-ms-wma|mp4|avi|x-matroska|x-troff-msvideo|msvideo|x-msvideo|x-flv|x-ms-wmv|';
+            var mimeTypeSctring = '|mpeg|mp3|flac|x-ms-wma|mp4|';
 
             for (var key in browsers) {
                 if (browsers[key].test(userAgent)) {
                     if (key == "chrome") {
-                        mimeTypeSctring = '|mp3|wav|x-wav|x-pn-wav|ogg|flac|x-ms-wma|mp4|avi|x-matroska|x-troff-msvideo|msvideo|x-msvideo|x-flv|x-ms-wmv|';
+                        mimeTypeSctring = '|mp3|flac|x-ms-wma|mp4|';
                     }
                 }
             };
@@ -41,7 +41,19 @@
             if (mimeTypeSctring.indexOf(type) !== -1) {
                 return true;
             } else {
-                toastr.error('We only support WAVE, FLAC, OGG, MP3, AAC, AMR, WMA, MP4, MKV, FLV, AVI', 'Unrecongnized File Type');
+                toastr.error('We only support FLAC, MP3, MP4, M4A, WMA', 'Unrecongnized File Type');
+                return false;
+            }
+        }
+    });
+
+    $scope.singAudioUploader.filters.push({
+        name: 'mediaSizeFilter',
+        fn: function (item, options) {
+            if (item.size < 104857600) {
+                return true;
+            } else {
+                toastr.error("Sorry, the file size is too big, 100MB Maximun", "Large file");
                 return false;
             }
         }
@@ -58,7 +70,7 @@
 
     $scope.identifyAudio = function (optionId) {
 
-        if ($scope.singAudioUploader.queue.lenght = 0) {
+        if ($scope.singAudioUploader.queue.length == 0) {
             toastr.error('Please select a media file');
         } else {
             $scope.homePageUICtrl.disableIfentifyButton = true;
@@ -69,15 +81,15 @@
             var fd = new FormData();
             fd.append('input', $scope.singAudioUploader.queue[0]._file);
             toastr.success('Uploading file to the system, please wait')
-            $http.post('http://localhost:8102/MusicFetch/_MediaInput/' + optionId, fd, config).then(function (response) {
+            $http.post('http://myvmlab.senecacollege.ca:5340/MusicFetch/_MediaInput/' + optionId, fd, config).then(function (response) {
                 if (response.status == 200) {
                     if (response.data.statusCode == 200){
                         $scope.homePageUICtrl.disableIfentifyButton = false;
                         console.log(response);
-                        var url = 'http://localhost:8102/MusicFetch/Download?file=' + response.data.fileURL + '&fileName=' + response.data.fileName;
+                        var url = 'http://myvmlab.senecacollege.ca:5340/MusicFetch/Download?file=' + response.data.fileURL + '&fileName=' + response.data.fileName;
                         window.location.assign(url);
                         if (optionId == 2) {
-                            var win = window.open('http://localhost:8102/' + response.data.queryURL, "_blank");
+                            var win = window.open('http://myvmlab.senecacollege.ca:5340/' + response.data.queryURL, "_blank");
                             win.focus();
                         }
                     } else if (response.data.statusCode == 400) {
@@ -92,6 +104,7 @@
                 $scope.homePageUICtrl.disableIfentifyButton = false;
             }, function (error) {
                 $scope.homePageUICtrl.disableIfentifyButton = false;
+                console.log(error);
                 toastr.error('Sorry, cannot fild the metadata');
             });
         }

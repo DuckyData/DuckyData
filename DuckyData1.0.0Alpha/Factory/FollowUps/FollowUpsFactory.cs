@@ -53,7 +53,7 @@ namespace DuckyData1._0._0Alpha.Factory.FollowUps
                     followUpToAdd = Mapper.Map<FollowUp>(followUp);
                     followUpToAdd.TimeStamp = DateTime.Now;
                     followUpToAdd.report = bug;
-                    followUpToAdd.CreatedBy = user.firstName + " " + user.lastName;
+                    followUpToAdd.CreatedBy = user.Email;
                     appDB.FollowUps.Add(followUpToAdd);
                     appDB.SaveChanges();
                     return true;

@@ -111,7 +111,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             var user = ac.findUserById(uID);
             if (user.gagged)
             {
-                ModelState.AddModelError("SentDate", "Please select an option");
+                ModelState.AddModelError("SentDate", "your account's messaging services have been disabled due to inapropriate use ");
                 return View();
             }
             if (ModelState.IsValid)
@@ -148,6 +148,13 @@ namespace DuckyData1._0._0Alpha.Controllers
         {
             if (ModelState.IsValid & id == newItem.Id)
             {
+                var uID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                var user = ac.findUserById(uID);
+                if (user.gagged)
+                {
+                    ModelState.AddModelError("SentDate", "your account's messaging services have been disabled due to inapropriate use ");
+                    return View();
+                }
                 // Attempt to do the update
                 var editedItem = m.EditMessage(newItem);
                 if (editedItem == null)

@@ -97,23 +97,34 @@ namespace DuckyData1._0._0Alpha.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
             {
+                ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);
             }
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
-            var locked = UserManager.GetLockoutEnabled(user.Id);
+            //var locked = UserManager.GetLockoutEnabled(user.Id);
             bool banned = user.banned;
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (!locked && !banned)
+                  if(banned)
                     {
-                        return RedirectToLocal(returnUrl);
+                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        
+                            ModelState.AddModelError("flags", "Your account has been disabled due to repeated warnings of" 
+                                + " inapropriate use of our services. Please Contact us for further information and resolutions");
+                            return View();
                     }
                     else
                     {
-                        return View("Lockout");
+                        return RedirectToLocal(returnUrl);
                     }
                 case SignInStatus.LockedOut:
+                    if(user.LockoutEndDateUtc == new DateTime(4000, 12, 30))
+                    {
+                        ModelState.AddModelError("flags", "Your account has been Deactivated. If you wish to reactivate,"
+                                + " please feel free to Contact us");
+                        return View();
+                    }
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
@@ -127,29 +138,36 @@ namespace DuckyData1._0._0Alpha.Controllers
 
 
         [Authorize]
-        public ActionResult Activate(string id)
+        public ActionResult Activate(string Id)
         {
-            UserManager.SetLockoutEnabled(id, false);
-            var user = UserManager.Users.FirstOrDefault(i => i.Id == id);
-            user.LockoutEndDateUtc = DateTime.Now;
-            db.SaveChanges();
+            //UserManager.SetLockoutEnabled(id, false);
+            var user = UserManager.FindById(Id);
+            user.LockoutEnabled = true;
+            user.LockoutEndDateUtc = null;
+            UserManager.Update(user);
             return RedirectToAction("ListUsers", "Account");
         }
 
         [Authorize]
-        public ActionResult Deactivate(string id)
+        public ActionResult Deactivate(string Id)
         {
-            UserManager.SetLockoutEnabled(id, true);
-            var user = UserManager.Users.FirstOrDefault(i => i.Id == id);
-            user.LockoutEndDateUtc = new DateTime(9999, 12, 30);
-            db.SaveChanges();
+            var user = UserManager.FindById(Id);
+            user.LockoutEnabled = true;
+            user.LockoutEndDateUtc = new DateTime(4000, 12, 30);
+            UserManager.Update(user);
+            
             return RedirectToAction("ListUsers", "Account");
         }
         
         public bool LockoutStatus(string id)
         {
-            var status = UserManager.GetLockoutEnabled(id);
-            return status;
+            var user = accountFactory.findUserById(id);
+            var dt = new DateTime(4000, 12, 30);
+            if (user.LockoutEndDateUtc == dt)
+            {
+                return true;
+            }
+            return false;
         }
 
        public bool IsGagged(string id)
@@ -203,21 +221,23 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         // GET; /Account/Edit/bkajdbfkjhsdfkhsdhfks
         [HttpGet]
-        public ActionResult Edit()
+        [Authorize]
+        public ActionResult Edit(string id)
         {
-            string uID = User.Identity.GetUserId();
-            ApplicationUser user = accountFactory.findUserById(uID);
+            if (id == null) { id = User.Identity.GetUserId(); }
+            ApplicationUser user = accountFactory.findUserById(id);
             return View(Mapper.Map<adminEditUser>(user));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit(adminEditUser user)
         {
             ApplicationUser dest = accountFactory.findUserById(user.Id);
             if(dest != null)
             {
-                accountFactory.adminUpdateUserInfo(dest, user);
+                accountFactory.adminUpdateUserInfo(dest, user, 0);
                 return RedirectToAction("Details",new { Id = user.Id });
             }
             else {
@@ -268,7 +288,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 usr.flagged = false;
                 usr.gagged = false;
                 usr.banned = false;
-                accountFactory.adminUpdateUserInfo(user, usr);
+                accountFactory.adminUpdateUserInfo(user, usr, 0);
             }
 
             return RedirectToAction("ListUsers", "Account");
@@ -317,8 +337,8 @@ namespace DuckyData1._0._0Alpha.Controllers
                     //var callbackUrl = Url.Action("ActivateAccount","Account",new { userId = user.Id,code = code },protocol: Request.Url.Scheme);
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
-                    UserManager.SetLockoutEnabled(user.Id, false);
-                    user.LockoutEndDateUtc = DateTime.Now;
+                    //UserManager.SetLockoutEnabled(user.Id, false);
+                    //user.LockoutEndDateUtc = DateTime.Now;
                     db.SaveChanges();
 
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -747,14 +767,14 @@ namespace DuckyData1._0._0Alpha.Controllers
             ApplicationUser dest = accountFactory.findUserById(uid);
             if (dest.banned && !ban)
             {
-                UserManager.SetLockoutEnabled(dest.Id, false);
+                //UserManager.SetLockoutEnabled(dest.Id, false);
                 var dt = DateTime.Now;
-                dest.LockoutEndDateUtc = dt;
+                dest.LockoutEndDateUtc = null;
                 db.SaveChanges();
             }
-            else if (dest.banned)
+            else if (!dest.banned && ban)
             {
-                UserManager.SetLockoutEnabled(dest.Id, true);
+                //UserManager.SetLockoutEnabled(dest.Id, true);
                 var dt = DateTime.Now;
                 dt.AddMonths(6);
                 dest.LockoutEndDateUtc = dt;
@@ -770,7 +790,7 @@ namespace DuckyData1._0._0Alpha.Controllers
                 PhoneNumber = dest.PhoneNumber
             };
             
-            accountFactory.adminUpdateUserInfo(dest, user);
+            accountFactory.adminUpdateUserInfo(dest, user, 0);
             return RedirectToAction("ListUsers", "Account");
 
         }

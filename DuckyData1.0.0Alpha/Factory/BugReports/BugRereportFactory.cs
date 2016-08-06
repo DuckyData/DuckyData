@@ -99,8 +99,7 @@ namespace DuckyData1._0._0Alpha.Factory.BugReports
             bug.date = DateTime.Now;
             bug.status = "Open";
             ApplicationUser user = appDB.Users.First(u => u.Id == userId);
-            string name = user.firstName + " " + user.lastName;
-            bug.submittedBy = name != null ? name : "Anonymous";
+            bug.submittedBy = user.Email;
             bug.regUser = user;
 
             appDB.BugReports.Add(bug);

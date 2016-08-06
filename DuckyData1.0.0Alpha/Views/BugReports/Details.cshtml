@@ -54,19 +54,19 @@
         </dd>
     </dl>
     <div class="row" id="followUpsRepeatBox">
-        @foreach(var i in Model.FollowUps)
-            {
+        @foreach (var i in Model.FollowUps)
+        {
             <div class="followUpWarpper">
                 <div class="col-lg-12 bg-primary followUpHeader">
-                    <div class="col-md-7 followUpTitle">
+                    <div class="col-md-7 followUpTitle text-ellipsis">
                         <label>Title:</label>
                         @Html.DisplayFor(modelitem => i.Title)
                     </div>
-                    <div class="col-md-2 followUpCreatedBy">
+                    <div class="col-md-2 followUpCreatedBy text-ellipsis">
                         <label>Created By:</label>
                         @Html.DisplayFor(modelitem => i.CreatedBy)
                     </div>
-                    <div class="col-md-3 followUpTimeStamp">
+                    <div class="col-md-3 followUpTimeStamp text-ellipsis">
                         @Html.DisplayFor(modelitem => i.TimeStamp)
                     </div>
                 </div>
@@ -79,9 +79,9 @@
 
 </div>
 <p>
-    @if(Model.status == "Open")
+    @if (Model.status == "Open")
     {
-        @Html.ActionLink("Create Follow Ups","FollowUps",new { id = Model.Id }) 
+        @Html.ActionLink("Create Follow Ups |", "FollowUps", new { id = Model.Id })
     }
 
     @Html.ActionLink("Back to List", "Index")

@@ -6,7 +6,6 @@
     width: 670px;
     position: absolute;
     top: 40px;
-    left: calc(50vw - 340px);
 }
 
 #videoPlayer .modal-content .modal-header{
@@ -32,6 +31,7 @@
     font-size: 95%;
     -webkit-transition: -webkit-transform .8s ease-in-out;
     transition: transform .8s ease-in-out;
+    z-index: 20;
 }
 
 #videoPlayer .modal-content > button.close:focus,

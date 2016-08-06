@@ -4,6 +4,7 @@
 @Scripts.Render("~/bundles/jqueryval")
 @Styles.Render("~/Content/BugReport/createFollowUp.css")
 @Scripts.Render("~/Scripts/autosize.js")
+@Scripts.Render("~/Scripts/createFollowUpController.js")
 
 @using (Html.BeginForm()) 
 {
@@ -51,14 +52,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.report.assignTo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.report.assignTo)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.report.status)
         </dt>
 
@@ -66,8 +59,8 @@
             @Html.DisplayFor(model => model.report.status)
         </dd>
     </dl>
-    <div class="form-horizontal" id="create-follow-up">
-     
+    <div class="form-horizontal" id="create-follow-up" ng-controller="followUpCtrl">
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.report.Id)
         @Html.HiddenFor(model => model.report.subject)
@@ -80,22 +73,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                <div class="text-danger">{{createFollowUpMsg.subject}}</div>
+                <input class="form-control text-box single-line" id="Title" name="Title" type="text" value="" aria-invalid="true" ng-model="createFollowUpData.subject" ng-change="validateSubject()">
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                <div class="text-danger">{{createFollowUpMsg.desc}}</div>
+                <textarea cols="20" data-val="true" htmlattributes="{ class = form-control }" id="Description" name="Description" rows="2" ng-model="createFollowUpData.desc" ng-change="validateDesc()"></textarea>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" ng-disabled="!createFollowUpData.subject || !createFollowUpData.desc || createFollowUpUI.disableBtn" />
             </div>
         </div>
     </div>

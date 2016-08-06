@@ -137,27 +137,29 @@ namespace DuckyData1._0._0Alpha.Controllers
                 }
                 //m4a mime check end
                 response.mimeStatusCode = true;
+                
                 var result = m.RunQuery(newItem);
                 string qry;
-                if(result.album != null && result.artists[0] != null && result.title != null )
+                
+                if (result.album != null && result.artists[0] != null && result.title != null)
                 {
                     response.statusCode = true;
                 }
                 response.fileURL = result.path;
                 response.fileName = result.title + ext;
-                
-                
+
+
                 if (newItem.input.ContentType.Contains("audio"))
                 {
                     qry = result.album;
                     response.queryURL = string.Format("MusicFetch/Index?album={0}", qry);
-                    return Json(new { mimeStatusCode = true,statusCode = 200,qry = result.album,queryURL = string.Format("MusicFetch/Index?album={0}",qry) ,fileURL = result.path ,fileName = result.title + ext});
+                    return Json(new { mimeStatusCode = true, statusCode = 200, qry = result.album, queryURL = string.Format("MusicFetch/Index?album={0}", qry), fileURL = result.path, fileName = result.title + ext });
                 }
                 else if (newItem.input.ContentType.Contains("video"))
                 {
                     qry = result.title;
                     response.queryURL = string.Format("VideoFetch/Index?video={0}", qry);
-                    return Json(new { mimeStatusCode = true,statusCode = 200,qry = result.album,queryURL = string.Format("VideoFetch/Index?video={0}",qry),fileURL = result.path,fileName = result.title + ext });
+                    return Json(new { mimeStatusCode = true, statusCode = 200, qry = result.album, queryURL = string.Format("VideoFetch/Index?video={0}", qry), fileURL = result.path, fileName = result.title + ext });
                 }
             }
             return Json(new { statusCode=400,msg="Data not valid" });
