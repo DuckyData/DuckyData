@@ -12,16 +12,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/05/2016 15:24:32</publishTime>
+      <publishTime>08/08/2016 00:01:50</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/05/2016 15:24:32</publishTime>
+      <publishTime>08/08/2016 00:01:50</publishTime>
     </File>
     <File Include="bin/AutoMapper.dll">
       <publishTime>07/28/2016 15:57:59</publishTime>
     </File>
     <File Include="bin/DuckyData1.0.0Alpha.dll">
-      <publishTime>08/05/2016 15:27:23</publishTime>
+      <publishTime>08/08/2016 00:01:41</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -735,7 +735,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/02/2016 23:13:01</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/05/2016 15:27:25</publishTime>
+      <publishTime>08/08/2016 00:01:43</publishTime>
     </File>
     <File Include="Scripts/.jscs.json">
       <publishTime>07/28/2016 15:57:58</publishTime>
@@ -1128,7 +1128,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/28/2016 15:57:58</publishTime>
     </File>
     <File Include="Scripts/duckyDataApp.js">
-      <publishTime>08/05/2016 14:20:55</publishTime>
+      <publishTime>08/05/2016 17:49:46</publishTime>
     </File>
     <File Include="Scripts/EditUserProfileController.js">
       <publishTime>08/02/2016 19:37:17</publishTime>
@@ -1401,7 +1401,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/20/2016 14:36:03</publishTime>
     </File>
     <File Include="Views/Message/Create.cshtml">
-      <publishTime>08/05/2016 04:37:23</publishTime>
+      <publishTime>08/06/2016 03:38:12</publishTime>
     </File>
     <File Include="Views/Message/Delete.cshtml">
       <publishTime>07/28/2016 15:57:58</publishTime>
@@ -1419,10 +1419,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/05/2016 00:32:42</publishTime>
     </File>
     <File Include="Views/Message/Reply.cshtml">
-      <publishTime>08/04/2016 20:17:57</publishTime>
+      <publishTime>08/07/2016 15:40:52</publishTime>
     </File>
     <File Include="Views/Message/Sent.cshtml">
-      <publishTime>07/20/2016 14:36:03</publishTime>
+      <publishTime>08/07/2016 16:03:17</publishTime>
     </File>
     <File Include="Views/Message/_Inbox.cshtml">
       <publishTime>07/20/2016 14:36:03</publishTime>

@@ -224,6 +224,11 @@ namespace DuckyData1._0._0Alpha.Controllers
         [Authorize]
         public ActionResult Edit(string id)
         {
+            var uID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            if (uID != id && !System.Web.HttpContext.Current.User.IsInRole("Admin"))
+            {
+                id = uID;
+            }
             if (id == null) { id = User.Identity.GetUserId(); }
             ApplicationUser user = accountFactory.findUserById(id);
             return View(Mapper.Map<adminEditUser>(user));

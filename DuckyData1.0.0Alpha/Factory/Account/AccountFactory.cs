@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DuckyData1._0._0Alpha.Factory.Account
 {
@@ -102,6 +103,11 @@ namespace DuckyData1._0._0Alpha.Factory.Account
 
         public ApplicationUser findUserByEmail(string email)
         {
+            var err = Regex.Matches(email, @"[a-zA-Z0-9]");
+            if(err.Count == 0)
+            {
+                return null;
+            }
             ApplicationUser user = userDB.Users.First(u => u.Email == email);
 
             if (user != null)

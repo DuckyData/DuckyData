@@ -153,13 +153,42 @@ namespace DuckyData1._0._0Alpha.Controllers
                 {
                     qry = result.album;
                     response.queryURL = string.Format("MusicFetch/Index?album={0}", qry);
-                    return Json(new { mimeStatusCode = true, statusCode = 200, qry = result.album, queryURL = string.Format("MusicFetch/Index?album={0}", qry), fileURL = result.path, fileName = result.title + ext });
+                    return Json(new {
+                        mimeStatusCode = true,
+                        statusCode = 200,
+                        qry = result.album,
+                        queryURL = string.Format("MusicFetch/Index?album={0}", qry),
+                        fileURL = result.path,
+                        fileName = result.title + ext,
+
+                        album = result.album,
+                        artURL = result.artURL,
+                        artists = result.artists,
+                        genres = result.genres,
+                        producer = result.producer,
+                        releaseDate = result.releaseDate,
+                        title = result.title
+                    });
                 }
                 else if (newItem.input.ContentType.Contains("video"))
                 {
                     qry = result.title;
                     response.queryURL = string.Format("VideoFetch/Index?video={0}", qry);
-                    return Json(new { mimeStatusCode = true, statusCode = 200, qry = result.album, queryURL = string.Format("VideoFetch/Index?video={0}", qry), fileURL = result.path, fileName = result.title + ext });
+                    return Json(new {
+                        mimeStatusCode = true,
+                        statusCode = 200,
+                        qry = result.title,
+                        queryURL = string.Format("VideoFetch/Index?video={0}", qry),
+                        fileURL = result.path, fileName = result.title + ext,
+
+                        album = result.album,
+                        artURL = result.artURL,
+                        artists = result.artists,
+                        genres = result.genres,
+                        producer = result.producer,
+                        releaseDate = result.releaseDate,
+                        title = result.title
+                    });
                 }
             }
             return Json(new { statusCode=400,msg="Data not valid" });

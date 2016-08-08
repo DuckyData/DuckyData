@@ -19,9 +19,9 @@ namespace DuckyData1._0._0Alpha.Controllers
 {
     public class MessageController : Controller
     {
+        AccountFactory accountFactory = new AccountFactory();
         private Manager m = new Manager();
         private AccountFactory ac = new AccountFactory();
-        static private string uID = System.Web.HttpContext.Current.User.Identity.GetUserId();
 
         // GET: Message
         [Authorize(Roles = "Admin")]
@@ -74,13 +74,12 @@ namespace DuckyData1._0._0Alpha.Controllers
             addForm.SentDate = DateTime.Now;
             addForm.Recipient = msg.UserName;
             addForm.Subject = string.Format("RE: {0}", msg.Subject);
-            addForm.Body = string.Format("<br/><br/>--Original Message--\n{0}", msg.Body);
+            addForm.Body = string.Format("\n--Original Message--\n{0}", msg.Body);
             return View(addForm);
         }
 
         // POST: Message/Reply
         [Authorize]
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult Reply(MessageAdd newItem)
         {
@@ -103,7 +102,6 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         // POST: Message/Create
         [Authorize]
-        [ValidateInput(false)]
         [HttpPost]
         public ActionResult Create(MessageAdd newItem)
         {
@@ -111,17 +109,39 @@ namespace DuckyData1._0._0Alpha.Controllers
             var user = ac.findUserById(uID);
             if (user.gagged)
             {
-                ModelState.AddModelError("SentDate", "your account's messaging services have been disabled due to inapropriate use ");
-                return View();
+                ModelState.AddModelError("errors", "Your account's messaging services have been disabled due to inapropriate use ");
+                var addForm = new MessageAddForm();
+                addForm.SentDate = DateTime.Now;
+                return View(addForm);
+            }
+            if (newItem.Recipient == null || newItem.Recipient == "")
+            {
+                ModelState.AddModelError("errors", "You must specify who you are messaging");
+                var addForm = new MessageAddForm();
+                addForm.SentDate = newItem.SentDate;
+                addForm.Recipient = newItem.Recipient;
+                addForm.Subject = newItem.Subject;
+                return View(addForm);
+            }
+            var exists = accountFactory.findUserByEmail(newItem.Recipient);
+            if (exists == null)
+            {
+                ModelState.AddModelError("errors", "The user you are trying to message does not exist");
+                var addForm = new MessageAddForm();
+                addForm.SentDate = DateTime.Now;
+                return View(addForm);
             }
             if (ModelState.IsValid)
             {
                 var addedItem = m.SendMessage(newItem);
                 return RedirectToAction("Inbox", "Message");
             }
-            return View();
+            //ModelState.AddModelError("errors", "An unknow error occured. please try again. \nIf this error presists, please submit a Bug Report");
+            var addF = new MessageAddForm();
+            addF.Recipient = newItem.Recipient;
+            addF.SentDate = DateTime.Now;
+            return View(addF);
         }
-
         // GET: Message/Edit/5
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)

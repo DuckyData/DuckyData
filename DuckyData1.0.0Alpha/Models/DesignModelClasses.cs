@@ -45,6 +45,7 @@ namespace DuckyData1._0._0Alpha.Models
         public string releaseDate { get; set; }
         public byte[] albumArt { get; set; }
         public string artMime { get; set; }
+        public string artURL { get; set; }
         public uint track { get; set; }
         public byte[] fileBytes { get; set; }
 

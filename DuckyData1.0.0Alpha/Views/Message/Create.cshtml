@@ -13,6 +13,7 @@
     <div class="form-horizontal" ng-controller="messageCreateCtrl">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationMessage("errors", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.SentDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -20,7 +21,6 @@
                 @Html.ValidationMessageFor(model => model.SentDate, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Recipient, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

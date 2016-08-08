@@ -28,8 +28,6 @@ namespace DuckyData1._0._0Alpha.Controllers
         private ApplicationDbContext ds = new ApplicationDbContext();
 
         private AccountController a = new AccountController();
-        static private string uID = HttpContext.Current.User.Identity.GetUserId();
-        static private string uNm = HttpContext.Current.User.Identity.Name;
         static private AccountFactory af = new AccountFactory();
         IEnumerable<userRole> AuthUsers()
         {
@@ -88,7 +86,10 @@ namespace DuckyData1._0._0Alpha.Controllers
             var result =  p.go(input);
             if (result.album != null && result.artists[0] != null) {
                 var art = LastFmAlbumArt.AlbumArt(result.album, result.artists[0]);
-
+                if (art != null)
+                {
+                    result.artURL = LastFmAlbumArt.AbsUrlOfArt(result.album, result.artists[0]);
+                }
                 var ms = new MemoryStream();
                 if (art != null)
                 {
@@ -208,10 +209,13 @@ namespace DuckyData1._0._0Alpha.Controllers
         // MESSAGE MANAGEMENT - BEGIN
         public MessageBase SendMessage(MessageAdd newItem)
         {
-            //var user = ds.Users.SingleOrDefault(i => i.Id == uID);
-           // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
-           // if(usr.gagged) { return null; }
-            newItem.UserId = uID;
+
+        string uID = HttpContext.Current.User.Identity.GetUserId();
+        string uNm = HttpContext.Current.User.Identity.Name;
+        //var user = ds.Users.SingleOrDefault(i => i.Id == uID);
+        // var usr = a.UserManager.Users.FirstOrDefault(i => i.Id == uID);
+        // if(usr.gagged) { return null; }
+        newItem.UserId = uID;
             newItem.UserName = uNm;
             newItem.viewed = false;
             Message msg = new Message();
@@ -275,6 +279,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public MessageBase GetMessageById(int id)
         {
+            string uNm = HttpContext.Current.User.Identity.Name;
             var fetchedObject = (ds.Messages.SingleOrDefault(i => i.Id == id));
             var newstate = fetchedObject;
             if (fetchedObject.viewed == false && fetchedObject.Recipient == uNm)
@@ -291,7 +296,8 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public IEnumerable<MessageBase> Outbox()
         {
-            var messages = ds.Messages.Where(x => x.UserId == uID ).OrderBy(d => d.SentDate);
+        string uID = HttpContext.Current.User.Identity.GetUserId();
+        var messages = ds.Messages.Where(x => x.UserId == uID ).OrderBy(d => d.SentDate);
 
 
             return (messages == null) ? null : Mapper.Map<IEnumerable<MessageBase>>(messages);
@@ -299,6 +305,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public IEnumerable<Message> Inbox()
         {
+            string uNm = HttpContext.Current.User.Identity.Name;
             var messages = ds.Messages.SqlQuery("Select * from dbo.Messages").Where(x => x.Recipient == uNm);
 
             return (messages == null) ? null : messages;
@@ -330,6 +337,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public MessageBase EditMessage(MessageEdit toApply)
         {
+            string uNm = HttpContext.Current.User.Identity.Name;
             var toEdit = ds.Messages.SingleOrDefault(i => i.Id == toApply.Id);
 
             if(toEdit == null || (uNm != toEdit.UserName && !HttpContext.Current.User.IsInRole("admin"))) { return null; }
@@ -347,6 +355,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public void MarkAsUnread(int id)
         {
+            string uNm = HttpContext.Current.User.Identity.Name;
             var omsg = ds.Messages.SingleOrDefault(i => i.Id == id);
             if (uNm == omsg.Recipient)
             {
@@ -359,6 +368,7 @@ namespace DuckyData1._0._0Alpha.Controllers
 
         public bool DeleteMessage(int id)
         {
+            string uNm = HttpContext.Current.User.Identity.Name;
             var toDel = ds.Messages.SingleOrDefault(i => i.Id == id);
             if (toDel == null || (uNm != toDel.UserName && !HttpContext.Current.User.IsInRole("admin")))
             {
