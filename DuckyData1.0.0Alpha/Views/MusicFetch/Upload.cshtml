@@ -23,12 +23,12 @@
             <div class="audio-upload-repeat width-100" ng-repeat="audio in audioFileUploader.queue">
                 <div class="pull-left audio-file-status">{{audio.pct | percentage}}</div>
                 <div class="pull-left audio-file-name text-ellipsis">{{audio.file.name}}</div>
-                <div class="pull-left audio-file-remove"><span class="fui-trash" ng-click="audioFileUploader.queue.splice($index,1)"></span></div>
+                <div class="pull-left audio-file-remove"><span class="fui-trash" ng-click="removeAudioFromList($index)"></span></div>
                 <div class="pull-left audio-file-size">{{audio.file.size/1024/1024 | number:2}} MB</div>
             </div>
         </div>
         <div id="audio-uploader-footer">
-            <button class="btn btn-danger pull-right btn-sm" ng-disabled="musicUploaderUICtrl.disableUploadAll" ng-click="uploadAllAudio()">Upload All ({{audioFileUploader.queue.length}})</button>
+            <button class="btn btn-danger pull-right btn-sm" ng-disabled="musicUploaderUICtrl.disableUploadAll || !audioFileUploader.queue.length"  ng-click="uploadAllAudio()">Upload All ({{audioFileUploader.queue.length}})</button>
         </div>
     </div>
 </body>

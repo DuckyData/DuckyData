@@ -84,7 +84,7 @@ namespace DuckyData1._0._0Alpha.Controllers
             Program p = new Program();
             //return new acr() { album = "The Wall" };
             var result =  p.go(input);
-            if (result.album != null && result.artists[0] != null) {
+            if (result.album != null && result.artists != null && result.artists[0] != null) {
                 var art = LastFmAlbumArt.AlbumArt(result.album, result.artists[0]);
                 if (art != null)
                 {

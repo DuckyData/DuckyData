@@ -79,7 +79,7 @@ duckyData.controller('musicFetchCtrl', function ($scope, $http, $sce, $interval,
                 toastr.error('Cannot find information about this album', 'Sorry');
             });
         } else {
-            toastr.error('Ablum paramater not found!','Opps');
+            toastr.error('Album paramater not found!','Opps');
         }
     }(function(){}());
     

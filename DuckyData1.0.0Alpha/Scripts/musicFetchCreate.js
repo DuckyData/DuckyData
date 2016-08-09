@@ -106,6 +106,16 @@
             angular.forEach($scope.musicFetchCreateData.failedQueue, function (failed) {
                 $scope.audioFileUploader.queue.push(failed);
             })
+        } else {
+            toastr.success('All files uploaded');
+        }
+    }
+
+    $scope.removeAudioFromList = function (index) {
+        if ($scope.musicUploaderUICtrl.disableUploadAll) {
+            toastr.error('Cannot remove file from list', 'Upload in process');
+        } else {
+            $scope.audioFileUploader.queue.splice(index, 1)
         }
     }
 });

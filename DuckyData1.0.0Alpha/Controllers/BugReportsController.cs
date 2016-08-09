@@ -15,7 +15,6 @@ using System.Web.Routing;
 using PagedList;
 using DuckyData1._0._0Alpha.Factory.FollowUps;
 using DuckyData1._0._0Alpha.ViewModels.FollowUps;
-using DuckyData1._0._0Alpha.Factory.WebAPI.Gracenote;
 using System.Threading.Tasks;
 
 namespace DuckyData1._0._0Alpha.Controllers

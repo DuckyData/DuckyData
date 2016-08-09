@@ -271,11 +271,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AllowCrossSiteJson.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\BugReportsController.cs" />
     <Compile Include="Controllers\ControlPanelsController.cs" />
-    <Compile Include="Controllers\FollowUpsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -290,8 +288,6 @@
     <Compile Include="Factory\DatabaseConnection.cs" />
     <Compile Include="Factory\FavouriteFactory\FavouriteFactory.cs" />
     <Compile Include="Factory\FollowUps\FollowUpsFactory.cs" />
-    <Compile Include="Factory\WebAPI\Gracenote\GNAjax.cs" />
-    <Compile Include="Factory\WebAPI\Gracenote\GNQueryBuilder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -836,14 +832,10 @@
     <Content Include="Views\Account\EmailSent.cshtml" />
     <Content Include="Views\Account\ListUsers.cshtml" />
     <Content Include="Views\Shared\_AdminTools.cshtml" />
-    <Content Include="Views\VideoFavourites\Create.cshtml" />
-    <Content Include="Views\VideoFavourites\Delete.cshtml" />
-    <Content Include="Views\VideoFavourites\Details.cshtml" />
-    <Content Include="Views\VideoFavourites\Edit.cshtml" />
-    <Content Include="Views\VideoFavourites\Delete.cshtml" />
     <Content Include="Views\VideoFavourites\Index.cshtml" />
     <Content Include="Views\MusicFavourites\Delete.cshtml" />
     <Content Include="Views\MusicFavourites\Index.cshtml" />
+    <Content Include="Views\VideoFavourites\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Message\Create.cshtml" />

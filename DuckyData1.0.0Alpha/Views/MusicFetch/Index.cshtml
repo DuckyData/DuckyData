@@ -15,11 +15,11 @@
                 </div>
                 <div id="album-detail-info" class="pull-left">
                     <div class="width-100">
-                        <div class="width-80 album-title">{{musicFetchData.album.title}}</div>
+                        <div class="width-80 album-title text-ellipsis">{{musicFetchData.album.title}}</div>
                     </div>
                     <div class="width-100">
                         <div class="width-20 pull-left artist-label">Artist：</div>
-                        <div class="width-80 pull-left">{{musicFetchData.album.artist.name}}</div>
+                        <div class="width-80 pull-left text-ellipsis"">{{musicFetchData.album.artist.name}}</div>
                     </div>
                 </div>
                 <div id="back-to-possible-album-list" class="pull-left" ng-click="musicFetchUICtrl.showTrackList = false;musicFetchUICtrl.showPossibleAlbum=true;musicFetchUICtrl.showPreviewWindow=false;playPausePreview('reset')">

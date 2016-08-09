@@ -4,7 +4,7 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-    
+
         <dt>
             @Html.DisplayNameFor(model => model.VideoImg)
         </dt>
@@ -15,15 +15,16 @@
         <dt>
             @Html.DisplayNameFor(model => model.VideoTitle)
         </dt>
-    
+
         <dd>
             @Html.DisplayFor(model => model.VideoTitle)
         </dd>
     </dl>
-    
-    @using (Html.BeginForm()) {
+
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
-    
+
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-primary" /> |
             @Html.ActionLink("Back to List", "Index")

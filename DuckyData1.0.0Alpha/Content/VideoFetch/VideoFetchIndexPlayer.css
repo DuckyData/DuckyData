@@ -31,7 +31,6 @@
     font-size: 95%;
     -webkit-transition: -webkit-transform .8s ease-in-out;
     transition: transform .8s ease-in-out;
-    z-index: 20;
 }
 
 #videoPlayer .modal-content > button.close:focus,
@@ -50,4 +49,15 @@
 
 #videoPlayer .modal-content .modal-footer{
     text-align: left !important;
+}
+
+
+@media (max-width: 670px) {
+    #videoPlayer .modal-content{
+        width: 100%;
+    }
+
+    #player{
+        width: 100%;
+    }
 }

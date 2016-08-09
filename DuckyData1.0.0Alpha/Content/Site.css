@@ -115,10 +115,11 @@ body div.navbar-fixed-top{
 
 #jumbotron #file-identify-upload-box{
     margin-top: 50px;
-    height: 250px;
+    height: auto;
     width: 100%;
     padding-bottom: 10px;
     position: relative;
+    overflow: hidden;
 }
 
 #jumbotron #file-identify-upload-box div.medi-drop-box{
@@ -134,11 +135,12 @@ body div.navbar-fixed-top{
 #jumbotron #file-identify-upload-box .file-drop-area{
     width: 100%;
     height: 200px;
+    position: relative;
 }
 
 #jumbotron #file-identify-upload-box .file-indentify-btn-group{
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    margin-top: 20px;
 }
 
 
@@ -154,4 +156,37 @@ body div.navbar-fixed-top{
 }
 .remove-identify-file {
     cursor: pointer;
+}
+
+#metadata-display{
+    background-color: #fff;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+#metadata-display > button{
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    right: 20px;
+    cursor: pointer;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
+}
+#metadata-display > button:hover{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+#metadata-display > button:focus,
+#metadata-display > button:active{
+    border: none;
+    outline: none;
+}
+
+#metadata-display div.width-50{
+    padding-right: 10px;
 }

@@ -57,21 +57,15 @@ duckyData.controller('videoFetchCtrl', function ($scope, $timeout, GAPIFactory, 
             width: '640',
             videoId: $scope.videoFetchData.selectedVideo.id.videoId,
             events: {
-                'onStateChange': onPlayerStateChange
+                'onReady': onPlayerReady
             }
         });
     }
 
     function onPlayerReady(event) {
-        event.target.playVideo();
+        $scope.videoFetchData.player.playVideo();
     }
-    var done = true;
-    function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-            setTimeout($scope.stopVideo, 6000);
-            done = true;
-        }
-    }
+
     $scope.stopVideo = function () {
         $scope.videoFetchData.player.stopVideo();
     }

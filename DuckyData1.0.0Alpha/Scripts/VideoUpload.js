@@ -16,7 +16,7 @@
     }
 
     $scope.videoUploadUICtrl = {
-        showUserLogo: $scope.videoUploadData.user.imgURL ? true: false
+        disableBtn: false
     }
 
     $scope.videoInputTagClick = function () {
@@ -62,16 +62,19 @@
 
     $scope.uploadAllVideos = function() {
         // get connestion
+        $scope.videoUploadUICtrl.disableBtn = true;
         if (uploadVideo == null) {
             uploadVideo = new UploadVideo();
         }
-            GAPIFactory.signIn().then(function (result) {
-                if (result.status == 200) {
-                    uploadVideo.ready(result.token).then(function () {
-                        UploadVideo.prototype.uploadFile(0)
-                    });
-                }
-            })
+        GAPIFactory.signIn().then(function (result) {
+            if (result.status == 200) {
+                uploadVideo.ready(result.token).then(function () {
+                    UploadVideo.prototype.uploadFile(0)
+                });
+            } else {
+                $scope.videoUploadUICtrl.disableBtn = false;
+            }
+        })
         
     }
 
@@ -127,15 +130,17 @@
             this.uploadStartTime = Date.now();
             uploader.upload();
         } else {
-            //chec for failed queue
-            console.log('clear queue');
             clearUploadQueue();
             if ($scope.videoFileUploader.failedQueue.lenght) {
                 reloadFailedQueue();
-            } 
+            } else {
+                toastr.success('All files uploaded');
+            }
+            $scope.$apply(function () {
+                $scope.videoUploadUICtrl.disableBtn = false;
+            })
         }
     };
-
     function clearUploadQueue() {
         $scope.$apply(function () {
             $scope.videoFileUploader.queue = [];
@@ -151,5 +156,13 @@
                 $scope.videoFileUploader.failedQueue = [];
             }, 500);
         })
+    }
+
+    $scope.removeVideoFromList = function (index) {
+        if ($scope.videoUploadUICtrl.disableBtn) {
+            toastr.error('Cannot remove file from list', 'Upload in process');
+        } else {
+            $scope.videoFileUploader.queue.splice(index, 1)
+        }
     }
 });

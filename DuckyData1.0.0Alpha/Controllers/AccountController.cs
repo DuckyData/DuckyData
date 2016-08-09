@@ -770,14 +770,15 @@ namespace DuckyData1._0._0Alpha.Controllers
         public ActionResult EditFlags(string uid, bool flag, bool gag, bool ban)
         {
             ApplicationUser dest = accountFactory.findUserById(uid);
-            if (dest.banned && !ban)
+            
+            if (dest.banned && !ban && !UserManager.IsInRole(uid, "Admin"))
             {
                 //UserManager.SetLockoutEnabled(dest.Id, false);
                 var dt = DateTime.Now;
                 dest.LockoutEndDateUtc = null;
                 db.SaveChanges();
             }
-            else if (!dest.banned && ban)
+            else if (!dest.banned && ban && !UserManager.IsInRole(uid, "Admin"))
             {
                 //UserManager.SetLockoutEnabled(dest.Id, true);
                 var dt = DateTime.Now;
@@ -787,13 +788,17 @@ namespace DuckyData1._0._0Alpha.Controllers
             }
                 adminEditUser user = new adminEditUser
             {
-                flagged = flag,
-                gagged = gag,
-                banned = ban,
                 FirstName = dest.firstName,
                 LastName = dest.lastName,
                 PhoneNumber = dest.PhoneNumber
             };
+            if(!UserManager.IsInRole(uid, "Admin"))
+            {
+
+                user.flagged = flag;
+                user.gagged = gag;
+                user.banned = ban;
+            }
             
             accountFactory.adminUpdateUserInfo(dest, user, 0);
             return RedirectToAction("ListUsers", "Account");

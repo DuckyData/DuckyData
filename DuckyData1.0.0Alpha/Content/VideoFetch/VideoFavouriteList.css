@@ -3,7 +3,8 @@
     overflow:hidden;
     min-height: calc(100vh - 165px);
     height: auto;
-    background: #F1F1F1
+    background: #F1F1F1;
+    min-width: 568px;
 }
 
 #list-favourite-video-header {
@@ -21,7 +22,11 @@
 }
 
 #list-favourite-video-header form > div{
-    width: 340px;
+    width: 280px;
+}
+
+#list-favourite-video-header form > div >input{
+    width: 220px;
 }
 
 #list-favourite-video-header button{

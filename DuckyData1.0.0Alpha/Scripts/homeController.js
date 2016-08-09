@@ -1,8 +1,11 @@
 ﻿duckyData.controller('homeCtrl', function ($scope, $http, $window, FileUploader, toastr) {
     $scope.singAudioUploader = new FileUploader();
-
+    $scope.homePageData = {
+        metadata: {}
+    }
     $scope.homePageUICtrl = {
-        disableIfentifyButton: false
+        disableIfentifyButton: false,
+        showMetadata: false
     }
 
     $scope.singAudioUploader.filters.push({
@@ -22,22 +25,16 @@
         fn: function (item, options) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
 
-            var userAgent = $window.navigator.userAgent;
+            var browserInfo = $window.navigator.userAgent;
 
-            console.log(userAgent);
-
-            var browsers = { chrome: /chrome/i, safari: /safari/i, firefox: /firefox/i, ie: /internet explorer/i };
+            var chromeFinder =/chrome/i
             
             var mimeTypeSctring = '|mpeg|mp3|flac|x-ms-wma|mp4|';
 
-            for (var key in browsers) {
-                if (browsers[key].test(userAgent)) {
-                    if (key == "chrome") {
-                        mimeTypeSctring = '|mp3|flac|x-ms-wma|mp4|';
-                    }
-                }
-            };
-
+            if (chromeFinder.test(browserInfo)) {
+                mimeTypeSctring = '|mp3|flac|x-ms-wma|mp4|';
+            }
+           
             if (mimeTypeSctring.indexOf(type) !== -1) {
                 return true;
             } else {
@@ -59,6 +56,10 @@
         }
     });
 
+    $scope.singAudioUploader.onAfterAddingFile = function () {
+        $scope.homePageData.metadata = {}
+        $scope.homePageUICtrl.showMetadata = false;
+    };
     $scope.inputTagTrigger = function (tag) {
         if ($scope.singAudioUploader.queue.length > 0) {
             // have file already
@@ -66,6 +67,11 @@
         } else {
             $(tag).click();
         }
+    }
+
+    $scope.hideMetadata = function () {
+        $scope.homePageUICtrl.showMetadata = false;
+        $scope.homePageData.metadata = {}
     }
 
     $scope.identifyAudio = function (optionId) {
@@ -81,19 +87,20 @@
             var fd = new FormData();
             fd.append('input', $scope.singAudioUploader.queue[0]._file);
             toastr.success('Uploading file to the system, please wait')
-            $http.post('http://myvmlab.senecacollege.ca:5340/MusicFetch/_MediaInput/' + optionId, fd, config).then(function (response) {
+            $http.post('http://localhost:8102/MusicFetch/_MediaInput/' + optionId, fd, config).then(function (response) {
                 if (response.status == 200) {
                     if (response.data.statusCode == 200){
                         $scope.homePageUICtrl.disableIfentifyButton = false;
-                        console.log(response);
-                        var url = 'http://myvmlab.senecacollege.ca:5340/MusicFetch/Download?file=' + response.data.fileURL + '&fileName=' + response.data.fileName;
+                        angular.merge($scope.homePageData.metadata, response.data);
+                        $scope.homePageUICtrl.showMetadata = true;
+                        var url = 'http://localhost:8102/MusicFetch/Download?file=' + response.data.fileURL + '&fileName=' + response.data.fileName;
                         window.location.assign(url);
                         if (optionId == 2) {
                             var win = window.open('http://myvmlab.senecacollege.ca:5340/' + response.data.queryURL, "_blank");
                             win.focus();
                         }
                     } else if (response.data.statusCode == 400) {
-                        toastr.error(response.data.msg);
+                        toastr.error(response.data.msg,'Sorry');
                     } else if (response.data.statusCode == 500) {
                         toastr.error('Cannot find metadata for this file', 'Sorry');
                     }

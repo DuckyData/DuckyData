@@ -21,12 +21,20 @@
 }
 
 #list-favourite-audio-header form > div{
-    width: 340px;
+    width: 280px;
 }
+#list-favourite-audio-header form > div input{
+    width: 220px;
+}
+
 
 #list-favourite-audio-header button{
     height: 35px;
     border: none;
     color: #fff;
     background: #1ABC9C;
+}
+ ul.pagination{
+    padding-left: 0 !important;
+    padding-right: 0 !important;;
 }

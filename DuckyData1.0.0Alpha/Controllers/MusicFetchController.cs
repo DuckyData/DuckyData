@@ -140,8 +140,12 @@ namespace DuckyData1._0._0Alpha.Controllers
                 
                 var result = m.RunQuery(newItem);
                 string qry;
-                
-                if (result.album != null && result.artists[0] != null && result.title != null)
+                if(result.album == "" || result.album == null || result.title == null)
+                {
+                    return Json(new { mimeStatusCode = true, statusCode = 400, msg = "Failed to identify file" });
+                }
+
+                if (result.album != null && result.artists!=null && result.artists[0] != null && result.title != null)
                 {
                     response.statusCode = true;
                 }
